@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¿Qué es la ética? · Web interactiva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#22d3ee; --accent-2:#f59e0b }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(245,158,11,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14" aria-label="Navegación principal">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Ética<span class="text-amber-300">Lab</span></a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#leer" class="hover:text-amber-300">Leer</a>
+        <a href="#practicar" class="hover:text-amber-300">Practicar</a>
+        <a href="#generar" class="hover:text-amber-300">Generar</a>
+        <a href="#dialogo" class="hover:text-amber-300">Diálogo</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAjustes" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAjustes">Ajustes</button>
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg bg-amber-400/20 text-amber-200 hover:bg-amber-400/30 transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
+          ¿Qué es la <span class="text-amber-300">ética</span>?
+        </h1>
+        <p class="mt-4 text-lg text-slate-300">
+          Moral y ética son dos términos que, aunque suelen utilizarse indistintamente, no significan lo mismo. La <strong>moral</strong> es el conjunto de normas que una cultura, sociedad o religión considera necesarias para convivir justamente. La <strong>ética</strong> reflexiona sobre la moral: por qué consideramos válidos ciertos comportamientos; se pregunta por el <em>deber</em>, el <em>bien</em>, lo <em>justo</em>…
+        </p>
+        <div class="mt-6 flex gap-3">
+          <a href="#leer" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Empezar</a>
+          <a href="#practicar" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Ir a practicar</a>
+        </div>
+        <p class="mt-4 text-sm text-slate-400">Sugerencia: pulsa <span class="kbd">?</span> para ver atajos.</p>
+      </div>
+      <div class="relative">
+        <div class="glass rounded-3xl p-6 ring-a">
+          <h2 class="text-xl font-bold mb-3">Idea central</h2>
+          <p class="text-slate-300">La ética <strong>piensa críticamente</strong> sobre la moral: analiza razones, fines y principios que orientan nuestras acciones y valora si pueden ser <strong>universales</strong>.</p>
+          <div class="mt-4 grid grid-cols-3 gap-3 text-center">
+            <div class="glass rounded-xl p-3" title="Deber y normas">
+              <div class="text-2xl">📜</div>
+              <div class="text-xs text-slate-300 mt-1">Deber</div>
+            </div>
+            <div class="glass rounded-xl p-3" title="Bien y fines">
+              <div class="text-2xl">🎯</div>
+              <div class="text-xs text-slate-300 mt-1">Bien</div>
+            </div>
+            <div class="glass rounded-xl p-3" title="Justicia y universalidad">
+              <div class="text-2xl">⚖️</div>
+              <div class="text-xs text-slate-300 mt-1">Justicia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEER -->
+  <section id="leer" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <article class="glass rounded-3xl p-6" aria-labelledby="tit-def">
+        <h3 id="tit-def" class="text-2xl font-bold">Moral vs Ética</h3>
+        <p class="mt-3 text-slate-300">
+          La <strong>moral</strong> describe normas y costumbres vigentes en un grupo. La <strong>ética</strong> reflexiona críticamente sobre esas normas: pregunta si son justas, por qué deberían valer y con qué criterios evaluarlas.
+        </p>
+        <details class="mt-4 group">
+          <summary class="cursor-pointer inline-flex items-center gap-2 text-amber-300 hover:text-amber-200"><span class="inline-block w-5" aria-hidden>➤</span>Ampliar explicación</summary>
+          <div class="mt-3 text-slate-300">
+            <ul class="list-disc ml-5 space-y-2">
+              <li><strong>Moral</strong>: prescribe (<em>qué</em> hacer en tal cultura).</li>
+              <li><strong>Ética</strong>: justifica y critica (<em>por qué</em> hacerlo y si vale para todos).</li>
+              <li><strong>Universalidad</strong>: la ética busca principios generales, no meras costumbres locales.</li>
+            </ul>
+          </div>
+        </details>
+      </article>
+
+      <article class="glass rounded-3xl p-6" aria-labelledby="tit-obra">
+        <h3 id="tit-obra" class="text-2xl font-bold">Obras éticas y preguntas clave</h3>
+        <p class="mt-3 text-slate-300">Las obras filosóficas de carácter ético preguntan: “¿qué es el deber?”, “¿cómo hacer el bien?”, “¿qué valores deben guiarnos?”, “¿existen normas universales?”. Las respuestas han variado históricamente.</p>
+        <div class="mt-4">
+          <h4 class="font-semibold">Tres grandes enfoques (simplificado)</h4>
+          <div class="mt-2 grid sm:grid-cols-3 gap-3">
+            <div class="glass rounded-xl p-3 text-center">
+              <div class="text-2xl">😊</div>
+              <div class="font-semibold">Ética de la felicidad</div>
+              <p class="text-sm text-slate-300">Bien vivir = florecer (fines y virtudes).</p>
+            </div>
+            <div class="glass rounded-xl p-3 text-center">
+              <div class="text-2xl">🧭</div>
+              <div class="font-semibold">Ética del deber</div>
+              <p class="text-sm text-slate-300">Normas y principios imparciales.</p>
+            </div>
+            <div class="glass rounded-xl p-3 text-center">
+              <div class="text-2xl">💪</div>
+              <div class="font-semibold">Ética de la virtud</div>
+              <p class="text-sm text-slate-300">Carácter, hábitos y ejemplos.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <article class="glass rounded-3xl p-6 mt-6" aria-labelledby="tit-hist">
+      <h3 id="tit-hist" class="text-2xl font-bold">Historia de la ética</h3>
+      <p class="mt-3 text-slate-300">La historia de la ética integra diferentes modos de razonar cuál es la mejor manera de vivir y comportarse. Cambian argumentos y conclusiones según contextos y problemas de cada época.</p>
+    </article>
+  </section>
+
+  <!-- PRACTICAR: Clasificador ético -->
+  <section id="practicar" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-2xl font-extrabold">Practicar · ¿Cuestión ética o no?</h3>
+      <div class="text-sm text-slate-400">Haz clic en cada tarjeta o usa teclas <span class="kbd">E</span>/<span class="kbd">N</span>.</div>
+    </div>
+    <div id="quiz" class="grid md:grid-cols-3 gap-4" aria-live="polite"></div>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button id="btnCorregir" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Corregir</button>
+      <button id="btnReiniciar" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Reiniciar</button>
+      <button id="btnMostrarSol" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Mostrar soluciones</button>
+    </div>
+    <div id="panelExp" class="mt-6 glass rounded-2xl p-4 hidden" aria-live="polite"></div>
+  </section>
+
+  <!-- GENERAR: Creador de dilemas éticos -->
+  <section id="generar" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <h3 class="text-2xl font-extrabold">Generador de dilemas éticos</h3>
+    <p class="mt-2 text-slate-300">Crea un dilema y elige un enfoque (felicidad, deber o virtud) para justificaciones.</p>
+
+    <div class="mt-4 grid md:grid-cols-4 gap-4 items-end">
+      <label class="block">Contexto
+        <select id="selContexto" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+          <option>Amistad</option>
+          <option>Familia</option>
+          <option>Aula</option>
+          <option>Redes sociales</option>
+          <option>Medioambiente</option>
+          <option>Deporte</option>
+        </select>
+      </label>
+      <label class="block">Conflicto
+        <select id="selConflicto" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+          <option>Decir la verdad vs. proteger a alguien</option>
+          <option>Mi beneficio vs. bien común</option>
+          <option>Lealtad a un amigo vs. justicia imparcial</option>
+          <option>Privacidad vs. seguridad</option>
+          <option>Honestidad académica vs. presión de grupo</option>
+        </select>
+      </label>
+      <label class="block">Enfoque
+        <select id="selEnfoque" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+          <option>Felicidad (consecuencias)</option>
+          <option>Deber (principios)</option>
+          <option>Virtud (carácter)</option>
+        </select>
+      </label>
+      <label class="block">Universalidad
+        <input id="rngUniv" type="range" min="0" max="100" value="70" class="mt-3 w-full" title="Ajusta cuánto buscas que el criterio valga para cualquiera">
+      </label>
+    </div>
+
+    <div class="mt-4 flex gap-3">
+      <button id="btnGenerar" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Generar</button>
+      <button id="btnGuardar" class="px-4 py-2 rounded-xl glass hover:ring-a transition" disabled>Guardar en mi cuaderno</button>
+      <button id="btnExportar" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Exportar .txt</button>
+    </div>
+
+    <div id="salidaGen" class="mt-4 glass rounded-2xl p-4 text-lg hidden" aria-live="polite"></div>
+
+    <div class="mt-6">
+      <h4 class="font-semibold">Mi cuaderno de dilemas</h4>
+      <ul id="cuaderno" class="mt-2 space-y-2"></ul>
+    </div>
+  </section>
+
+  <!-- DIÁLOGO: dinámica rápida -->
+  <section id="dialogo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14">
+    <h3 class="text-2xl font-extrabold">Diálogo ético · Piensa – Pareja – Comparte</h3>
+    <p class="mt-2 text-slate-300">Usa el temporizador para deliberar con criterios.</p>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-4">
+      <div class="glass rounded-3xl p-6">
+        <h4 class="font-semibold">Temporizador</h4>
+        <div class="mt-3 flex items-center gap-3 flex-wrap">
+          <label class="block">Piensa
+            <input id="t1" type="number" class="mt-1 w-24 rounded-lg bg-white/10 border border-white/10 p-2" value="60" min="10" step="10"> s
+          </label>
+          <label class="block">Pareja
+            <input id="t2" type="number" class="mt-1 w-24 rounded-lg bg-white/10 border border-white/10 p-2" value="120" min="20" step="10"> s
+          </label>
+          <label class="block">Comparte
+            <input id="t3" type="number" class="mt-1 w-24 rounded-lg bg-white/10 border border-white/10 p-2" value="120" min="20" step="10"> s
+          </label>
+        </div>
+        <div class="mt-4 text-5xl font-extrabold tabular-nums" id="visor">00:60</div>
+        <div class="mt-4 flex gap-2">
+          <button id="btnStart" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Iniciar</button>
+          <button id="btnPausa" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Pausa</button>
+          <button id="btnReset" class="px-4 py-2 rounded-xl glass hover:ring-a transition">Reset</button>
+        </div>
+        <p class="mt-3 text-sm text-slate-400">Consejo: cambia los tiempos según la actividad.</p>
+      </div>
+
+      <div class="glass rounded-3xl p-6">
+        <h4 class="font-semibold">Criterios para deliberar</h4>
+        <ul class="mt-2 list-disc ml-5 space-y-2 text-slate-300">
+          <li><strong>Deber</strong>: ¿qué norma justa aplicaría cualquiera?</li>
+          <li><strong>Bien</strong>: ¿qué opción mejora más las consecuencias para todos?</li>
+          <li><strong>Virtud</strong>: ¿qué haría una persona íntegra y prudente?</li>
+          <li><strong>Universalidad</strong>: ¿podría defenderse esta regla para toda la humanidad?</li>
+        </ul>
+        <div class="mt-4">
+          <label class="block font-medium mb-2">Propuesta de arranque</label>
+          <div class="flex gap-2">
+            <button class="px-3 py-2 rounded-xl glass hover:ring-a transition" data-prompt>¿Decir siempre la verdad es lo correcto?</button>
+            <button class="px-3 py-2 rounded-xl glass hover:ring-a transition" data-prompt>¿Es justo copiar si “todos lo hacen”?</button>
+            <button class="px-3 py-2 rounded-xl glass hover:ring-a transition" data-prompt>¿Debemos priorizar el bien común sobre el interés propio?</button>
+          </div>
+          <textarea id="cajaPrompt" class="mt-3 w-full rounded-xl bg-white/10 border border-white/10 p-3" rows="3" placeholder="Escribe o pega aquí la pregunta de partida"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALES -->
+  <dialog id="modalAjustes" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ajustes de visualización</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <label for="fontUp">Tamaño de texto</label>
+          <input id="fontUp" type="range" min="14" max="22" value="16">
+        </div>
+        <div class="flex items-center justify-between">
+          <label for="altoContraste">Alto contraste</label>
+          <input id="altoContraste" type="checkbox">
+        </div>
+        <div class="flex items-center justify-between">
+          <label for="modoLectura">Modo lectura (oculta extras)</label>
+          <input id="modoLectura" type="checkbox">
+        </div>
+      </div>
+      <div class="p-5 border-t border-white/10 text-sm text-slate-400">Tus preferencias se guardan en este dispositivo.</div>
+    </form>
+  </dialog>
+
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200">
+        <p><strong>Leer</strong>: conceptos clave y enfoques.</p>
+        <p><strong>Practicar</strong>: clasificar si una cuestión es ética o no.</p>
+        <p><strong>Generar</strong>: compón dilemas y guarda tus ideas.</p>
+        <p><strong>Diálogo</strong>: usa el temporizador y los criterios para deliberar.</p>
+        <p class="text-sm text-slate-400">Atajos: <span class="kbd">?</span> ayuda · <span class="kbd">g</span> generar · <span class="kbd">p</span> practicar.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">
+    Hecho con ⚖️ y 💬 para pensar mejor.
+  </footer>
+
+  <script>
+  // ====== UTIL ======
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const store = {
+    get(k, def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
+    set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+  }
+
+  // ====== QUIZ "Ética o no" ======
+  const items = [
+    { t: '¿Es justo dar el mismo castigo a todos los casos?', e: true, exp: 'Cuestión normativa con pretensión de imparcialidad.' },
+    { t: '¿Cuál es la capital de Portugal?', e: false, exp: 'Pregunta informativa, no moral.' },
+    { t: '¿Debería decir la verdad si perjudica a mi amigo?', e: true, exp: 'Dilema ético de deber y consecuencias.' },
+    { t: '¿Por qué hierve el agua a 100ºC?', e: false, exp: 'Explicación científica, no evaluación moral.' },
+    { t: '¿Es correcto copiar si “todos lo hacen”?', e: true, exp: 'Cuestión sobre normas universales vs. costumbre.' },
+    { t: '¿Qué opción beneficia más al conjunto?', e: true, exp: 'Enfoque consecuencial y bien común.' },
+    { t: '¿Cuánto mide el Everest?', e: false, exp: 'Dato empírico sin dimensión normativa.' },
+    { t: '¿Qué virtudes necesitamos para convivir bien?', e: true, exp: 'Cuestión de carácter y hábitos morales.' },
+  ];
+
+  const quizEl = $('#quiz');
+  const panelExp = $('#panelExp');
+  let respuestas = Array(items.length).fill(null);
+
+  function renderQuiz(){
+    quizEl.innerHTML = items.map((it,i)=>{
+      return `<article class=\"glass rounded-2xl p-4 min-h-[140px] flex flex-col justify-between\" data-i=\"${i}\">\n        <div class=\"text-slate-100 text-lg\">${it.t}</div>\n        <div class=\"mt-4 flex gap-2\" role=\"group\" aria-label=\"Clasificar\">\n          <button class=\"btn-e px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30\" aria-pressed=\"false\">Ética</button>\n          <button class=\"btn-n px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20\" aria-pressed=\"false\">No ética</button>\n        </div>\n        <div class=\"mt-2 text-sm text-slate-300 hidden exp\"></div>\n      </article>`
+    }).join('');
+
+    $$('#quiz .btn-e').forEach(btn=>btn.addEventListener('click', e=>toggle(e, true)));
+    $$('#quiz .btn-n').forEach(btn=>btn.addEventListener('click', e=>toggle(e, false)));
+
+    quizEl.addEventListener('keydown', e=>{
+      const card = e.target.closest('article');
+      if(!card) return;
+      const i = +card.dataset.i;
+      if(e.key.toLowerCase()==='e'){ setChoice(i,true,card); }
+      if(e.key.toLowerCase()==='n'){ setChoice(i,false,card); }
+    });
+    $$('#quiz article').forEach(a=>a.tabIndex=0);
+  }
+
+  function toggle(e, val){
+    const card = e.target.closest('article');
+    const i = +card.dataset.i;
+    setChoice(i, val, card);
+  }
+
+  function setChoice(i, val, card){
+    respuestas[i] = val;
+    const bE = card.querySelector('.btn-e');
+    const bN = card.querySelector('.btn-n');
+    bE.setAttribute('aria-pressed', val);
+    bN.setAttribute('aria-pressed', !val);
+    bE.classList.toggle('bg-amber-300', val);
+    bE.classList.toggle('text-slate-900', val);
+    bE.classList.toggle('bg-amber-400/20', !val);
+    bN.classList.toggle('bg-amber-300', !val);
+    bN.classList.toggle('text-slate-900', !val);
+    bN.classList.toggle('bg-white/10', val);
+  }
+
+  function corregir(mostrarExp){
+    let aciertos = 0;
+    $$('#quiz article').forEach((card, i)=>{
+      const ok = items[i].e;
+      const val = respuestas[i];
+      const exp = card.querySelector('.exp');
+      exp.textContent = (val===ok? '✔️ Bien: ':'❌ Ojo: ') + items[i].exp;
+      exp.classList.toggle('hidden', !mostrarExp);
+      card.classList.remove('ring-4','ring-red-400','ring-green-400');
+      if(val===ok){ aciertos++; card.classList.add('ring-4','ring-green-400') }
+      else { card.classList.add('ring-4','ring-red-400') }
+    });
+    panelExp.classList.remove('hidden');
+    panelExp.innerHTML = `<div class="text-lg font-semibold">Resultado: ${aciertos}/${items.length}</div>\n      <div class=\"text-sm text-slate-300 mt-1\">Pista: una cuestión ética evalúa acciones y normas con criterios generales (deber, bien, virtud), no solo datos.</div>`;
+  }
+
+  $('#btnCorregir').addEventListener('click', ()=>corregir(true));
+  $('#btnReiniciar').addEventListener('click', ()=>{ respuestas = Array(items.length).fill(null); renderQuiz(); panelExp.classList.add('hidden') });
+  $('#btnMostrarSol').addEventListener('click', ()=>{
+    respuestas = items.map(it=>it.e);
+    renderQuiz();
+    corregir(true);
+  });
+
+  renderQuiz();
+
+  // ====== GENERADOR DE DILEMAS ======
+  const selContexto = $('#selContexto');
+  const selConflicto = $('#selConflicto');
+  const selEnfoque = $('#selEnfoque');
+  const rngUniv = $('#rngUniv');
+  const salidaGen = $('#salidaGen');
+  const btnGuardar = $('#btnGuardar');
+  const cuaderno = $('#cuaderno');
+
+  function generar(){
+    const ctx = selContexto.value;
+    const conf = selConflicto.value;
+    const enf = selEnfoque.value;
+    const univ = +rngUniv.value;
+    const nota = univ>=70 ? 'con criterio universal' : univ>=40 ? 'buscando generalizar' : 'ojo: puede ser demasiado particular, intenta universalizar';
+    const dilema = `Contexto: ${ctx}. Conflicto: ${conf}. Enfoque: ${enf}.`;
+    const guia = enf.startsWith('Felicidad') ? 'Considera consecuencias para todos los afectados.' : enf.startsWith('Deber') ? 'Piensa en una regla que nadie pueda rechazar si fuera universal.' : 'Describe qué virtudes están en juego (prudencia, justicia, lealtad...).';
+    salidaGen.innerHTML = `<div><strong>Dilema:</strong> ${dilema}</div><div class="mt-2 text-sm text-slate-300">${guia} — ${nota}.</div>`;
+    salidaGen.classList.remove('hidden');
+    btnGuardar.disabled = false;
+    return dilema;
+  }
+
+  function pintarCuaderno(){
+    const lista = store.get('cuadernoEtica', []);
+    cuaderno.innerHTML = lista.map((q,i)=>
+      `<li class=\"glass rounded-xl p-3 flex items-center justify-between gap-3\">\n        <span>${q}</span>\n        <div class=\"flex gap-2\">\n          <button data-up=\"${i}\" class=\"px-2 py-1 glass rounded-lg\" title=\"Subir\">↑</button>\n          <button data-down=\"${i}\" class=\"px-2 py-1 glass rounded-lg\" title=\"Bajar\">↓</button>\n          <button data-del=\"${i}\" class=\"px-2 py-1 bg-red-500/20 hover:bg-red-500/30 rounded-lg\" title=\"Eliminar\">Eliminar</button>\n        </div>\n      </li>`
+    ).join('');
+  }
+
+  $('#btnGenerar').addEventListener('click', generar);
+
+  btnGuardar.addEventListener('click', ()=>{
+    const lista = store.get('cuadernoEtica', []);
+    const q = salidaGen.textContent.split('Dilema: ')[1] ? salidaGen.textContent.split('Dilema: ')[1].split(' — ')[0] : null;
+    const texto = q || (salidaGen.textContent || '').trim();
+    if(texto && !lista.includes(texto)){
+      lista.push(texto);
+      store.set('cuadernoEtica', lista);
+      pintarCuaderno();
+      btnGuardar.disabled = true;
+    }
+  });
+
+  $('#btnExportar').addEventListener('click', ()=>{
+    const lista = store.get('cuadernoEtica', []);
+    const blob = new Blob([lista.join('\n')||'(cuaderno vacío)'], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'cuaderno_etica.txt';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  cuaderno.addEventListener('click', e=>{
+    const lista = store.get('cuadernoEtica', []);
+    if(e.target.dataset.del){ lista.splice(+e.target.dataset.del,1) }
+    if(e.target.dataset.up){ const i=+e.target.dataset.up; if(i>0){ [lista[i-1],lista[i]]=[lista[i],lista[i-1]] } }
+    if(e.target.dataset.down){ const i=+e.target.dataset.down; if(i<lista.length-1){ [lista[i+1],lista[i]]=[lista[i],lista[i+1]] } }
+    store.set('cuadernoEtica', lista); pintarCuaderno();
+  });
+
+  pintarCuaderno();
+
+  // ====== DIÁLOGO: Temporizador ======
+  let fase = 0; // 0 piensa, 1 pareja, 2 comparte
+  let restante = 0;
+  let intv = null;
+  const visor = $('#visor');
+  function secActual(){ return [$('#t1').value, $('#t2').value, $('#t3').value].map(n=>parseInt(n,10)) }
+  function etiquetar(i){ return ['Piensa','Pareja','Comparte'][i] }
+  function format(s){ return String(s).padStart(2,'0') }
+  function tick(){
+    if(restante<=0){ fase++; const sec = secActual(); if(fase>2){ stop(); return } restante = sec[fase]; announce(`Fase: ${etiquetar(fase)}`) }
+    visor.textContent = `${format(Math.floor(restante/60))}:${format(restante%60)}`;
+    restante--;
+  }
+  function start(){ if(intv) return; fase=0; restante=secActual()[0]; announce('Fase: Piensa'); intv = setInterval(tick,1000); }
+  function pause(){ if(!intv) return; clearInterval(intv); intv=null }
+  function stop(){ pause(); visor.textContent = '00:60' }
+  function announce(msg){ const el = document.createElement('div'); el.className='sr-only'; el.textContent=msg; document.body.appendChild(el); setTimeout(()=>el.remove(),500) }
+
+  $('#btnStart').addEventListener('click', start);
+  $('#btnPausa').addEventListener('click', pause);
+  $('#btnReset').addEventListener('click', stop);
+
+  // ====== PROMPTS RÁPIDOS ======
+  $$('[data-prompt]').forEach(b=>b.addEventListener('click', ()=>{ $('#cajaPrompt').value = b.textContent }))
+
+  // ====== MODALES + AJUSTES ======
+  const modalAjustes = $('#modalAjustes');
+  const modalAyuda = $('#modalAyuda');
+  $('#btnAjustes').addEventListener('click', ()=>modalAjustes.showModal());
+  $('#btnAyuda').addEventListener('click', ()=>modalAyuda.showModal());
+
+  const pref = store.get('ui.pref.etica', { fs:16, contrast:false, lectura:false });
+  document.documentElement.style.fontSize = pref.fs+'px';
+  if(pref.contrast){ document.body.classList.add('contrast') }
+  if(pref.lectura){ document.body.classList.add('lectura') }
+
+  $('#fontUp').value = pref.fs;
+  $('#altoContraste').checked = pref.contrast;
+  $('#modoLectura').checked = pref.lectura;
+
+  $('#fontUp').addEventListener('input', e=>{ document.documentElement.style.fontSize = e.target.value+'px'; pref.fs=+e.target.value; store.set('ui.pref.etica',pref) })
+  $('#altoContraste').addEventListener('change', e=>{ document.body.classList.toggle('contrast', e.target.checked); pref.contrast=e.target.checked; store.set('ui.pref.etica',pref) })
+  $('#modoLectura').addEventListener('change', e=>{ document.body.classList.toggle('lectura', e.target.checked); pref.lectura=e.target.checked; store.set('ui.pref.etica',pref) })
+
+  const style = document.createElement('style');
+  style.textContent = `
+    body.contrast { color:#111; background:#fff; }
+    body.contrast .glass{ background:#fff; border-color:#1113 }
+    body.lectura header, body.lectura #practicar ~ *, body.lectura #generar ~ *, body.lectura #dialogo ~ * { display:block }
+    body.lectura .no-print, body.lectura [data-prompt] { display:none !important }
+  `;
+  document.head.appendChild(style);
+
+  // ====== ATAJOS ======
+  window.addEventListener('keydown', e=>{
+    if(e.key === '?'){ modalAyuda.open? modalAyuda.close():modalAyuda.showModal() }
+    if(e.key.toLowerCase()==='g'){ location.hash = '#generar' }
+    if(e.key.toLowerCase()==='p'){ location.hash = '#practicar' }
+  });
+  </script>
+</body>
+</html>

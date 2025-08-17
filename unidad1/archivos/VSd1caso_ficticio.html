@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plantillas A4 – SDA “Vivir bien juntos: felicidad, deber y virtud en nuestra aula”</title>
+  <style>
+    :root {
+      --ink:#111;
+      --muted:#666;
+      --line:#222;
+      --accent:#0a7;
+    }
+    @page { size: A4; margin: 1.6cm; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; color: var(--ink); margin: 0; }
+    .sheet { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 12mm 10mm; position: relative; }
+    .screen-shadow { box-shadow: 0 0 0 1px #00000010, 0 10px 30px #0000001a; background:#fff; }
+    h1, h2, h3 { margin: 0 0 6mm; line-height: 1.15; }
+    h1 { font-size: 16pt; letter-spacing: .2px; }
+    h2 { font-size: 13pt; margin-top: 2mm; }
+    h3 { font-size: 11.5pt; margin-top: 2mm; color: var(--muted); }
+    p { margin: 0 0 4mm; font-size: 10.5pt; }
+    .meta { font-size: 9.5pt; color: var(--muted); display:flex; gap:10mm; flex-wrap:wrap; margin-bottom: 4mm; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; }
+    .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+    .box { border: 1px solid var(--line); border-radius: 5px; padding: 4mm; }
+    .checklist { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 6mm; font-size: 10.5pt; }
+    .checklist li { display: flex; gap: 3mm; align-items: flex-start; }
+    .check { width: 12pt; height: 12pt; border: 1px solid var(--line); border-radius: 2px; display: inline-block; margin-top: 2pt; }
+    .line { border-bottom: 1px solid var(--line); height: 14pt; }
+    .lines-2 .line { margin-bottom: 2mm; }
+    .tiny { font-size: 9pt; color: var(--muted); }
+    .signature { display:grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 6mm; align-items:end; }
+    .signature .sig-line { border-bottom: 1px solid var(--line); height: 12mm; }
+    .badge { font-size: 9pt; color: var(--muted); position: absolute; bottom: 10mm; right: 10mm; }
+    .page-break { page-break-after: always; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid var(--line); padding: 3mm; font-size: 10pt; }
+    th { background: #f6f6f6; font-weight: 600; }
+    .narrow td, .narrow th { padding: 2mm; font-size: 9.5pt; }
+    .center { text-align: center; }
+    .muted { color: var(--muted); }
+    .pill { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:0 6px; font-size:9pt; color:var(--muted); }
+    .help { font-size: 9.5pt; color: var(--muted); margin-top: 1mm; }
+    .grid { display: grid; gap: 4mm; }
+    .two { grid-template-columns: 1fr 1fr; }
+    .three { grid-template-columns: repeat(3,1fr); }
+
+    @media print {
+      .screen-shadow { box-shadow: none; }
+      .badge { color: #999; }
+    }
+  </style>
+</head>
+<body>
+
+  
+
+  
+  
+  

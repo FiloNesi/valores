@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dilema ético encadenado · Planta vs. Río</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#f59e0b; --accent2:#22d3ee }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(245,158,11,.35), 0 10px 30px rgba(34,211,238,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    .droptarget{min-height:120px}
+    .token{cursor:grab}
+    .token:active{cursor:grabbing}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} .step{display:block !important} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Ética<span class="text-amber-300">Lab</span> · Dilema</a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#p1" class="hover:text-amber-300">Prueba 1</a>
+        <a href="#p2" class="hover:text-amber-300">Prueba 2</a>
+        <a href="#p3" class="hover:text-amber-300">Prueba 3</a>
+        <a href="#informe" class="hover:text-amber-300">Informe</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+        <button id="btnExportar" class="no-print px-3 py-1.5 rounded-lg bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Exportar .txt</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero / Dilema central -->
+  <section id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="glass rounded-3xl p-6 ring-a">
+      <h1 class="text-2xl sm:text-3xl font-extrabold">📍 Dilema central</h1>
+      <p class="mt-3 text-lg text-slate-200">“En vuestra ciudad se va a construir una <strong>planta</strong> que dará muchos <strong>empleos</strong>, pero también <strong>contaminará</strong> un río cercano y afectará a la <strong>salud</strong> de la población. ¿Qué decisión es la <strong>más ética</strong>?”</p>
+      <div class="mt-4 grid md:grid-cols-4 gap-3 text-center">
+        <div class="glass rounded-xl p-3"><div class="text-2xl">💼</div><div class="text-xs">Empleo</div></div>
+        <div class="glass rounded-xl p-3"><div class="text-2xl">🌊</div><div class="text-xs">Río</div></div>
+        <div class="glass rounded-xl p-3"><div class="text-2xl">🩺</div><div class="text-xs">Salud</div></div>
+        <div class="glass rounded-xl p-3"><div class="text-2xl">⚖️</div><div class="text-xs">Justicia</div></div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-3 items-center">
+        <button id="btnComenzar" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200 transition">Comenzar pruebas</button>
+        <div class="text-sm text-slate-400">Atajos: <span class="kbd">1</span>/<span class="kbd">2</span>/<span class="kbd">3</span> para cambiar de prueba</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="mt-6 glass rounded-2xl p-4">
+      <div class="flex items-center justify-between text-sm">
+        <span>Progreso</span>
+        <span id="progText">0 / 3 completadas</span>
+      </div>
+      <div class="w-full bg-white/10 rounded-full h-2 mt-2">
+        <div id="progBar" class="bg-amber-300 h-2 rounded-full" style="width:0%"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRUEBA 1 -->
+  <section id="p1" class="step max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-extrabold">Prueba 1 · Detectives de valores (10 min)</h2>
+      <div class="flex items-center gap-2">
+        <button id="timer1Start" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a">Iniciar 10:00</button>
+        <span id="timer1" class="tabular-nums">10:00</span>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- Banco de valores -->
+      <div class="glass rounded-3xl p-6">
+        <h3 class="font-semibold mb-2">Arrastra valores (puedes crear nuevos)</h3>
+        <div class="flex flex-wrap gap-2" id="banco" aria-label="Banco de valores">
+          <!-- tokens generados por JS -->
+        </div>
+        <div class="mt-3 flex gap-2">
+          <input id="nuevoValor" class="w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Añadir valor (p. ej., salud pública)">
+          <button id="btnAddValor" class="px-3 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200">Añadir</button>
+        </div>
+      </div>
+
+      <!-- Clasificación -->
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="glass rounded-2xl p-4 droptarget" data-cat="personales">
+          <div class="font-semibold">Personales</div>
+          <div class="min-h-[90px] mt-2 space-y-2 valores"></div>
+        </div>
+        <div class="glass rounded-2xl p-4 droptarget" data-cat="colectivos">
+          <div class="font-semibold">Colectivos</div>
+          <div class="min-h-[90px] mt-2 space-y-2 valores"></div>
+        </div>
+        <div class="glass rounded-2xl p-4 droptarget" data-cat="universales">
+          <div class="font-semibold">Universales</div>
+          <div class="min-h-[90px] mt-2 space-y-2 valores"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button id="btnCheckP1" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200">Comprobar (mín. 4)</button>
+      <button id="btnResetP1" class="px-4 py-2 rounded-xl glass hover:ring-a">Reiniciar</button>
+      <span id="p1Msg" class="text-slate-300"></span>
+    </div>
+  </section>
+
+  <!-- PRUEBA 2 -->
+  <section id="p2" class="step max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-extrabold">Prueba 2 · Espejo de teorías éticas (10 min)</h2>
+      <div class="flex items-center gap-2">
+        <button id="timer2Start" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a">Iniciar 10:00</button>
+        <span id="timer2" class="tabular-nums">10:00</span>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-4">
+      <article class="glass rounded-2xl p-4">
+        <h3 class="font-semibold">Felicidad · Utilitarismo</h3>
+        <p class="text-sm text-slate-300">¿Maximiza la felicidad y minimiza el daño para el conjunto?</p>
+        <label class="block mt-2 text-sm">Evaluación
+          <select id="uEval" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            <option>Muy a favor</option><option>A favor</option><option>Neutral</option><option>En contra</option><option>Muy en contra</option>
+          </select>
+        </label>
+        <textarea id="uJust" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Razones utilitaristas... (afectados, beneficios/daños, alternativas)"></textarea>
+      </article>
+
+      <article class="glass rounded-2xl p-4">
+        <h3 class="font-semibold">Deber · Kant</h3>
+        <p class="text-sm text-slate-300">¿Es justo por principio, independientemente de las consecuencias?</p>
+        <label class="block mt-2 text-sm">Evaluación
+          <select id="kEval" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            <option>Muy a favor</option><option>A favor</option><option>Neutral</option><option>En contra</option><option>Muy en contra</option>
+          </select>
+        </label>
+        <textarea id="kJust" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Razones kantianas... (universalidad, dignidad, no usar a personas como medios)"></textarea>
+      </article>
+
+      <article class="glass rounded-2xl p-4">
+        <h3 class="font-semibold">Virtud · Carácter</h3>
+        <p class="text-sm text-slate-300">¿Qué haría una persona prudente y justa? ¿Qué rasgos fomenta?</p>
+        <label class="block mt-2 text-sm">Evaluación
+          <select id="vEval" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            <option>Muy a favor</option><option>A favor</option><option>Neutral</option><option>En contra</option><option>Muy en contra</option>
+          </select>
+        </label>
+        <textarea id="vJust" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Razones de virtud... (prudencia, templanza, justicia, responsabilidad)"></textarea>
+      </article>
+    </div>
+
+    <div class="mt-4 glass rounded-2xl p-4">
+      <label class="block font-semibold">¿Qué enfoque ofrece la mejor solución y por qué?</label>
+      <div class="mt-2 flex flex-wrap gap-3">
+        <label class="inline-flex items-center gap-2"><input type="radio" name="mejor" value="Utilitarismo"> <span>Felicidad</span></label>
+        <label class="inline-flex items-center gap-2"><input type="radio" name="mejor" value="Kant"> <span>Deber</span></label>
+        <label class="inline-flex items-center gap-2"><input type="radio" name="mejor" value="Virtud"> <span>Virtud</span></label>
+      </div>
+      <textarea id="mejorJust" rows="3" class="mt-3 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Justificación comparada (ventajas, límites, universalidad)"></textarea>
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button id="btnCheckP2" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200">Comprobar</button>
+      <span id="p2Msg" class="text-slate-300"></span>
+    </div>
+  </section>
+
+  <!-- PRUEBA 3 -->
+  <section id="p3" class="step max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-extrabold">Prueba 3 · Debate relámpago (10 min)</h2>
+      <div class="flex items-center gap-2">
+        <button id="timer3Start" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a">Iniciar 10:00</button>
+        <span id="timer3" class="tabular-nums">10:00</span>
+      </div>
+    </div>
+
+    <div class="glass rounded-3xl p-6">
+      <label class="block font-semibold">Propuesta final de acción</label>
+      <div class="mt-2 flex flex-wrap gap-3">
+        <label class="inline-flex items-center gap-2"><input type="radio" name="accion" value="Construir"> <span>Construir</span></label>
+        <label class="inline-flex items-center gap-2"><input type="radio" name="accion" value="No construir"> <span>No construir</span></label>
+        <label class="inline-flex items-center gap-2"><input type="radio" name="accion" value="Buscar alternativa"> <span>Buscar alternativa</span></label>
+      </div>
+      <div class="mt-4 grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold">Mini-argumento (1 min)</label>
+          <textarea id="argumento" rows="6" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="En 3-4 frases: tesis, 2 razones, objeción y réplica."></textarea>
+          <div class="mt-2 flex items-center gap-2">
+            <button id="btnChrono60" class="px-3 py-1.5 rounded-lg glass hover:ring-a">Crono 01:00</button>
+            <span id="chrono" class="tabular-nums">01:00</span>
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold">Puntos clave (checklist)</label>
+          <div class="mt-2 space-y-2 text-sm">
+            <label class="flex items-center gap-2"><input type="checkbox" class="chk"> Tesis clara</label>
+            <label class="flex items-center gap-2"><input type="checkbox" class="chk"> Dos razones relevantes</label>
+            <label class="flex items-center gap-2"><input type="checkbox" class="chk"> Objeción considerada</label>
+            <label class="flex items-center gap-2"><input type="checkbox" class="chk"> Respuesta/criterio universal</label>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button id="btnCheckP3" class="px-4 py-2 rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-200">Listo para plenario</button>
+        <span id="p3Msg" class="text-slate-300"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORME -->
+  <section id="informe" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="glass rounded-3xl p-6">
+      <h2 class="text-2xl font-extrabold">Informe del grupo</h2>
+      <div id="resumen" class="mt-3 text-slate-200 space-y-2"></div>
+      <p class="mt-3 text-sm text-slate-400">Consejo: imprime o exporta y compártelo con el docente.</p>
+    </div>
+  </section>
+
+  <!-- Ayuda -->
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200">
+        <p><strong>Prueba 1</strong>: arrastra al menos 4 valores y clasifícalos en personales/colectivos/universales.</p>
+        <p><strong>Prueba 2</strong>: evalúa el dilema con <em>felicidad</em>, <em>deber</em> y <em>virtud</em>. Elige la mejor y justifica.</p>
+        <p><strong>Prueba 3</strong>: decide acción, redacta el mini-argumento y repásalo con la checklist; usa el crono de 1 minuto.</p>
+        <p class="text-sm text-slate-400">Atajos: <span class="kbd">1</span>/<span class="kbd">2</span>/<span class="kbd">3</span> para cambiar de prueba · <span class="kbd">?</span> ayuda.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">Hecho con ⚖️ y 💬 para deliberar mejor.</footer>
+
+  <script>
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  // ===== Navegación / Progreso =====
+  const steps = ['p1','p2','p3'];
+  const done = { p1:false, p2:false, p3:false };
+  function updateProgress(){
+    const count = Object.values(done).filter(Boolean).length;
+    $('#progText').textContent = `${count} / 3 completadas`;
+    $('#progBar').style.width = (count/3*100)+'%';
+    renderInforme();
+  }
+  function go(id){
+    steps.forEach(s=>$('#'+s).classList.toggle('hidden', s!==id));
+    location.hash = '#'+id;
+  }
+  $('#btnComenzar').addEventListener('click', ()=>go('p1'));
+  window.addEventListener('keydown', e=>{
+    if(e.key==='?') $('#modalAyuda').open ? $('#modalAyuda').close() : $('#modalAyuda').showModal();
+    if(e.key==='1') go('p1');
+    if(e.key==='2') go('p2');
+    if(e.key==='3') go('p3');
+  });
+  $('#btnAyuda').addEventListener('click', ()=>$('#modalAyuda').showModal());
+
+  // ===== Timers =====
+  function makeTimer(startBtn, labelEl, seconds){
+    let t=null, remain=seconds;
+    function fmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0') }
+    function tick(){ remain--; labelEl.textContent = fmt(remain); if(remain<=0){ clearInterval(t); t=null; alert('⏰ Tiempo!'); }
+    }
+    startBtn.addEventListener('click', ()=>{ if(t){ clearInterval(t); t=null; remain=seconds; labelEl.textContent=fmt(remain); return } t=setInterval(tick,1000); labelEl.textContent=fmt(remain); startBtn.textContent='Reiniciar'; });
+  }
+  makeTimer($('#timer1Start'), $('#timer1'), 600);
+  makeTimer($('#timer2Start'), $('#timer2'), 600);
+  makeTimer($('#timer3Start'), $('#timer3'), 600);
+
+  // Cronómetro 1 min (debate)
+  (function(){
+    let t=null, remain=60;
+    function fmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0') }
+    $('#btnChrono60').addEventListener('click', ()=>{
+      if(t){ clearInterval(t); t=null; remain=60; $('#chrono').textContent=fmt(remain); return }
+      t=setInterval(()=>{ remain--; $('#chrono').textContent=fmt(remain); if(remain<=0){ clearInterval(t); t=null; alert('⏰ ¡1 minuto!') } },1000);
+    });
+  })();
+
+  // ===== PRUEBA 1: Valores (drag & drop) =====
+  const valoresIniciales = ['salud','empleo','justicia','sostenibilidad','renta familiar','medioambiente','equidad intergeneracional','desarrollo económico','derechos humanos','participación ciudadana'];
+
+  function token(v){
+    const el = document.createElement('span');
+    el.className = 'token inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-300/20 text-amber-200 border border-amber-300/40';
+    el.draggable = true; el.textContent = v;
+    el.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', v); e.dataTransfer.effectAllowed='move'; e.dataTransfer.setDragImage(el, 10, 10) });
+    return el;
+  }
+  function renderBanco(){ const b = $('#banco'); b.innerHTML=''; valores.forEach(v=>b.appendChild(token(v))) }
+  const valores = [...valoresIniciales];
+  renderBanco();
+
+  // zonas de drop
+  $$('.droptarget').forEach(zone=>{
+    zone.addEventListener('dragover', e=>{ e.preventDefault(); zone.classList.add('ring-2','ring-amber-300') });
+    zone.addEventListener('dragleave', ()=>zone.classList.remove('ring-2','ring-amber-300'));
+    zone.addEventListener('drop', e=>{
+      e.preventDefault(); zone.classList.remove('ring-2','ring-amber-300');
+      const v = e.dataTransfer.getData('text/plain');
+      const tag = token(v); tag.classList.remove('bg-amber-300/20'); tag.classList.add('bg-white/10');
+      zone.querySelector('.valores').appendChild(tag);
+      // eliminar del banco solo una instancia
+      const idx = valores.indexOf(v); if(idx>-1){ valores.splice(idx,1); renderBanco(); }
+      saveP1();
+    });
+  });
+
+  $('#btnAddValor').addEventListener('click', ()=>{
+    const v = $('#nuevoValor').value.trim(); if(!v) return; valores.push(v); $('#nuevoValor').value=''; renderBanco();
+  });
+
+  function getP1Data(){
+    const data = { personales:[], colectivos:[], universales:[] };
+    $$('.droptarget').forEach(z=>{
+      const cat = z.dataset.cat; data[cat] = [...z.querySelectorAll('.valores .token')].map(e=>e.textContent)
+    });
+    return data;
+  }
+  function saveP1(){ localStorage.setItem('p1', JSON.stringify(getP1Data())) }
+  function loadP1(){
+    const raw = localStorage.getItem('p1'); if(!raw) return;
+    const data = JSON.parse(raw);
+    ['personales','colectivos','universales'].forEach(cat=>{
+      const cont = document.querySelector(`[data-cat="${cat}"] .valores`);
+      cont.innerHTML='';
+      (data[cat]||[]).forEach(v=>cont.appendChild(token(v)));
+      // quitar del banco
+      (data[cat]||[]).forEach(v=>{ const i = valores.indexOf(v); if(i>-1) valores.splice(i,1) });
+    });
+    renderBanco();
+  }
+  loadP1();
+
+  $('#btnResetP1').addEventListener('click', ()=>{ localStorage.removeItem('p1'); valores.splice(0,valores.length,...valoresIniciales); renderBanco(); $$('.valores').forEach(v=>v.innerHTML=''); $('#p1Msg').textContent='Reiniciado.' })
+
+  $('#btnCheckP1').addEventListener('click', ()=>{
+    const d = getP1Data();
+    const total = d.personales.length + d.colectivos.length + d.universales.length;
+    const ok = total>=4;
+    $('#p1Msg').textContent = ok? '✔️ Bien: hay al menos 4 valores clasificados. Puedes pasar a la Prueba 2.' : '❌ Te faltan valores. Arrastra al menos 4.';
+    done.p1 = ok; updateProgress(); if(ok) go('p2');
+  });
+
+  // ===== PRUEBA 2: Teorías =====
+  function getP2Data(){
+    const mejor = (document.querySelector('input[name="mejor"]:checked')||{}).value || '';
+    return {
+      uEval: $('#uEval').value, uJust: $('#uJust').value.trim(),
+      kEval: $('#kEval').value, kJust: $('#kJust').value.trim(),
+      vEval: $('#vEval').value, vJust: $('#vJust').value.trim(),
+      mejor, mejorJust: $('#mejorJust').value.trim()
+    }
+  }
+  function saveP2(){ localStorage.setItem('p2', JSON.stringify(getP2Data())) }
+  function loadP2(){
+    const raw = localStorage.getItem('p2'); if(!raw) return; const d = JSON.parse(raw);
+    if(d.uEval) $('#uEval').value = d.uEval; if(d.uJust) $('#uJust').value = d.uJust;
+    if(d.kEval) $('#kEval').value = d.kEval; if(d.kJust) $('#kJust').value = d.kJust;
+    if(d.vEval) $('#vEval').value = d.vEval; if(d.vJust) $('#vJust').value = d.vJust;
+    if(d.mejor){ document.querySelectorAll('input[name="mejor"]').forEach(r=>{ r.checked = r.value===d.mejor }) }
+    if(d.mejorJust) $('#mejorJust').value = d.mejorJust;
+  }
+  ['#uEval','#uJust','#kEval','#kJust','#vEval','#vJust','#mejorJust'].forEach(sel=>$(sel).addEventListener('input', saveP2));
+  $$('input[name="mejor"]').forEach(r=>r.addEventListener('change', saveP2));
+  loadP2();
+
+  $('#btnCheckP2').addEventListener('click', ()=>{
+    const d = getP2Data();
+    const ok = d.uJust.length>=20 && d.kJust.length>=20 && d.vJust.length>=20 && d.mejor && d.mejorJust.length>=20;
+    $('#p2Msg').textContent = ok? '✔️ Bien: comparativa completada. Puedes pasar a la Prueba 3.' : '❌ Completa las justificaciones y selecciona el enfoque que consideras mejor.';
+    done.p2 = ok; updateProgress(); if(ok) go('p3');
+  });
+
+  // ===== PRUEBA 3: Debate =====
+  function getP3Data(){
+    const accion = (document.querySelector('input[name="accion"]:checked')||{}).value || '';
+    const checks = $$('.chk').map(c=>c.checked);
+    return { accion, argumento: $('#argumento').value.trim(), checks };
+  }
+  function saveP3(){ localStorage.setItem('p3', JSON.stringify(getP3Data())) }
+  function loadP3(){
+    const raw = localStorage.getItem('p3'); if(!raw) return; const d = JSON.parse(raw);
+    if(d.accion){ $$('input[name="accion"]').forEach(r=>{ r.checked = r.value===d.accion }) }
+    if(d.argumento) $('#argumento').value = d.argumento;
+    if(d.checks) $$('.chk').forEach((c,i)=>c.checked = !!d.checks[i]);
+  }
+  $$('input[name="accion"]').forEach(r=>r.addEventListener('change', saveP3));
+  $('#argumento').addEventListener('input', saveP3);
+  $$('.chk').forEach(c=>c.addEventListener('change', saveP3));
+  loadP3();
+
+  $('#btnCheckP3').addEventListener('click', ()=>{
+    const d = getP3Data();
+    const ok = !!d.accion && d.argumento.length>=30 && d.checks.filter(Boolean).length>=3;
+    $('#p3Msg').textContent = ok? '✔️ Perfecto: listo para el plenario.' : '❌ Revisa: elige acción, redacta tu argumento y marca al menos 3 ítems.';
+    done.p3 = ok; updateProgress();
+  });
+
+  // ===== Informe y exportación =====
+  function renderInforme(){
+    const p1 = JSON.parse(localStorage.getItem('p1')||'{}');
+    const p2 = JSON.parse(localStorage.getItem('p2')||'{}');
+    const p3 = JSON.parse(localStorage.getItem('p3')||'{}');
+
+    function list(arr){ return (arr||[]).map(x=>`<li>${x}</li>`).join('') || '<li>—</li>' }
+
+    $('#resumen').innerHTML = `
+      <h3 class="font-semibold">Prueba 1 · Valores</h3>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div><div class="text-sm text-slate-400">Personales</div><ul class="list-disc ml-5">${list(p1.personales)}</ul></div>
+        <div><div class="text-sm text-slate-400">Colectivos</div><ul class="list-disc ml-5">${list(p1.colectivos)}</ul></div>
+        <div><div class="text-sm text-slate-400">Universales</div><ul class="list-disc ml-5">${list(p1.universales)}</ul></div>
+      </div>
+      <h3 class="font-semibold mt-4">Prueba 2 · Teorías</h3>
+      <ul class="list-disc ml-5">
+        <li><strong>Felicidad:</strong> ${p2.uEval||'—'} — ${p2.uJust||'—'}</li>
+        <li><strong>Deber:</strong> ${p2.kEval||'—'} — ${p2.kJust||'—'}</li>
+        <li><strong>Virtud:</strong> ${p2.vEval||'—'} — ${p2.vJust||'—'}</li>
+        <li><strong>Mejor enfoque:</strong> ${p2.mejor||'—'} — ${p2.mejorJust||'—'}</li>
+      </ul>
+      <h3 class="font-semibold mt-4">Prueba 3 · Propuesta</h3>
+      <ul class="list-disc ml-5">
+        <li><strong>Acción:</strong> ${p3.accion||'—'}</li>
+        <li><strong>Mini-argumento:</strong> ${p3.argumento||'—'}</li>
+      </ul>
+    `;
+  }
+  renderInforme();
+
+  $('#btnExportar').addEventListener('click', ()=>{
+    const p1 = JSON.parse(localStorage.getItem('p1')||'{}');
+    const p2 = JSON.parse(localStorage.getItem('p2')||'{}');
+    const p3 = JSON.parse(localStorage.getItem('p3')||'{}');
+    const lines = [];
+    lines.push('DILEMA: Planta vs. Río');
+    lines.push('---');
+    lines.push('PRUEBA 1 · Valores');
+    lines.push('Personales: ' + (p1.personales||[]).join(', '));
+    lines.push('Colectivos: ' + (p1.colectivos||[]).join(', '));
+    lines.push('Universales: ' + (p1.universales||[]).join(', '));
+    lines.push('');
+    lines.push('PRUEBA 2 · Teorías');
+    lines.push('Felicidad: '+(p2.uEval||'')+' — '+(p2.uJust||''));
+    lines.push('Deber: '+(p2.kEval||'')+' — '+(p2.kJust||''));
+    lines.push('Virtud: '+(p2.vEval||'')+' — '+(p2.vJust||''));
+    lines.push('Mejor enfoque: '+(p2.mejor||'')+' — '+(p2.mejorJust||''));
+    lines.push('');
+    lines.push('PRUEBA 3 · Propuesta');
+    lines.push('Acción: '+(p3.accion||''));
+    lines.push('Mini-argumento: '+(p3.argumento||''));
+
+    const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'informe_dilema_etico.txt';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  </script>
+</body>
+</html>

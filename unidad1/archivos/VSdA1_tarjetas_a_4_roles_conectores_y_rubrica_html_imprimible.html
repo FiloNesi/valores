@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Tarjetas A4 — Diálogo socrático (Roles, Conectores y Rúbrica)</title>
+  <style>
+    /* ====== PRINT SETUP ====== */
+    @page { size: A4; margin: 12mm; }
+    @media print {
+      body { background: white; margin: 0; }
+      .no-print { display: none !important; }
+      .card { box-shadow: none; }
+    }
+
+    /* ====== BASE ====== */
+    :root{
+      --ink:#111;
+      --muted:#555;
+      --line:#BFC3C7;
+      --accent:#0F62FE; /* usado solo en pantalla; en impresión queda gris oscuro */
+    }
+    html,body{height:100%;}
+    body{
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans","Liberation Sans",sans-serif;
+      line-height:1.35; color:var(--ink); background:#f7f7f8;
+    }
+    .wrap{ max-width: 210mm; margin: 0 auto; padding: 10mm; }
+    h1{ font-size: 18pt; margin: 0 0 6mm 0; }
+    .toolbar{ display:flex; gap:8px; align-items:center; justify-content:space-between; margin-bottom: 6mm; }
+    .btn{ border:1px solid var(--line); background:white; padding:6px 12px; border-radius:8px; cursor:pointer; font-size: 10pt; }
+    .btn:hover{ border-color:#999; }
+
+    /* ====== GRID ====== */
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+    .section-title{ grid-column:1/-1; font-size: 11pt; text-transform: uppercase; letter-spacing:.06em; color:var(--muted); margin: 2mm 0 0; }
+
+    /* ====== CARD ====== */
+    .card{ background:white; border:1px solid var(--line); border-radius:10px; padding:8mm; page-break-inside: avoid; }
+    .card h2{ font-size: 14pt; margin:0 0 2mm; }
+    .card h3{ font-size: 12pt; margin:3mm 0 1mm; }
+    .card p{ margin:0; }
+    .meta{ font-size:9pt; color:var(--muted); }
+    ul{ margin: 1.5mm 0 0 5mm; padding:0; }
+    li{ margin: 1.5mm 0; }
+    .hr{ border-top:1px solid var(--line); margin:3mm 0; }
+    .badge{ display:inline-block; border:1px solid var(--line); border-radius:999px; padding:1mm 4mm; font-size:9pt; font-weight:600; }
+    .tip{ font-size:10pt; color:#2f2f2f; }
+
+    /* ====== FORMS (for rubric) ====== */
+    .checkline{ display:flex; align-items:center; gap:3mm; margin: 2mm 0; }
+    .box{ width:12pt; height:12pt; border:1px solid #333; display:inline-block; }
+    .line{ border-bottom:1px solid var(--line); height:14pt; flex:1; }
+    .table{ width:100%; border-collapse: collapse; margin-top: 2mm; }
+    .table th,.table td{ border:1px solid #999; padding: 2mm; font-size: 10pt; text-align:left; }
+    .small{ font-size:10pt; color:var(--muted); }
+
+    /* ====== FOOTNOTE ====== */
+    footer{ grid-column:1/-1; font-size:9pt; color:var(--muted); text-align:center; margin-top: 4mm; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="toolbar no-print">
+      <h1>Tarjetas A4 — Diálogo socrático</h1>
+      <div>
+        <button class="btn" onclick="window.print()">Imprimir</button>
+      </div>
+    </div>
+
+    <!-- ===================== ROLES ===================== -->
+    <div class="grid">
+      <div class="section-title">Roles (recorta y reparte)</div>
+
+      <!-- Moderador/a -->
+      <section class="card" data-role="moderador">
+        <h2>Moderador/a del diálogo</h2>
+        <p class="meta">Misión: asegurar rigor, equidad y foco.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Abrir y leer la <strong>pregunta foco</strong>.</li>
+          <li>Repartir <strong>turnos de 60–90’’</strong> y cuidar «una idea por turno».</li>
+          <li>Pedir <strong>paráfrasis</strong> antes de discrepar.</li>
+          <li>Exigir <strong>razones y distinciones</strong> (no solo ejemplos).</li>
+          <li>Recordar normas y realizar <strong>microcierres</strong> cada 8–10’.</li>
+          <li>Invitar a <strong>voces poco oídas</strong> y cerrar hilos repetidos.</li>
+        </ul>
+        <h3>Frases útiles</h3>
+        <ul>
+          <li>“Si te entiendo, dices que… ¿es correcto?”</li>
+          <li>“¿Qué entiendes por <em>X</em>? Dame una <strong>definición breve</strong>.”</li>
+          <li>“¿Cuál es tu <strong>razón</strong>? ¿Hay un <strong>contraejemplo</strong>?”</li>
+          <li>“Propongo <strong>distinguir</strong> A de B… ¿Ayuda?”</li>
+          <li>“Cierro este hilo en 1’ y volvemos a la pregunta.”</li>
+        </ul>
+        <div class="hr"></div>
+        <p class="small"><span class="badge">Tip</span> Neutralidad: no opines, facilita el proceso.</p>
+      </section>
+
+      <!-- Cartógrafo/a -->
+      <section class="card" data-role="cartografo">
+        <h2>Cartógrafo/a</h2>
+        <p class="meta">Misión: hacer visible el pensamiento del grupo.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Dibujar el mapa: <strong>Tesis – Razones – Objeciones – Matices – Términos</strong>.</li>
+          <li>Usar flechas para conectar ideas relacionadas.</li>
+          <li>Anotar dudas o palabras que necesiten <strong>definición</strong>.</li>
+          <li>Leer una <strong>síntesis</strong> de 3–4 ideas al final.</li>
+        </ul>
+        <h3>Formato rápido</h3>
+        <ul>
+          <li>PREGUNTA → <em>Tesis</em> → <em>Razones</em> → <em>Objeciones</em> → <em>Matices/condiciones</em> → <em>Términos</em></li>
+        </ul>
+        <div class="hr"></div>
+        <p class="small"><span class="badge">Regla</span> No opines mientras cartografías.</p>
+      </section>
+
+      <!-- Guardián/a del tiempo -->
+      <section class="card" data-role="tiempo">
+        <h2>Guardián/a del tiempo</h2>
+        <p class="meta">Misión: ritmo claro y cierres a tiempo.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Cronometrar <strong>turnos de 60–90’’</strong>.</li>
+          <li>Avisar de <strong>microcierres</strong> cada 8–10’.</li>
+          <li>Señalar “<strong>2 minutos</strong> para concluir este punto”.</li>
+        </ul>
+        <h3>Frases útiles</h3>
+        <ul>
+          <li>“Quedan 20’’ para cerrar el turno.”</li>
+          <li>“Microcierre ahora: pasamos a razones/objeciones.”</li>
+        </ul>
+      </section>
+
+      <!-- Curador/a de preguntas -->
+      <section class="card" data-role="curador">
+        <h2>Curador/a de preguntas</h2>
+        <p class="meta">Misión: mantener la calidad del foco.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Recoger y mejorar <strong>preguntas filosóficas</strong> (abiertas, con razones).</li>
+          <li>Agrupar semejantes y seleccionar las 6–8 mejores para votar.</li>
+          <li>Comprobar que las intervenciones <strong>responden</strong> a la pregunta foco.</li>
+          <li>Proponer re-encuadres si el grupo se dispersa.</li>
+        </ul>
+        <h3>Criterios de buena pregunta</h3>
+        <ul>
+          <li>Abre un <strong>problema conceptual</strong>.</li>
+          <li>Obliga a <strong>dar razones</strong> y criterios.</li>
+          <li>Admite <strong>desacuerdo razonable</strong>.</li>
+        </ul>
+      </section>
+
+      <!-- Observador/a con rúbrica -->
+      <section class="card" data-role="observador">
+        <h2>Observador/a con rúbrica</h2>
+        <p class="meta">Misión: registrar evidencias, no opiniones sueltas.</p>
+        <div class="hr"></div>
+        <h3>Qué observar</h3>
+        <ul>
+          <li><strong>Definiciones</strong> de términos clave.</li>
+          <li><strong>Paráfrasis</strong> antes de discrepar.</li>
+          <li><strong>Razones</strong> y <strong>contraejemplos</strong>.</li>
+          <li><strong>Distinciones</strong> conceptuales relevantes.</li>
+          <li><strong>Participación distribuida</strong> (evitar monopolios).</li>
+        </ul>
+        <p class="tip">Interviene solo si el docente lo indica (p. ej., silla caliente).</p>
+      </section>
+
+      <!-- Portavoz de síntesis -->
+      <section class="card" data-role="portavoz">
+        <h2>Portavoz de síntesis</h2>
+        <p class="meta">Misión: cerrar con claridad en 90’’.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Leer 3–4 <strong>conclusiones provisionales</strong> del mapa.</li>
+          <li>Nombrar 1–2 <strong>preguntas abiertas</strong> para el seguimiento.</li>
+        </ul>
+      </section>
+
+      <!-- Secretario/a de evidencias -->
+      <section class="card" data-role="secretario">
+        <h2>Secretario/a de evidencias</h2>
+        <p class="meta">Misión: conservar los rastros del pensamiento.</p>
+        <div class="hr"></div>
+        <h3>Tus funciones</h3>
+        <ul>
+          <li>Fotografiar la pizarra/cartografía.</li>
+          <li>Recoger fichas y rúbricas; archivar.</li>
+          <li>Entregar al docente o subir al repositorio de clase.</li>
+        </ul>
+      </section>
+
+      <footer>— Fin de Roles —</footer>
+    </div>
+
+    <!-- ===================== CONECTORES ===================== -->
+    <div class="grid" style="margin-top:10mm;">
+      <div class="section-title">Conectores de pensamiento (proyectar o repartir)</div>
+
+      <section class="card" data-card="conectores-basicos">
+        <h2>Conectores básicos (decir en voz alta)</h2>
+        <ul>
+          <li><strong>Defino</strong> <em>X</em> como…</li>
+          <li><strong>Mi razón</strong> es…</li>
+          <li><strong>Un ejemplo</strong> que lo muestra es…</li>
+          <li><strong>Un contraejemplo</strong> sería…</li>
+          <li><strong>Parafraseo</strong> lo que dijo…: “_____”.</li>
+          <li><strong>Conecto</strong> con lo anterior: …</li>
+        </ul>
+        <div class="hr"></div>
+        <p class="small">Usa una idea por turno (60–90’’) y termina con «porque…».</p>
+      </section>
+
+      <section class="card" data-card="conectores-profundizar">
+        <h2>Conectores para profundizar</h2>
+        <ul>
+          <li><strong>Distingo</strong> A de B porque…</li>
+          <li><strong>La condición</strong> para que <em>X</em> sea <em>Y</em> es…</li>
+          <li><strong>El criterio</strong> para decidir entre A y B es…</li>
+          <li><strong>Infiero</strong> que… (a partir de…)</li>
+          <li><strong>Cuestiono el supuesto</strong> de…</li>
+          <li><strong>Reformulo</strong> la pregunta foco en…</li>
+        </ul>
+        <div class="hr"></div>
+        <p class="small">Recuerda: razones antes de ejemplos; precisión antes que slogans.</p>
+      </section>
+
+      <footer>— Fin de Conectores —</footer>
+    </div>
+
+    <!-- ===================== RÚBRICA OBSERVADOR ===================== -->
+    <div class="grid" style="margin-top:10mm;">
+      <div class="section-title">Rúbrica del observador (imprimible)</div>
+
+      <section class="card" data-card="rubrica-observador">
+        <h2>Rúbrica del observador/a</h2>
+        <div class="checkline">
+          <span class="small">Observador/a:</span><span class="line"></span>
+          <span class="small">Fecha:</span><span class="line"></span>
+        </div>
+        <div class="checkline">
+          <span class="small">Grupo:</span><span class="line"></span>
+          <span class="small">Pregunta foco:</span><span class="line"></span>
+        </div>
+        <div class="hr"></div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Indicador</th>
+              <th>0</th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Definiciones</strong> de términos clave</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><strong>Paráfrasis</strong> antes de discrepar</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><strong>Razones</strong> explícitas (no solo ejemplos)</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><strong>Contraejemplos</strong> y pruebas de estrés</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><strong>Distinciones</strong> conceptuales relevantes</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td><strong>Participación distribuida</strong> (evitar monopolios)</td>
+              <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:2mm;">Marca 0–3 según la frecuencia/calidad observada (0=nunca, 3=consistente y claro).</p>
+        <div class="hr"></div>
+        <h3>Conteo rápido (opcional)</h3>
+        <div class="checkline"><span class="small">Definiciones (nº):</span><span class="line"></span></div>
+        <div class="checkline"><span class="small">Contraejemplos (nº):</span><span class="line"></span></div>
+        <div class="checkline"><span class="small">Intervenciones totales:</span><span class="line"></span></div>
+        <div class="checkline"><span class="small">Voces distintas que hablaron:</span><span class="line"></span></div>
+        <div class="hr"></div>
+        <h3>Hallazgos (escribe 2–3 evidencias)</h3>
+        <div class="checkline"><span class="line"></span></div>
+        <div class="checkline"><span class="line"></span></div>
+        <div class="checkline"><span class="line"></span></div>
+      </section>
+
+      <section class="card" data-card="observador-foco">
+        <h2>Ficha de observador con foco</h2>
+        <p class="small">Elige 1 foco y registra evidencias concretas.</p>
+        <div class="hr"></div>
+        <ul>
+          <li><strong>Foco A — Definiciones:</strong> ¿Qué términos se definieron? ¿Cómo?</li>
+          <li><strong>Foco B — Razones:</strong> ¿Cuántas razones explícitas hubo? ¿Fueron pertinentes?</li>
+          <li><strong>Foco C — Contraejemplos:</strong> ¿Qué ejemplos pusieron a prueba las ideas?</li>
+          <li><strong>Foco D — Distinciones:</strong> ¿Qué distinciones aclararon el desacuerdo?</li>
+          <li><strong>Foco E — Equidad:</strong> ¿Quién habló? ¿Hubo invitación a voces poco oídas?</li>
+        </ul>
+        <div class="hr"></div>
+        <h3>Notas</h3>
+        <div class="checkline"><span class="line"></span></div>
+        <div class="checkline"><span class="line"></span></div>
+        <div class="checkline"><span class="line"></span></div>
+      </section>
+
+      <footer>— Fin de Rúbrica —</footer>
+    </div>
+
+  </div>
+</body>
+</html>

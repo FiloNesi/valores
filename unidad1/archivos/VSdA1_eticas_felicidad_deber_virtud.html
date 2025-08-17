@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Éticas: felicidad, deber y virtud</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffaf0;
+      color: #333;
+      padding: 40px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #4b2e83;
+    }
+    .etica {
+      background-color: #f0f0ff;
+      border-left: 8px solid #4b2e83;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 6px;
+      display: none;
+    }
+    .etica img {
+      max-width: 100px;
+      float: right;
+      margin-left: 15px;
+    }
+    .boton {
+      background-color: #4b2e83;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .boton:hover {
+      background-color: #3a226b;
+    }
+    .subcontenido {
+      background-color: #fff0f5;
+      border-left: 8px solid #d6336c;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
+  <script>
+    function mostrarEtica(id) {
+      const bloques = document.querySelectorAll('.etica');
+      bloques.forEach(b => b.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+    function toggleSubcontenido(id) {
+      const sc = document.getElementById(id);
+      sc.style.display = sc.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</head>
+<body>
+  <h1>Éticas Filosóficas</h1>
+  <h2>Interactivo: Felicidad, Deber y Virtud</h2>
+
+  <div style="text-align:center">
+    <button class="boton" onclick="mostrarEtica('felicidad')">Ética de la Virtud</button>
+    <button class="boton" onclick="mostrarEtica('deber')">Ética del Deber</button>
+    <button class="boton" onclick="mostrarEtica('virtud')">Ética de la Felicidad</button>
+  </div>
+
+  <div id="felicidad" class="etica">
+    <img src="https://imagenes/aristoteles.jpg" alt="Aristóteles">
+    <h3>Ética de la Virtud</h3>
+    <p><strong>Principio:</strong> Una acción es moral si refleja las virtudes del ser humano (valentía, justicia, templanza...).</p>
+    <p><strong>Autores:</strong> Aristóteles, Tomás de Aquino.</p>
+    <p><strong>Ejemplo:</strong> Ayudo a alguien sin esperar nada a cambio porque quiero ser una persona generosa.</p>
+    <button class="boton" onclick="toggleSubcontenido('felicidadInfo')">+ ¿Por qué necesitamos ser felices?</button>
+    <div id="felicidadInfo" class="subcontenido">
+      <h3>¿Por qué necesitamos ser felices?</h3>
+      <p><strong>Prácticamente todo lo que hacemos, lo hacemos para ser felices.</strong> La felicidad se puede definir como el <em>estado de satisfacción personal</em> y de plenitud que alcanzamos al lograr algo que nos produce bienestar y alegría, como tener buenos amigos, estar sanos...; que nos gustaría que durase para siempre y que nos permite <em>disfrutar de aquello que nos parece verdaderamente valioso</em>.</p>
+      <p><strong>1. ¿Crees que puede haber diferentes modos de entender la felicidad? Justifica tu respuesta.</strong></p>
+      <p>Para conseguir la felicidad personal necesitamos vivir en un ambiente que no la impida y, a ser posible, que la facilite. Es decir, vivir en una sociedad feliz. Quienes viven en un país muy pobre, o muy inseguro, van a tener más dificultades para ser felices.</p>
+      <p>Según el pensador griego Aristóteles, la finalidad del ser humano consiste en ser feliz. Pero alcanzar la felicidad requiere comportarse de forma virtuosa, lo cual consiste en lograr el justo medio entre dos situaciones extremas.</p>
+    </div>
+  </div>
+
+  <div id="deber" class="etica">
+    <img src="https://imagenes/kant.jpg" alt="Kant">
+    <h3>Ética del Deber (Deontológica)</h3>
+    <p><strong>Principio:</strong> Una acción es moral si se hace por deber, sin importar las consecuencias.</p>
+    <p><strong>Autor:</strong> Immanuel Kant.</p>
+    <p><strong>Ejemplo:</strong> Digo la verdad aunque eso pueda causarme problemas, porque es lo correcto.</p>
+    <button class="boton" onclick="toggleSubcontenido('deberInfo')">+ ¿Qué proponía Kant?</button>
+    <div id="deberInfo" class="subcontenido">
+      <h3>¿Qué proponía Kant?</h3>
+      <p><strong>Immanuel Kant</strong>, un importante filósofo de la Ilustración (s. XVIII), creía que el criterio moral no debía buscarse fuera del ser humano, como la felicidad, sino en su interior, en su conciencia moral.</p>
+      <p>Según él, cada uno podía entender por buenas y justas conductas diferentes, lo que da lugar a conflictos. Así, según Kant, es preciso sentar las bases de una ética universal. Para ello, debemos servirnos de la <strong>razón práctica</strong>, que es el uso de la razón para determinar lo justo y bueno.</p>
+      <p>La razón práctica debe encontrar un criterio o ley moral que pueda tener validez universal, que sea <strong>categórico</strong>, es decir, que no esté sujeto a decisiones individuales.</p>
+    </div>
+  </div>
+
+
+  <div id="virtud" class="etica">
+    <img src="https://imagenes/epicuro.jpg" alt="Epicuro">
+    <h3>Ética de la Felicidad (Consecuencialista)</h3>
+    <p><strong>Principio:</strong> Una acción es moral si nos ayuda a alcanzar la felicidad (placer, utilidad) y nos ayuda a evitar el dolor.</p>
+    <p><strong>Autores:</strong> Epicuro, Bentham, Stuart Mill.</p>
+    <p><strong>Ejemplo:</strong> Compartir lo que tengo porque eso me hace sentir bien y mejora el bienestar de los demás.</p>
+    <button class="boton" onclick="toggleSubcontenido('virtudInfo')">+ ¿Qué decía Epicuro?</button>
+    <div id="virtudInfo" class="subcontenido">
+      <h3>¿Qué decía Epicuro?</h3>
+      <p><strong>Epicuro</strong> consideraba que la felicidad consiste en el placer. La búsqueda del placer es el fin fundamental de la vida. Se trata de un placer equilibrado, porque si te excedes en los placeres, puedes sufrir consecuencias negativas. Y para alcanzar ese equilibrio, es mejor centrarse en los aspectos positivos de nuestra vida que preocuparse por cosas que no tienen solución.</p>
+      <p><em>Epicuro afirmó:</em> "No es posible vivir feliz si no se lleva una vida bella, justa y virtuosa; ni llevar una vida bella, justa y virtuosa sin ser feliz."</p>
+    </div>
+  </div>
+
+<div style="text-align:center; margin-top: 40px;">
+  <button class="boton" style="background-color: #d6336c;" onclick="document.getElementById('modalReflexion').style.display='block'">Reflexiona</button>
+</div>
+
+<div id="modalReflexion" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); z-index:1000;">
+  <div style="background:white; margin:5% auto; padding:20px; width:80%; border-radius:10px; position:relative;">
+    <span style="position:absolute; top:10px; right:20px; font-size:20px; cursor:pointer;" onclick="document.getElementById('modalReflexion').style.display='none'">&times;</span>
+    <h2>Reflexiona</h2>
+    <p>Lee las siguientes acciones y justifica según cada una de las tres teorías éticas. Pon las respuestas en común con el resto de los compañeros de clase. ¿Qué relación hay entre mi felicidad y la felicidad de los demás?</p>
+    <ul>
+      <li>a. Pagar impuestos.</li>
+      <li>b. Comprar ropa hecha en fábricas que vulneran los derechos humanos.</li>
+      <li>c. Escuchar música en el transporte público sin utilizar auriculares.</li>
+      <li>d. Participar en una acción de recogida de residuos en un entorno natural.</li>
+    </ul>
+  </div>
+</div>
+
+
+</html>
