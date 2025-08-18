@@ -1,61 +1,344 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Ficha de Actividad: La lluvia de millones</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ficha de actividad · La lluvia de millones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .seccion {
-      margin-bottom: 25px;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    .preguntas {
-      background-color: #f2f2f2;
-      padding: 15px;
-      border-radius: 8px;
-    }
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#22d3ee; --accent2:#a78bfa; --accent3:#10b981 }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(167,139,250,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} header{border:0} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
   </style>
 </head>
 <body>
-  <h1>Ficha de Actividad</h1>
-  <h2>"La lluvia de millones"</h2>
+  <!-- Header / Navbar -->
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14" aria-label="Navegación principal">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Filo<span class="text-cyan-300">Lab</span> · Actividad</a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#descripcion" class="hover:text-cyan-300">Descripción</a>
+        <a href="#familia" class="hover:text-cyan-300">Mi familia</a>
+        <a href="#escritura" class="hover:text-cyan-300">Escritura (5')</a>
+        <a href="#grupo" class="hover:text-cyan-300">En grupo</a>
+        <a href="#debate" class="hover:text-cyan-300">Debate</a>
+        <a href="#export" class="hover:text-cyan-300">Exportar</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+        <button id="btnImprimir" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition">Imprimir</button>
+      </div>
+    </nav>
+  </header>
 
-  <div class="seccion">
-    <strong>Descripción del juego:</strong>
-    <p>Imagina que a cada miembro de tu familia le toca un premio de un millón de euros por cada año que tiene. Por ejemplo, si tu madre tiene 40 años, le tocan 40 millones; si tú tienes 13, te tocan 13 millones. Toma papel y bolígrafo y escribe qué hará, según tu parecer, cada miembro de tu familia con el dinero que le ha tocado.</p>
-  </div>
+  <main id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <!-- Hero -->
+    <section id="descripcion" class="glass rounded-3xl p-6 ring-a">
+      <h1 class="text-2xl md:text-3xl font-extrabold">Ficha de actividad — <span class="text-cyan-300">«La lluvia de millones»</span></h1>
+      <p class="text-slate-300 mt-1">Imagina que a cada miembro de tu familia le toca un premio de <strong>1 millón de euros por cada año que tiene</strong>. Si tu madre tiene 40 años, le tocan 40 millones; si tú tienes 13, te tocan 13 millones.</p>
+      <p class="text-slate-300 mt-2">Toma papel y bolígrafo (o escribe aquí) qué hará, según tu parecer, cada miembro de tu familia con el dinero.</p>
+      <div class="mt-3 text-sm text-slate-400">Instrucciones: (1) 5 minutos de escritura individual · (2) Grupo de 4 para compartir · (3) Debate guiado en clase.</div>
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <button id="btnStart5" class="px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Crono 05:00</button>
+        <span id="visor5" class="tabular-nums">05:00</span>
+        <button id="btnReset5" class="px-3 py-1.5 rounded-lg glass hover:ring-a">Reset</button>
+      </div>
+    </section>
 
-  <div class="seccion">
-    <strong>Instrucciones:</strong>
-    <ol>
-      <li>Dedica 5 minutos a escribir lo que hará cada miembro de tu familia con el dinero.</li>
-      <li>Forma un grupo de cuatro compañeros y compartid vuestras historias.</li>
-      <li>Participa en el debate guiado que hará el profesor/a.</li>
-    </ol>
-  </div>
+    <!-- Mi familia -->
+    <section id="familia" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Mi familia</h2>
+      <p class="text-slate-300 text-sm">Añade a tus familiares con su edad. El sistema calcula el <em>premio</em> (edad × 1 millón). Escribe qué crees que haría cada persona con su dinero.</p>
 
-  <div class="seccion preguntas">
-    <strong>Preguntas para el debate:</strong>
-    <ul>
-      <li>¿Me ha gustado el juego? ¿Cómo me he sentido?</li>
-      <li>¿Qué momento me ha gustado más? ¿Me he sentido triste en algún momento?</li>
-      <li>¿Cómo he usado el dinero que me ha tocado? ¿He pensado en los demás o solo en mí?</li>
-      <li>¿Qué han hecho los demás miembros de mi familia con su dinero?</li>
-      <li>¿Mi familia tiene suficiente dinero? ¿Tenemos problemas económicos?</li>
-      <li>¿Quién trae el dinero a casa? ¿Se habla mucho del dinero?</li>
-      <li>¿Es importante el dinero para mí?</li>
-    </ul>
-  </div>
+      <div class="grid md:grid-cols-4 gap-3 mt-3">
+        <label class="block">Nombre
+          <input id="fNombre" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Ej.: madre, Ana...">
+        </label>
+        <label class="block">Edad (años)
+          <input id="fEdad" type="number" min="0" max="120" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Ej.: 40">
+        </label>
+        <label class="block">Relación
+          <input id="fRelacion" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="madre, padre, yo, hermana...">
+        </label>
+        <div class="flex items-end">
+          <button id="btnAdd" class="w-full px-3 py-2 rounded-xl bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Añadir</button>
+        </div>
+      </div>
 
+      <div class="mt-4 overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead>
+            <tr class="text-left text-slate-300">
+              <th class="py-2 pr-3">Nombre</th>
+              <th class="py-2 pr-3">Relación</th>
+              <th class="py-2 pr-3">Edad</th>
+              <th class="py-2 pr-3">Premio (millones €)</th>
+              <th class="py-2 pr-3">¿Qué hará con su dinero?</th>
+              <th class="py-2 pr-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla" class="text-slate-100"></tbody>
+        </table>
+      </div>
 
+      <div class="mt-3 grid md:grid-cols-3 gap-3">
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Total familiar</div>
+          <div id="totalPremio" class="text-3xl font-extrabold">0 M€</div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Media por persona</div>
+          <div id="mediaPremio" class="text-3xl font-extrabold">0 M€</div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Nº de miembros</div>
+          <div id="numMiembros" class="text-3xl font-extrabold">0</div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Escritura individual -->
+    <section id="escritura" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Escritura individual (5')</h2>
+      <p class="text-slate-300 text-sm">Escribe tu historia en 8–12 líneas. Puedes copiar/pegar lo de la tabla o ampliar detalles.</p>
+      <textarea id="historia" rows="6" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Ej.: Mi madre (40 M€) donaría parte a... Yo (13 M€) ahorraría para..."></textarea>
+    </section>
+
+    <!-- Trabajo en grupo -->
+    <section id="grupo" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">En grupo (compartir)</h2>
+      <div class="grid md:grid-cols-2 gap-4 mt-2">
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Resumen del grupo (3–5 líneas)</h3>
+          <textarea id="resumenGrupo" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Coincidencias/diferencias, decisiones llamativas..."></textarea>
+        </article>
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Acuerdos / Desacuerdos</h3>
+          <textarea id="acuerdos" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="¿En qué coincidimos? ¿En qué no?"></textarea>
+        </article>
+      </div>
+    </section>
+
+    <!-- Debate guiado -->
+    <section id="debate" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Debate guiado</h2>
+      <div class="grid md:grid-cols-2 gap-4 mt-2">
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Autopercepción</h3>
+          <div class="mt-2 space-y-2 text-sm">
+            <label class="block">¿Me ha gustado el juego? ¿Cómo me he sentido?
+              <input id="q1" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+            <label class="block">¿Qué momento me ha gustado más? ¿Me he sentido triste en algún momento?
+              <input id="q2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+            <label class="block">¿Cómo he usado el dinero? ¿He pensado en los demás o solo en mí?
+              <input id="q3" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+          </div>
+        </article>
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Familia y valores</h3>
+          <div class="mt-2 space-y-2 text-sm">
+            <label class="block">¿Qué han hecho los demás miembros de mi familia con su dinero?
+              <input id="q4" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+            <label class="block">¿Mi familia tiene suficiente dinero? ¿Tenemos problemas económicos?
+              <input id="q5" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+            <label class="block">¿Quién trae el dinero a casa? ¿Se habla mucho del dinero?
+              <input id="q6" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+            <label class="block">¿Es importante el dinero para mí?
+              <input id="q7" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            </label>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-4 grid md:grid-cols-3 gap-3">
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Mi emoción principal</div>
+          <select id="emocion" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+            <option>Curiosidad</option>
+            <option>Alegría</option>
+            <option>Tristeza</option>
+            <option>Sorpresa</option>
+            <option>Injusticia</option>
+            <option>Esperanza</option>
+          </select>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Pensé más en…</div>
+          <div class="mt-2 space-y-1 text-sm">
+            <label class="flex items-center gap-2"><input type="radio" name="foco" value="mi"> En mí</label>
+            <label class="flex items-center gap-2"><input type="radio" name="foco" value="familia"> En mi familia</label>
+            <label class="flex items-center gap-2"><input type="radio" name="foco" value="comunidad"> En la comunidad / sociedad</label>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">¿Donaría parte del dinero?</div>
+          <input id="donacion" type="range" min="0" max="100" value="10" class="mt-2 w-full">
+          <div class="text-sm mt-1"><span id="donacionVal">10</span>%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exportar / Vista previa -->
+    <section id="export" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Vista previa y exportación</h2>
+      <pre id="preview" class="mt-2 whitespace-pre-wrap text-slate-200 text-sm"></pre>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <button id="btnExport" class="px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Exportar .txt</button>
+        <button id="btnReset" class="px-3 py-1.5 rounded-lg glass hover:ring-a">Reiniciar ficha</button>
+      </div>
+      <p class="text-xs text-slate-400 mt-2">Privacidad: todo se guarda en este dispositivo (<em>localStorage</em>).</p>
+    </section>
+  </main>
+
+  <!-- Ayuda -->
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200 text-sm">
+        <p>1) Añade familiares y edades; el premio se calcula automáticamente (edad × 1M€).</p>
+        <p>2) Usa el <strong>Crono 05:00</strong> para la escritura individual.</p>
+        <p>3) Completa el resto y <strong>exporta .txt</strong> o <strong>imprime</strong>.</p>
+        <p>Atajo: <span class="kbd">?</span> abre/cierra esta ayuda.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">Hecho con 💬 y 🧠 para pensar en común.</footer>
+
+  <script>
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const store = {
+    get(k, def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
+    set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+  }
+
+  // ===== Crono 5 min =====
+  let t5=null, remain5=300;
+  function fmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0') }
+  function reset5(){ remain5=300; $('#visor5').textContent = fmt(remain5) }
+  reset5();
+  $('#btnStart5').addEventListener('click', ()=>{
+    if(t5){ clearInterval(t5); t5=null; $('#btnStart5').textContent='Crono 05:00'; reset5(); return }
+    $('#btnStart5').textContent='Detener';
+    t5=setInterval(()=>{ remain5--; $('#visor5').textContent=fmt(remain5); if(remain5<=0){ clearInterval(t5); t5=null; $('#btnStart5').textContent='Crono 05:00'; alert('⏰ ¡Tiempo!') } },1000);
+  });
+  $('#btnReset5').addEventListener('click', ()=>{ if(t5){ clearInterval(t5); t5=null } reset5() });
+
+  // ===== Tabla familia =====
+  const datos = store.get('lluvia.datos', { miembros:[], historia:'', resumenGrupo:'', acuerdos:'', q1:'', q2:'', q3:'', q4:'', q5:'', q6:'', q7:'', emocion:'Curiosidad', foco:'', donacion:10 });
+
+  function renderTabla(){
+    const tb = $('#tabla'); tb.innerHTML='';
+    datos.miembros.forEach((m,i)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="py-2 pr-3">${m.nombre}</td>
+        <td class="py-2 pr-3">${m.relacion}</td>
+        <td class="py-2 pr-3">${m.edad}</td>
+        <td class="py-2 pr-3">${m.edad}</td>
+        <td class="py-2 pr-3 w-[400px]"><textarea data-i="${i}" class="w-full rounded-md bg-white/10 border border-white/10 p-2" rows="2">${m.plan||''}</textarea></td>
+        <td class="py-2 pr-3"><button data-del="${i}" class="px-2 py-1 rounded-md bg-red-500/20 hover:bg-red-500/30">Eliminar</button></td>`;
+      tb.appendChild(tr);
+    });
+    // bind plan edits
+    $$('#tabla textarea').forEach(tx=>tx.addEventListener('input', e=>{ const i=+e.target.dataset.i; datos.miembros[i].plan = e.target.value; save(); renderPreview(); }));
+    // bind delete
+    $$('#tabla [data-del]').forEach(b=>b.addEventListener('click', e=>{ const i=+e.target.dataset.del; datos.miembros.splice(i,1); save(); renderTabla(); renderResumen(); renderPreview(); }));
+    renderResumen();
+  }
+
+  function renderResumen(){
+    const n = datos.miembros.length;
+    const total = datos.miembros.reduce((a,m)=>a+(+m.edad||0),0);
+    $('#numMiembros').textContent = n;
+    $('#totalPremio').textContent = total + ' M€';
+    $('#mediaPremio').textContent = (n? (total/n).toFixed(1):0) + ' M€';
+  }
+
+  function addMiembro(){
+    const nombre = $('#fNombre').value.trim();
+    const edad = parseInt($('#fEdad').value,10);
+    const relacion = $('#fRelacion').value.trim();
+    if(!nombre || isNaN(edad) || edad<0){ alert('Añade un nombre y una edad válida'); return }
+    datos.miembros.push({ nombre, edad, relacion, plan:'' });
+    $('#fNombre').value=''; $('#fEdad').value=''; $('#fRelacion').value='';
+    save(); renderTabla(); renderPreview();
+  }
+  $('#btnAdd').addEventListener('click', addMiembro);
+
+  // ===== Inputs varios =====
+  function bindInput(id, key){ const el=$(id); if(!el) return; el.addEventListener('input', ()=>{ datos[key]= el.type==='range'? +el.value : el.value; if(key==='donacion'){ $('#donacionVal').textContent=el.value } save(); renderPreview(); }); if(datos[key]!=null){ el.value = datos[key]; if(key==='donacion') $('#donacionVal').textContent=datos[key]; } }
+  bindInput('#historia','historia');
+  bindInput('#resumenGrupo','resumenGrupo');
+  bindInput('#acuerdos','acuerdos');
+  ['#q1','#q2','#q3','#q4','#q5','#q6','#q7'].forEach((sel,i)=>bindInput(sel, 'q'+(i+1)));
+  bindInput('#donacion','donacion');
+  if(datos.emocion) $('#emocion').value = datos.emocion; $('#emocion').addEventListener('change', ()=>{ datos.emocion=$('#emocion').value; save(); renderPreview(); });
+  if(datos.foco){ $$('input[name="foco"]').forEach(r=>r.checked = r.value===datos.foco) }
+  $$('input[name="foco"]').forEach(r=>r.addEventListener('change', ()=>{ datos.foco=r.value; save(); renderPreview(); }));
+
+  // ===== Persistencia =====
+  function save(){ store.set('lluvia.datos', datos) }
+
+  // ===== Vista previa / export =====
+  function renderPreview(){
+    const lines = [];
+    lines.push('FICHA DE ACTIVIDAD — La lluvia de millones');
+    lines.push('');
+    lines.push('MI FAMILIA:');
+    if(datos.miembros.length===0){ lines.push('(sin miembros añadidos)') }
+    datos.miembros.forEach(m=>{ lines.push(`- ${m.nombre} (${m.relacion}), ${m.edad} M€ — ${m.plan||''}`) });
+    const total = datos.miembros.reduce((a,m)=>a+(+m.edad||0),0);
+    const media = datos.miembros.length? (total/datos.miembros.length).toFixed(1):0;
+    lines.push(`Total: ${total} M€ · Media: ${media} M€`);
+    lines.push('');
+    lines.push('HISTORIA (individual):');
+    lines.push(datos.historia||'');
+    lines.push('');
+    lines.push('GRUPO — Resumen:');
+    lines.push(datos.resumenGrupo||'');
+    lines.push('GRUPO — Acuerdos/Desacuerdos:');
+    lines.push(datos.acuerdos||'');
+    lines.push('');
+    lines.push('DEBATE:');
+    ['q1','q2','q3','q4','q5','q6','q7'].forEach((k,i)=>{ lines.push(`${i+1}) ${datos[k]||''}`) });
+    lines.push(`Emoción: ${datos.emocion||''} · Foco: ${datos.foco||''} · Donación: ${datos.donacion||0}%`);
+    $('#preview').textContent = lines.join('\n');
+  }
+
+  $('#btnExport').addEventListener('click', ()=>{
+    const blob = new Blob([$('#preview').textContent||'' ], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'ficha_lluvia_de_millones.txt'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  $('#btnReset').addEventListener('click', ()=>{ localStorage.removeItem('lluvia.datos'); location.reload() });
+  $('#btnImprimir').addEventListener('click', ()=>window.print());
+  $('#btnAyuda').addEventListener('click', ()=>$('#modalAyuda').showModal());
+  window.addEventListener('keydown', e=>{ if(e.key==='?'){ const m=$('#modalAyuda'); m.open? m.close(): m.showModal() } });
+
+  // Inicial
+  renderTabla();
+  renderPreview();
+  </script>
 </body>
 </html>
