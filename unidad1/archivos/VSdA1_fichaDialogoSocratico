@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ficha del alumnado · Diálogo socrático — Libertad y decisión</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#22d3ee; --accent2:#a78bfa }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(167,139,250,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    .grid-col{display:grid; grid-template-columns:1fr; gap:.75rem}
+    @media (min-width:640px){ .grid-col{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} header{border:0} .section{break-inside:avoid} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+    textarea{resize:vertical}
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14" aria-label="Navegación principal">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Filo<span class="text-cyan-300">Lab</span> · Ficha Socrática</a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#datos" class="hover:text-cyan-300">0) Datos</a>
+        <a href="#bucay" class="hover:text-cyan-300">1) Cuento</a>
+        <a href="#pregunta" class="hover:text-cyan-300">2) Pregunta</a>
+        <a href="#definir" class="hover:text-cyan-300">3) Definir</a>
+        <a href="#postura" class="hover:text-cyan-300">4–6) Debate</a>
+        <a href="#condiciones" class="hover:text-cyan-300">7) Condiciones</a>
+        <a href="#sintesis" class="hover:text-cyan-300">8) Síntesis</a>
+        <a href="#autoeval" class="hover:text-cyan-300">9) Autoeval</a>
+        <a href="#compromiso" class="hover:text-cyan-300">10) Compromiso</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+        <button id="btnExport" class="no-print px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200 transition">Exportar .txt</button>
+        <button onclick="window.print()" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition">Imprimir</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <section class="glass rounded-3xl p-6 ring-a section" id="contexto">
+      <h1 class="text-2xl md:text-3xl font-extrabold">FICHA DEL ALUMNADO · DIÁLOGO SOCRÁTICO</h1>
+      <p class="text-slate-300 mt-1">Tema: <strong>La libertad como posibilidad de decidir (base de la conducta moral)</strong> · Curso: <strong>2.º ESO</strong></p>
+      <p class="text-slate-400 mt-2">Instrucciones: Completa cada apartado durante el proceso. Usa frases breves y claras. Cuando hables, utiliza conectores: “Defino…”, “Mi razón es…”, “Un contraejemplo sería…”, “Distingo…”.</p>
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <button class="px-2 py-1 rounded-md glass" data-insert="#preguntaTxt" data-text="¿Basta con querer para decir que una decisión es libre?">Sugerir pregunta 1</button>
+        <button class="px-2 py-1 rounded-md glass" data-insert="#preguntaTxt" data-text="¿Se puede ser responsable sin libertad real de elegir?">Sugerir pregunta 2</button>
+        <button class="px-2 py-1 rounded-md glass" data-insert="#argumento" data-text="Yo sostengo que..., porque..., además..., aunque podría objetarse que..., respondo que...">Plantilla argumento</button>
+      </div>
+    </section>
+
+    <!-- 0) Datos -->
+    <section class="glass rounded-3xl p-6 section" id="datos">
+      <h2 class="text-xl font-bold">0) Datos</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+        <label class="block">Nombre
+          <input id="nombre" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Nombre y apellidos">
+        </label>
+        <label class="block">Fecha
+          <input id="fecha" type="date" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+        </label>
+        <label class="block">Grupo
+          <input id="grupo" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="2º ESO C...">
+        </label>
+      </div>
+    </section>
+
+    <!-- 1) Bucay -->
+    <section class="glass rounded-3xl p-6 section" id="bucay">
+      <h2 class="text-xl font-bold">1) Escucha o lee el cuento “Autodependencia” de Jorge Bucay</h2>
+      <div class="grid-col mt-3">
+        <div>
+          <label class="block font-medium">Palabras clave (máx. 3)</label>
+          <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <input id="kw1" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1)" maxlength="18">
+            <input id="kw2" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="2)" maxlength="18">
+            <input id="kw3" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="3)" maxlength="18">
+          </div>
+        </div>
+        <div>
+          <label class="block font-medium">¿Qué conflicto de decisión aparece? (1–2 frases)</label>
+          <textarea id="conflicto" rows="2" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="➙"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) Pregunta filosófica -->
+    <section class="glass rounded-3xl p-6 section" id="pregunta">
+      <h2 class="text-xl font-bold">2) Mi pregunta filosófica (tras escuchar/leer)</h2>
+      <p class="text-slate-300 text-sm">Escribe una pregunta abierta (pide definir/distinguir o razones).</p>
+      <textarea id="preguntaTxt" rows="2" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="➙"></textarea>
+    </section>
+
+    <!-- 3) Definir -->
+    <section class="glass rounded-3xl p-6 section" id="definir">
+      <h2 class="text-xl font-bold">3) Definir para pensar mejor</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+        <label class="block">Libertad
+          <input id="defLibertad" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1 frase">
+        </label>
+        <label class="block">Decidir
+          <input id="defDecidir" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1 frase">
+        </label>
+        <label class="block">Presión/Coacción
+          <input id="defCoac" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1 frase">
+        </label>
+        <label class="block">Interdependencia (elegida)
+          <input id="defInter" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1 frase">
+        </label>
+        <label class="block md:col-span-2">Responsabilidad
+          <input id="defResp" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1 frase">
+        </label>
+      </div>
+    </section>
+
+    <!-- 4) Postura -->
+    <section class="glass rounded-3xl p-6 section" id="postura">
+      <h2 class="text-xl font-bold">4) Mi postura inicial</h2>
+      <fieldset class="mt-2 space-y-1">
+        <label class="flex items-center gap-2"><input type="radio" name="postura" value="A"> A. Ser libre es hacer lo que quiero.</label>
+        <label class="flex items-center gap-2"><input type="radio" name="postura" value="B"> B. Ser libre es poder decidir entre opciones con razones y asumir consecuencias.</label>
+        <label class="flex items-center gap-2"><input type="radio" name="postura" value="C"> C. Otra: <input id="posturaC" class="rounded-md bg-white/10 border border-white/10 p-1" placeholder="Especifica"></label>
+      </fieldset>
+      <label class="block font-medium mt-3">¿Por qué? (tu mejor razón)</label>
+      <textarea id="posturaRazon" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+    </section>
+
+    <!-- 5) Razones, ejemplos, contraejemplos -->
+    <section class="glass rounded-3xl p-6 section" id="razones">
+      <h2 class="text-xl font-bold">5) Razones, ejemplos y contraejemplos</h2>
+      <div class="grid-col mt-3">
+        <label class="block">Mi mejor razón a favor
+          <input id="r1" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+        </label>
+        <label class="block">Una segunda razón (opcional)
+          <input id="r2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+        </label>
+        <label class="block">Ejemplo que ilustra mi idea
+          <textarea id="ejemplo" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </label>
+        <label class="block">Contraejemplo (pone a prueba mi idea)
+          <textarea id="contra" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </label>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <span class="text-slate-400">Conectores:</span>
+        <button class="px-2 py-1 rounded-md glass" data-insert="#r1" data-text="Mi razón es...">Mi razón es…</button>
+        <button class="px-2 py-1 rounded-md glass" data-insert="#r1" data-text="Distingo...">Distingo…</button>
+        <button class="px-2 py-1 rounded-md glass" data-insert="#contra" data-text="Un contraejemplo sería...">Contraejemplo…</button>
+      </div>
+    </section>
+
+    <!-- 6) Durante el diálogo -->
+    <section class="glass rounded-3xl p-6 section" id="durante">
+      <h2 class="text-xl font-bold">6) Durante el diálogo (registro rápido)</h2>
+      <div class="grid md:grid-cols-2 gap-3 mt-3">
+        <div>
+          <label class="block">De <input id="ajeno1n" class="rounded-md bg-white/10 border border-white/10 p-1 w-40" placeholder="Nombre"> me hizo pensar…</label>
+          <textarea id="ajeno1" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </div>
+        <div>
+          <label class="block">De <input id="ajeno2n" class="rounded-md bg-white/10 border border-white/10 p-1 w-40" placeholder="Nombre"> me hizo pensar…</label>
+          <textarea id="ajeno2" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </div>
+      </div>
+      <label class="block font-medium mt-3">Distinción útil que apareció</label>
+      <input id="distincion" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="p. ej., querer/decidir; presión interna/externa">
+      <label class="block font-medium mt-3">Pregunta que quedó abierta en el grupo</label>
+      <input id="pregAbierta" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2">
+
+      <div class="mt-4 glass rounded-2xl p-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <label class="block">Crono por turno
+            <select id="turnoSeg" class="mt-1 rounded-lg bg-white/10 border border-white/10 p-2">
+              <option value="60">60 s</option>
+              <option value="75">75 s</option>
+              <option value="90" selected>90 s</option>
+            </select>
+          </label>
+          <button id="btnTurno" class="px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Iniciar turno</button>
+          <span id="visor" class="tabular-nums text-2xl">01:30</span>
+        </div>
+        <p class="text-sm text-slate-400 mt-2">Consejo: ofrece una sola idea por turno y termina con “porque…”.</p>
+      </div>
+    </section>
+
+    <!-- 7) Condiciones -->
+    <section class="glass rounded-3xl p-6 section" id="condiciones">
+      <h2 class="text-xl font-bold">7) Condiciones para decir “esta decisión fue libre”</h2>
+      <div id="conds" class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <label class="flex items-start gap-2"><input type="checkbox" value="info"> <span>Información suficiente sobre opciones y consecuencias.</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="coaccion-ext"> <span>Ausencia de coacción externa (nadie obliga/amenaza).</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="control-impulsos"> <span>Control de impulsos (no solo apetito del momento).</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="deliberacion"> <span>Deliberación (pensar antes de actuar).</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="alternativas"> <span>Alternativas reales (hay al menos dos caminos viables).</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="decir-no"> <span>Posibilidad de decir “no”.</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="coherencia"> <span>Coherencia con mis valores/compromisos.</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="asumo"> <span>Asumo consecuencias de mi elección.</span></label>
+        <label class="flex items-start gap-2"><input type="checkbox" value="interdependencia"> <span>Interdependencia elegida (pedir ayuda porque yo lo decido).</span></label>
+      </div>
+      <label class="block font-medium mt-3">Otras (escribe)</label>
+      <input id="condOtras" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Añade condiciones propias">
+    </section>
+
+    <!-- 8) Síntesis -->
+    <section class="glass rounded-3xl p-6 section" id="sintesis">
+      <h2 class="text-xl font-bold">8) Síntesis personal</h2>
+      <p class="text-slate-300 text-sm">Escribe en 4–6 líneas. Completa: “Una decisión es libre si…”</p>
+      <textarea id="sintesisTxt" rows="4" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+    </section>
+
+    <!-- 9) Autoevaluación -->
+    <section class="glass rounded-3xl p-6 section" id="autoeval">
+      <h2 class="text-xl font-bold">9) Autoevaluación (0–3)</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm mt-3">
+          <thead>
+            <tr class="text-left text-slate-300">
+              <th class="py-2 pr-4">Criterio</th>
+              <th class="py-2 pr-4">0</th>
+              <th class="py-2 pr-4">1</th>
+              <th class="py-2 pr-4">2</th>
+              <th class="py-2 pr-4">3</th>
+            </tr>
+          </thead>
+          <tbody id="rubrica" class="text-slate-100">
+            <tr>
+              <td class="py-2 pr-4">Escucha (no interrumpí, parafraseé antes de discrepar)</td>
+              <td><input type="radio" name="escucha" value="0"></td>
+              <td><input type="radio" name="escucha" value="1"></td>
+              <td><input type="radio" name="escucha" value="2"></td>
+              <td><input type="radio" name="escucha" value="3"></td>
+            </tr>
+            <tr>
+              <td class="py-2 pr-4">Claridad (definí términos, usé conectores)</td>
+              <td><input type="radio" name="claridad" value="0"></td>
+              <td><input type="radio" name="claridad" value="1"></td>
+              <td><input type="radio" name="claridad" value="2"></td>
+              <td><input type="radio" name="claridad" value="3"></td>
+            </tr>
+            <tr>
+              <td class="py-2 pr-4">Razones (di al menos 1 razón y consideré contraejemplos)</td>
+              <td><input type="radio" name="razones" value="0"></td>
+              <td><input type="radio" name="razones" value="1"></td>
+              <td><input type="radio" name="razones" value="2"></td>
+              <td><input type="radio" name="razones" value="3"></td>
+            </tr>
+            <tr>
+              <td class="py-2 pr-4">Respeto/turno (tono adecuado, 60–90’’ por turno)</td>
+              <td><input type="radio" name="respeto" value="0"></td>
+              <td><input type="radio" name="respeto" value="1"></td>
+              <td><input type="radio" name="respeto" value="2"></td>
+              <td><input type="radio" name="respeto" value="3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-3 grid sm:grid-cols-2 gap-3 items-start">
+        <div class="glass rounded-2xl p-4">
+          <div class="text-sm text-slate-400">Puntuación total</div>
+          <div id="total" class="text-3xl font-extrabold">0 / 12</div>
+        </div>
+        <label class="block">Comentario breve (opcional)
+          <textarea id="comentario" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <!-- 10) Compromiso final -->
+    <section class="glass rounded-3xl p-6 section" id="compromiso">
+      <h2 class="text-xl font-bold">10) Compromiso final</h2>
+      <div class="grid sm:grid-cols-2 gap-3 mt-3 text-sm">
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="definiciones"> Pedir definiciones cuando falten.</label>
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="razones-antes"> Dar razones antes que ejemplos.</label>
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="contraejemplos"> Proponer contraejemplos.</label>
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="parafrasear"> Parafrasear mejor a mis compañeros/as.</label>
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="conectar"> Conectar ideas con lo ya dicho.</label>
+        <label class="flex items-start gap-2"><input type="checkbox" class="comp" value="tiempo"> Cuidar el tiempo y la brevedad.</label>
+      </div>
+      <label class="block font-medium mt-3">Otro</label>
+      <input id="compOtro" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Escribe tu compromiso">
+      <p class="text-slate-400 text-sm mt-2">Recordatorio: habla en primera persona ("Yo sostengo que…"), una sola idea por turno y termina con “porque…”.</p>
+    </section>
+
+    <!-- Resumen / vista previa -->
+    <section class="glass rounded-3xl p-6 section" id="resumen">
+      <h2 class="text-xl font-bold">Vista previa para entregar</h2>
+      <pre id="preview" class="mt-2 whitespace-pre-wrap text-slate-200 text-sm"></pre>
+    </section>
+  </main>
+
+  <!-- Ayuda -->
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200 text-sm">
+        <p>✔️ La ficha <strong>se guarda sola</strong> en este dispositivo (localStorage).</p>
+        <p>✔️ Usa los botones de <em>conectores</em> para empezar tus frases.</p>
+        <p>✔️ Cronómetro configurable a 60/75/90 s por turno.</p>
+        <p>✔️ Puedes <strong>exportar .txt</strong> o <strong>imprimir</strong> al final.</p>
+        <p>Atajos: <span class="kbd">?</span> ayuda.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">Hecho con 🧠 y 💬 para dialogar mejor.</footer>
+
+  <script>
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const store = {
+    get(k, def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
+    set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+  }
+
+  // Insert helper (conectores / plantillas)
+  $$("[data-insert]").forEach(btn=>btn.addEventListener('click', ()=>{
+    const sel = btn.getAttribute('data-insert');
+    const el = document.querySelector(sel);
+    const text = btn.getAttribute('data-text') || '';
+    if(!el) return; const start = el.selectionStart||0; const end = el.selectionEnd||0;
+    el.value = el.value.slice(0,start) + (el.value && start>0? ' ':'') + text + ' ' + el.value.slice(end);
+    el.focus(); el.selectionStart = el.selectionEnd = start + text.length + 1;
+    autosave();
+  }))
+
+  // Crono por turno
+  let t=null, remain=90;
+  function fmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0') }
+  $('#turnoSeg').addEventListener('change', e=>{ remain=+e.target.value; $('#visor').textContent = fmt(remain) })
+  $('#btnTurno').addEventListener('click', ()=>{
+    if(t){ clearInterval(t); t=null; $('#btnTurno').textContent='Iniciar turno'; $('#visor').textContent=fmt(+$('#turnoSeg').value); return }
+    remain=+$('#turnoSeg').value; $('#btnTurno').textContent='Detener';
+    t = setInterval(()=>{ remain--; $('#visor').textContent=fmt(remain); if(remain<=0){ clearInterval(t); t=null; $('#btnTurno').textContent='Iniciar turno'; alert('⏰ ¡Tiempo!') } },1000);
+  })
+
+  // Campos a guardar
+  const fields = ['nombre','fecha','grupo','kw1','kw2','kw3','conflicto','preguntaTxt','defLibertad','defDecidir','defCoac','defInter','defResp','posturaRazon','r1','r2','ejemplo','contra','ajeno1n','ajeno1','ajeno2n','ajeno2','distincion','pregAbierta','condOtras','sintesisTxt','comentario','compOtro'];
+
+  function autosave(){
+    const data = Object.fromEntries(fields.map(id=>[id, (document.getElementById(id)||{}).value || '']));
+    data.postura = (document.querySelector('input[name="postura"]:checked')||{}).value||'';
+    data.posturaC = $('#posturaC').value||'';
+    data.conds = $$('#conds input[type="checkbox"]').filter(c=>c.checked).map(c=>c.value);
+    data.rubrica = {};
+    ['escucha','claridad','razones','respeto'].forEach(n=>{ const x=(document.querySelector(`input[name="${n}"]:checked`)||{}).value; data.rubrica[n] = x==null? null : +x; });
+    data.comp = $$('.comp').filter(c=>c.checked).map(c=>c.value);
+    store.set('ficha.socratico', data);
+    renderPreview();
+  }
+
+  function load(){
+    const d = store.get('ficha.socratico', null); if(!d) return;
+    fields.forEach(id=>{ if(d[id]!=null && document.getElementById(id)) document.getElementById(id).value = d[id] });
+    if(d.postura){ $$('input[name="postura"]').forEach(r=>r.checked = r.value===d.postura) }
+    if(d.posturaC) $('#posturaC').value = d.posturaC;
+    if(d.conds){ $$('#conds input[type="checkbox"]').forEach(c=>c.checked = d.conds.includes(c.value)) }
+    if(d.rubrica){ Object.entries(d.rubrica).forEach(([n,v])=>{ if(v!=null){ const el = document.querySelector(`input[name="${n}"][value="${v}"]`); if(el) el.checked = true; }}) }
+    if(d.comp){ $$('.comp').forEach(c=>c.checked = d.comp.includes(c.value)) }
+    renderPreview();
+  }
+
+  // Bind autosave
+  fields.forEach(id=>{ const el = document.getElementById(id); if(el) el.addEventListener('input', autosave) });
+  $$('input[name="postura"]').forEach(r=>r.addEventListener('change', autosave));
+  $$('#conds input[type="checkbox"]').forEach(c=>c.addEventListener('change', autosave));
+  $$('.comp').forEach(c=>c.addEventListener('change', autosave));
+  $$('#rubrica input[type="radio"]').forEach(r=>r.addEventListener('change', ()=>{ autosave(); updateTotal(); }));
+
+  function updateTotal(){
+    const d = store.get('ficha.socratico', {});
+    const sum = ['escucha','claridad','razones','respeto'].reduce((acc,k)=>acc+ (d.rubrica&&d.rubrica[k]!=null? d.rubrica[k]:0), 0);
+    $('#total').textContent = sum + ' / 12';
+  }
+
+  function renderPreview(){
+    const d = store.get('ficha.socratico', {});
+    const lines = [];
+    lines.push('FICHA DEL ALUMNADO · DIÁLOGO SOCRÁTICO');
+    lines.push('Tema: La libertad como posibilidad de decidir (base de la conducta moral) · Curso: 2.º ESO');
+    lines.push('');
+    lines.push('0) DATOS');
+    lines.push(`Nombre: ${d.nombre||''}`);
+    lines.push(`Fecha: ${d.fecha||''}`);
+    lines.push(`Grupo: ${d.grupo||''}`);
+    lines.push('');
+    lines.push('1) CUENTO "Autodependencia" (Bucay)');
+    lines.push(`Palabras clave: ${[d.kw1,d.kw2,d.kw3].filter(Boolean).join(', ')}`);
+    lines.push('Conflicto: ' + (d.conflicto||''));
+    lines.push('');
+    lines.push('2) MI PREGUNTA FILOSÓFICA');
+    lines.push(d.preguntaTxt||'');
+    lines.push('');
+    lines.push('3) DEFINIR');
+    lines.push(`Libertad = ${d.defLibertad||''}`);
+    lines.push(`Decidir = ${d.defDecidir||''}`);
+    lines.push(`Presión/Coacción = ${d.defCoac||''}`);
+    lines.push(`Interdependencia (elegida) = ${d.defInter||''}`);
+    lines.push(`Responsabilidad = ${d.defResp||''}`);
+    lines.push('');
+    lines.push('4) POSTURA INICIAL');
+    lines.push(`Opción: ${d.postura||''} ${d.postura==='C'? '('+(d.posturaC||'')+')':''}`);
+    lines.push('Por qué: ' + (d.posturaRazon||''));
+    lines.push('');
+    lines.push('5) RAZONES / EJEMPLOS');
+    lines.push('Razón 1: ' + (d.r1||''));
+    lines.push('Razón 2: ' + (d.r2||''));
+    lines.push('Ejemplo: ' + (d.ejemplo||''));
+    lines.push('Contraejemplo: ' + (d.contra||''));
+    lines.push('');
+    lines.push('6) DURANTE EL DIÁLOGO');
+    lines.push(`De ${d.ajeno1n||''}: ${d.ajeno1||''}`);
+    lines.push(`De ${d.ajeno2n||''}: ${d.ajeno2||''}`);
+    lines.push('Distinción útil: ' + (d.distincion||''));
+    lines.push('Pregunta abierta: ' + (d.pregAbierta||''));
+    lines.push('');
+    lines.push('7) CONDICIONES DE DECISIÓN LIBRE');
+    lines.push('Marcadas: ' + ((d.conds||[]).join(', ')));
+    lines.push('Otras: ' + (d.condOtras||''));
+    lines.push('');
+    lines.push('8) SÍNTESIS');
+    lines.push(d.sintesisTxt||'');
+    lines.push('');
+    lines.push('9) AUTOEVALUACIÓN');
+    const rub = d.rubrica||{}; const tot = ['escucha','claridad','razones','respeto'].map(k=>rub[k]??'—');
+    lines.push(`Escucha: ${tot[0]} · Claridad: ${tot[1]} · Razones: ${tot[2]} · Respeto/turno: ${tot[3]}`);
+    lines.push('Comentario: ' + (d.comentario||''));
+    lines.push('');
+    lines.push('10) COMPROMISO FINAL');
+    lines.push('Elegidos: ' + ((d.comp||[]).join(', ')));
+    lines.push('Otro: ' + (d.compOtro||''));
+    $('#preview').textContent = lines.join('\n');
+  }
+
+  function exportTxt(){
+    const blob = new Blob([$('#preview').textContent||'' ], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'ficha_dialogo_socratico.txt'; a.click(); URL.revokeObjectURL(a.href);
+  }
+  $('#btnExport').addEventListener('click', exportTxt);
+
+  // Inicializar
+  load();
+  updateTotal();
+
+  // Ayuda
+  $('#btnAyuda').addEventListener('click', ()=>$('#modalAyuda').showModal());
+  window.addEventListener('keydown', e=>{ if(e.key==='?'){ const m=$('#modalAyuda'); m.open? m.close(): m.showModal() } });
+  </script>
+</body>
+</html>
