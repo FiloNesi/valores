@@ -1,68 +1,252 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Ficha de Actividad: La lluvia de millones</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>“Autodependencia” · Jorge Bucay — Lectura interactiva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .seccion {
-      margin-bottom: 25px;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    .preguntas {
-      background-color: #f2f2f2;
-      padding: 15px;
-      border-radius: 8px;
-    }
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#22d3ee; --accent2:#a78bfa }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(167,139,250,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    .mark{background:rgba(34,211,238,.25); border-bottom:2px solid rgba(34,211,238,.6)}
+    .note{background:rgba(167,139,250,.18)}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} header{border:0} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+    .prose{line-height:1.7}
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-
-    <!-- Encabezado -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-6 py-4">
-            <h1 class="text-2xl md:text-3xl font-bold text-indigo-600">Educación en Valores Cívicos y Éticos</h1>
-            <p class="text-gray-600">2º de la ESO</p>
-        </div>
-    </header>
 <body>
-    <div class="mb-8">
-            <a href="temaindex.html" class="text-indigo-600 hover:underline">&larr; Volver a la página principal</a>
-        </div>
-<h1 class>Jorge Bucay</p>
-<p class="p1">Autodependencia</p>
-<p class="p2"><br></p>
-   <div style="width: 90%;" style="margin-left: 20px;">
-  
+  <!-- Header / Navbar -->
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14" aria-label="Navegación principal">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Filo<span class="text-cyan-300">Lab</span> · Lectura</a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#texto" class="hover:text-cyan-300">Texto</a>
+        <a href="#clave" class="hover:text-cyan-300">Palabras clave</a>
+        <a href="#tareas" class="hover:text-cyan-300">Actividades</a>
+        <a href="#export" class="hover:text-cyan-300">Exportar</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+        <button id="btnImprimir" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition">Imprimir</button>
+      </div>
+    </nav>
+  </header>
 
+  <main id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <!-- Hero -->
+    <section class="glass rounded-3xl p-6 ring-a">
+      <h1 class="text-2xl md:text-3xl font-extrabold">“Autodependencia” — <span class="text-cyan-300">Jorge Bucay</span></h1>
+      <p class="text-slate-300 mt-1">Lectura interactiva con marcadores, notas rápidas y actividades de comprensión y reflexión ética.</p>
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <button id="btnResaltarConectores" class="px-2 py-1 rounded-md glass">Resaltar conectores</button>
+        <button id="btnModoLectura" class="px-2 py-1 rounded-md glass">Modo lectura</button>
+        <button id="btnLimpiar" class="px-2 py-1 rounded-md glass">Limpiar marcas</button>
+        <span class="text-slate-400">Atajos: <span class="kbd">Ctrl</span> + clic = marcar · <span class="kbd">?</span> ayuda</span>
+      </div>
+    </section>
 
-       
-            <p class="p1">Me acuerdo siempre de esta escena:<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Mi primo, mucho más chico que yo, tenía tres años. Yo tenía unos doce...<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Estábamos en el comedor diario de la casa de mi abuela. Mi primito vino corriendo y se llevó la mesa por delante. Cayó sentado de culo en el piso llorando.<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Se había dado un golpe fuerte y poco después un bultito del tamaño de un hueso de melocotón le apareció en la frente.<span class="Apple-converted-space"> </span></p>
-        <br>
-            <p class="p1">Mi tía, que estaba en la habitación, corrió a abrazarlo y mientras me pedía que trajera hielo le decía a mi primo:<span class="Apple-converted-space"> </span></p>
-            <p class="p1">— Pobrecito, mala la mesa que te pegó, chas chas a la mesa...—, mientras le daba palmadas al mueble invitando a mi pobre primo a que la imitara...<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Y yo pensaba: ¿...? ¿Cuál es la enseñanza? La responsabilidad no es tuya que sos un torpe, que tenés tres años y que no mirás por dónde caminás; la culpa es de la mesa. La mesa es mala.<span class="Apple-converted-space"> </span></p>
-                <br>
-            <p class="p1">Yo intentaba entender más o menos sorprendido el mensaje oculto de la mala intencionalidad de los objetos. Y mi tía insistía para que mi primo le pegara a la mesa...<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Me parece gracioso como símbolo, pero como aprendizaje me parece siniestro: vos nunca sos responsable de lo que hiciste, la culpa siempre la tiene el otro, la culpa es del afuera, vos no, es el otro el que tiene que dejar de estar en tu camino para que vos no te golpees...<span class="Apple-converted-space"> </span></p>
-                <br>
-            <p class="p1">Tuve que recorrer un largo trecho para apartarme de los mensajes de las tías del mundo.<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Es mi responsabilidad apartarme de lo que me daña. Es mi responsabilidad defenderme de los que me hacen daño. Es mi responsabilidad hacerme cargo de lo que me pasa y saber mi cuota de participación en los hechos.<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Tengo que darme cuenta de la influencia que tiene cada cosa que hago. Para que las cosas que me pasan me pasen, yo tengo que hacer lo que hago.<span class="Apple-converted-space"> </span></p>
-            <p class="p1">Y no digo que puedo manejar todo lo que me pasa sino que soy responsable de lo que me pasa porque en algo, aunque sea pequeño, he colaborado para que suceda. Yo no puedo controlar la actitud de todos a mi alrededor pero puedo controlar la mía. Puedo actuar libremente con lo que hago. Tendré que decidir qué hago. Con mis limitaciones, con mis miserias, con mis ignorancias, con todo lo que sé y aprendí, con todo eso, tendré que decidir cuál es la mejor manera de actuar. Y tendré que actuar de esa mejor manera. Tendré que conocerme más para saber cuáles son mis recursos. Tendré que quererme tanto como para privilegiarme y saber que esta es mi decisión.<span class="Apple-converted-space"> </span></p>
-                <br>
-            <p class>Y tendré, entonces, algo que viene con la autonomía y que es la otra cara de la libertad: el coraje. Tendré el coraje de actuar como mi conciencia me dicta y de pagar el precio. […]</p>
- </div>
-    </body>
+    <!-- Texto original -->
+    <section id="texto" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Texto</h2>
+      <article id="articulo" class="prose mt-3 space-y-4 text-slate-100 select-text">
+        <p>Me acuerdo siempre de esta escena:<br>Mi primo, mucho más chico que yo, tenía tres años. Yo tenía unos doce...<br>Estábamos en el comedor diario de la casa de mi abuela. Mi primito vino corriendo y se llevó la mesa por delante. Cayó sentado de culo en el piso llorando.</p>
+        <p>Se había dado un golpe fuerte y poco después un bultito del tamaño de un hueso de melocotón le apareció en la frente.</p>
+        <p>Mi tía, que estaba en la habitación, corrió a abrazarlo y mientras me pedía que trajera hielo le decía a mi primo: — Pobrecito, mala la mesa que te pegó, chas chas a la mesa...—, mientras le daba palmadas al mueble invitando a mi pobre primo a que la imitara...</p>
+        <p>Y yo pensaba: ¿...? ¿Cuál es la enseñanza? La responsabilidad no es tuya que sos un torpe, que tenés tres años y que no mirás por dónde caminás; la culpa es de la mesa. La mesa es mala.</p>
+        <p>Yo intentaba entender más o menos sorprendido el mensaje oculto de la mala intencionalidad de los objetos. Y mi tía insistía para que mi primo le pegara a la mesa...</p>
+        <p>Me parece gracioso como símbolo, pero como aprendizaje me parece siniestro: vos nunca sos responsable de lo que hiciste, la culpa siempre la tiene el otro, la culpa es del afuera, vos no, es el otro el que tiene que dejar de estar en tu camino para que vos no te golpees...</p>
+        <p>Tuve que recorrer un largo trecho para apartarme de los mensajes de las tías del mundo.</p>
+        <p>Es mi responsabilidad apartarme de lo que me daña. Es mi responsabilidad defenderme de los que me hacen daño. Es mi responsabilidad hacerme cargo de lo que me pasa y saber mi cuota de participación en los hechos.</p>
+        <p>Tengo que darme cuenta de la influencia que tiene cada cosa que hago. Para que las cosas que me pasan me pasen, yo tengo que hacer lo que hago.</p>
+        <p>Y no digo que puedo manejar todo lo que me pasa sino que soy responsable de lo que me pasa porque en algo, aunque sea pequeño, he colaborado para que suceda. Yo no puedo controlar la actitud de todos a mi alrededor pero puedo controlar la mía. Puedo actuar libremente con lo que hago. Tendré que decidir qué hago. Con mis limitaciones, con mis miserias, con mis ignorancias, con todo lo que sé y aprendí, con todo eso, tendré que decidir cuál es la mejor manera de actuar. Y tendré que actuar de esa mejor manera. Tendré que conocerme más para saber cuáles son mis recursos. Tendré que quererme tanto como para privilegiarme y saber que esta es mi decisión.</p>
+        <p>Y tendré, entonces, algo que viene con la autonomía y que es la otra cara de la libertad: el coraje. Tendré el coraje de actuar como mi conciencia me dicta y de pagar el precio. […]</p>
+      </article>
+      <p class="text-xs text-slate-400 mt-3">© Texto proporcionado por el usuario para uso educativo en el aula.</p>
+    </section>
+
+    <!-- Palabras clave / Notas -->
+    <section id="clave" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Palabras clave (máx. 3) y notas</h2>
+      <div class="grid md:grid-cols-3 gap-3 mt-3">
+        <input id="kw1" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="1)" maxlength="18">
+        <input id="kw2" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="2)" maxlength="18">
+        <input id="kw3" class="rounded-xl bg-white/10 border border-white/10 p-2" placeholder="3)" maxlength="18">
+      </div>
+      <label class="block font-medium mt-3">Nota rápida (doble clic sobre el texto para añadir)</label>
+      <textarea id="nota" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Añade aquí tu reflexión breve..."></textarea>
+    </section>
+
+    <!-- Actividades -->
+    <section id="tareas" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Actividades de comprensión y reflexión</h2>
+      <div class="mt-3 grid md:grid-cols-2 gap-4">
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">1) Mensaje central</h3>
+          <p class="text-sm text-slate-300">Resume la idea principal del texto en 2–3 líneas.</p>
+          <textarea id="mensaje" rows="3" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </article>
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">2) Libertad y responsabilidad</h3>
+          <p class="text-sm text-slate-300">¿Qué relación propone el autor entre libertad, autonomía y coraje?</p>
+          <textarea id="relacion" rows="3" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2"></textarea>
+        </article>
+        <article class="glass rounded-2xl p-4 md:col-span-2">
+          <h3 class="font-semibold">3) Pregunta abierta para el diálogo</h3>
+          <input id="pregunta" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Ej.: ¿Se puede ser responsable sin libertad real de elegir?">
+        </article>
+      </div>
+    </section>
+
+    <!-- Exportar / Vista previa -->
+    <section id="export" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Vista previa y exportación</h2>
+      <pre id="preview" class="mt-2 whitespace-pre-wrap text-slate-200 text-sm"></pre>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <button id="btnExport" class="px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Exportar .txt</button>
+        <button id="btnReset" class="px-3 py-1.5 rounded-lg glass hover:ring-a">Reiniciar ficha</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ayuda -->
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200 text-sm">
+        <p>✔️ Marca texto con <strong>Ctrl + clic</strong> para resaltar. Doble clic añade <em>nota</em> con el fragmento seleccionado.</p>
+        <p>✔️ Botón <em>Resaltar conectores</em> para ver la estructura argumentativa.</p>
+        <p>✔️ Todo se guarda automáticamente (<em>localStorage</em>). Puedes <strong>exportar .txt</strong> o <strong>imprimir</strong>.</p>
+        <p>Atajo: <span class="kbd">?</span> abre/cierra esta ayuda.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">Hecho con 🧠 y 💬 para leer y pensar mejor.</footer>
+
+  <script>
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const store = {
+    get(k, def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
+    set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+  }
+
+  // ===== Marcar texto (Ctrl+click) y notas =====
+  const art = $('#articulo');
+  art.addEventListener('click', e=>{
+    if(!e.ctrlKey) return;
+    const range = window.getSelection();
+    if(!range || range.toString().trim()==='') return;
+    const span = document.createElement('mark');
+    span.className = 'mark';
+    try{
+      const selRange = range.getRangeAt(0);
+      selRange.surroundContents(span);
+      window.getSelection().removeAllRanges();
+      autosave();
+    }catch(err){ /* rangos cruzados: ignorar */ }
+  });
+
+  art.addEventListener('dblclick', e=>{
+    const sel = window.getSelection().toString().trim();
+    if(!sel) return;
+    const nota = $('#nota');
+    nota.value = (nota.value? nota.value + '\n' : '') + 'Nota sobre: “' + sel + '” — ';
+    autosave();
+  });
+
+  // Resaltar conectores
+  const conectores = ['y','pero','porque','aunque','entonces','sin embargo','por eso','para','con','no','sí'];
+  function resaltarConectores(){
+    const walker = document.createTreeWalker(art, NodeFilter.SHOW_TEXT);
+    const re = new RegExp('\\b(' + conectores.join('|') + ')\\b','gi');
+    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(n=>{
+      if(!n.nodeValue.trim()) return;
+      const html = n.nodeValue.replace(re, '<span class="note">$1</span>');
+      if(html!==n.nodeValue){ const span = document.createElement('span'); span.innerHTML = html; n.replaceWith(span) }
+    });
+  }
+  $('#btnResaltarConectores').addEventListener('click', resaltarConectores);
+
+  // Modo lectura: oculta paneles extra
+  $('#btnModoLectura').addEventListener('click', ()=>{
+    ['#clave','#tareas','#export'].forEach(id=>$(id).classList.toggle('hidden'))
+  });
+
+  // Limpiar marcas
+  $('#btnLimpiar').addEventListener('click', ()=>{
+    $$('#articulo mark.mark').forEach(m=>{ const t = document.createTextNode(m.textContent); m.replaceWith(t) });
+    autosave();
+  });
+
+  // ===== Autosave =====
+  const fields = ['kw1','kw2','kw3','nota','mensaje','relacion','pregunta'];
+  fields.forEach(id=>{ const el = document.getElementById(id); if(el) el.addEventListener('input', autosave) });
+
+  function autosave(){
+    const data = Object.fromEntries(fields.map(id=>[id, (document.getElementById(id)||{}).value || '']));
+    data.html = $('#articulo').innerHTML; // conserva marcas
+    store.set('lectura.bucay', data);
+    renderPreview();
+  }
+
+  function load(){
+    const d = store.get('lectura.bucay', null); if(!d) return;
+    if(d.html) $('#articulo').innerHTML = d.html;
+    fields.forEach(id=>{ if(d[id]!=null && document.getElementById(id)) document.getElementById(id).value = d[id] });
+    renderPreview();
+  }
+  load();
+
+  // ===== Vista previa + export =====
+  function renderPreview(){
+    const d = store.get('lectura.bucay', {});
+    const lines = [];
+    lines.push('LECTURA: “Autodependencia” — Jorge Bucay');
+    lines.push('Palabras clave: ' + [d.kw1,d.kw2,d.kw3].filter(Boolean).join(', '));
+    lines.push('');
+    lines.push('NOTA RÁPIDA:');
+    lines.push(d.nota||'');
+    lines.push('');
+    lines.push('ACTIVIDADES');
+    lines.push('1) Mensaje central:');
+    lines.push(d.mensaje||'');
+    lines.push('');
+    lines.push('2) Libertad y responsabilidad:');
+    lines.push(d.relacion||'');
+    lines.push('');
+    lines.push('3) Pregunta abierta:');
+    lines.push(d.pregunta||'');
+    $('#preview').textContent = lines.join('\n');
+  }
+
+  $('#btnExport').addEventListener('click', ()=>{
+    const blob = new Blob([$('#preview').textContent||'' ], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'lectura_autodependencia.txt'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  // Reiniciar
+  $('#btnReset').addEventListener('click', ()=>{ localStorage.removeItem('lectura.bucay'); location.reload() });
+
+  // Imprimir
+  $('#btnImprimir').addEventListener('click', ()=>window.print());
+
+  // Ayuda
+  $('#btnAyuda').addEventListener('click', ()=>$('#modalAyuda').showModal());
+  window.addEventListener('keydown', e=>{ if(e.key==='?'){ const m=$('#modalAyuda'); m.open? m.close(): m.showModal() } });
+  </script>
+</body>
 </html>
