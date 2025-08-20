@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Libertad · Externa e interna — Web interactiva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b1020; --ink:#e5e7eb; --accent:#22d3ee; --accent2:#a78bfa }
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#0b1020,#0d132a); color:var(--ink)}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04)); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.08)}
+    .ring-a{box-shadow:0 0 0 2px rgba(34,211,238,.35), 0 10px 30px rgba(167,139,250,.15)}
+    .kbd{border:1px solid rgba(255,255,255,.25); border-bottom-width:2px; border-radius:.5rem; padding:.15rem .4rem; font-size:.8rem}
+    .droptarget{min-height:120px}
+    .token{cursor:grab}
+    .token:active{cursor:grabbing}
+    @media print{ .no-print{display:none!important} body{background:white;color:#111827} .glass, .ring-a{box-shadow:none} header{border:0} }
+    :focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header class="sticky top-0 z-30 bg-[#0b1020]/80 backdrop-blur border-b border-white/10">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14" aria-label="Navegación principal">
+      <a href="#inicio" class="font-extrabold tracking-tight text-xl">Filo<span class="text-cyan-300">Lab</span> · Libertad</a>
+      <div class="hidden sm:flex items-center gap-6 text-sm">
+        <a href="#pregunta" class="hover:text-cyan-300">Pregunta</a>
+        <a href="#lectura" class="hover:text-cyan-300">Lectura</a>
+        <a href="#tipos" class="hover:text-cyan-300">Tipos</a>
+        <a href="#clasifica" class="hover:text-cyan-300">Clasificar (1)</a>
+        <a href="#derecho" class="hover:text-cyan-300">Derecho</a>
+        <a href="#export" class="hover:text-cyan-300">Exportar</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnAyuda" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition" aria-haspopup="dialog" aria-controls="modalAyuda">Ayuda</button>
+        <button id="btnImprimir" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a transition">Imprimir</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <!-- Hero / Pregunta generadora -->
+    <section id="pregunta" class="glass rounded-3xl p-6 ring-a">
+      <h1 class="text-2xl md:text-3xl font-extrabold">¿Qué consideras <span class="text-cyan-300">necesario</span> para ser libre? ¿Por qué?</h1>
+      <p class="text-slate-300 mt-2">Escribe tu idea inicial en 2–3 líneas. Puedes revisarla después de las actividades.</p>
+      <textarea id="idea" rows="3" class="mt-3 w-full rounded-xl bg-white/10 border border-white/10 p-3" placeholder="Yo considero que para ser libre es necesario... porque..."></textarea>
+      <div class="mt-3 flex flex-wrap gap-2 text-sm text-slate-400">Atajos: <span class="kbd">?</span> ayuda · <span class="kbd">Ctrl</span> + <span class="kbd">S</span> guarda/exporta</div>
+    </section>
+
+    <!-- Lectura / marco -->
+    <section id="lectura" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Libertad: sentidos y aprendizaje</h2>
+      <p class="mt-2 text-slate-200">Decimos que todos los seres humanos nacemos libres. Sin embargo, un bebé necesita de los demás para sobrevivir, no tiene capacidad para prever el futuro y se rige por impulsos que no controla. ¿Es, por tanto, libre? Para entender la frase “los seres humanos nacen libres” es necesario comprender los diferentes sentidos que tiene la libertad.</p>
+      <p class="mt-2 text-slate-200">Toda persona tiene la capacidad de decidir su modo de pensar, expresarse, creer o actuar: es la <strong>libertad real</strong>. Esta, a su vez, puede ser:</p>
+    </section>
+
+    <!-- Tipos de libertad -->
+    <section id="tipos" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Dos tipos de libertad</h2>
+      <div class="grid md:grid-cols-2 gap-4 mt-3">
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Libertad externa</h3>
+          <p class="text-slate-300 text-sm">Capacidad de actuar sin <em>limitaciones exteriores</em> (esclavitud, dictaduras, pobreza, etc.).</p>
+          <ul class="mt-2 text-sm list-disc ml-5 text-slate-300">
+            <li>Se relaciona con <strong>derechos</strong> y <strong>condiciones sociales</strong>.</li>
+            <li>Ejemplos: censura, persecución, falta de recursos básicos.</li>
+          </ul>
+        </article>
+        <article class="glass rounded-2xl p-4">
+          <h3 class="font-semibold">Libertad interna o psicológica</h3>
+          <p class="text-slate-300 text-sm">Capacidad de <em>decidir cómo actuar</em> para lograr fines valiosos; se <strong>aprende</strong> con educación, cultura e información.</p>
+          <ul class="mt-2 text-sm list-disc ml-5 text-slate-300">
+            <li>Se relaciona con <strong>autocontrol</strong>, <strong>hábitos</strong> y <strong>criterios</strong>.</li>
+            <li>Ejemplos: prejuicios, impulsividad, sesgos no examinados.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Clasificador -->
+    <section id="clasifica" class="glass rounded-3xl p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">1) Clasifica cada caso: ¿qué libertad les falta?</h2>
+        <div class="flex items-center gap-2 text-sm">
+          <button id="btnSol" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a">Mostrar soluciones</button>
+          <button id="btnReset" class="no-print px-3 py-1.5 rounded-lg glass hover:ring-a">Reiniciar</button>
+        </div>
+      </div>
+
+      <p class="text-slate-300 text-sm mt-1">Arrastra cada tarjeta a la columna correspondiente o marca con los botones.</p>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-4">
+        <!-- Banco -->
+        <div class="glass rounded-2xl p-4" aria-label="Banco de casos">
+          <h3 class="font-semibold mb-2">Casos</h3>
+          <div id="banco" class="flex flex-col gap-2"></div>
+        </div>
+
+        <!-- Columnas -->
+        <div class="glass rounded-2xl p-4 droptarget" data-cat="externa">
+          <h3 class="font-semibold">Falta libertad externa</h3>
+          <div class="valores mt-2 min-h-[160px] space-y-2"></div>
+        </div>
+        <div class="glass rounded-2xl p-4 droptarget" data-cat="interna">
+          <h3 class="font-semibold">Falta libertad interna</h3>
+          <div class="valores mt-2 min-h-[160px] space-y-2"></div>
+        </div>
+      </div>
+
+      <div id="msg" class="mt-3 text-slate-300"></div>
+    </section>
+
+    <!-- Derecho y dignidad -->
+    <section id="derecho" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Libertad como derecho y dignidad</h2>
+      <p class="text-slate-200">La libertad, además de un valor, es un <strong>derecho</strong>: no se puede esclavizar a una persona ni privarla de su capacidad de pensar, creer o decidir, porque entonces se atenta contra su <strong>dignidad</strong>.</p>
+      <div class="mt-3 grid md:grid-cols-2 gap-3">
+        <label class="block">Un ejemplo de vulneración del derecho a la libertad
+          <textarea id="vulneracion" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Describe un caso (histórico o actual)"></textarea>
+        </label>
+        <label class="block">Una medida para proteger la libertad y la dignidad
+          <textarea id="medida" rows="2" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 p-2" placeholder="Ley, política pública, práctica educativa, etc."></textarea>
+        </label>
+      </div>
+    </section>
+
+    <!-- Exportar / Vista previa -->
+    <section id="export" class="glass rounded-3xl p-6">
+      <h2 class="text-xl font-bold">Vista previa y exportación</h2>
+      <pre id="preview" class="mt-2 whitespace-pre-wrap text-slate-200 text-sm"></pre>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <button id="btnExport" class="px-3 py-1.5 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200">Exportar .txt</button>
+        <button id="btnReiniciarTodo" class="px-3 py-1.5 rounded-lg glass hover:ring-a">Reiniciar todo</button>
+      </div>
+      <p class="text-xs text-slate-400 mt-2">Privacidad: todo se guarda en este dispositivo (<em>localStorage</em>).</p>
+    </section>
+  </main>
+
+  <!-- Ayuda -->
+  <dialog id="modalAyuda" class="no-print glass rounded-2xl p-0 w-full max-w-xl text-slate-100">
+    <form method="dialog">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <h3 class="text-lg font-bold">Ayuda rápida</h3>
+        <button class="px-2 py-1 glass rounded-lg">Cerrar</button>
+      </div>
+      <div class="p-5 space-y-3 text-slate-200 text-sm">
+        <p>1) Lee el marco teórico (Lectura y Tipos).</p>
+        <p>2) Arrastra cada <em>caso</em> a <strong>Falta libertad externa</strong> o <strong>Falta libertad interna</strong>. También puedes usar los botones de cada tarjeta.</p>
+        <p>3) Completa los ejemplos de <strong>derecho y dignidad</strong> y exporta tu ficha.</p>
+        <p>Atajos: <span class="kbd">?</span> abre/cierra esta ayuda · <span class="kbd">Ctrl</span> + <span class="kbd">S</span> exporta.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="border-t border-white/10 py-6 text-center text-sm text-slate-400">Hecho con 🧠 y 💬 para pensar la libertad.</footer>
+
+  <script>
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const store = {
+    get(k, def){ try{ return JSON.parse(localStorage.getItem(k)) ?? def }catch{ return def } },
+    set(k, v){ localStorage.setItem(k, JSON.stringify(v)) }
+  }
+
+  // ===== Clasificador =====
+  const casos = [
+    { id:'a', txt:'a) Un preso en la cárcel.', ok:'externa' },
+    { id:'b', txt:'b) Un recién nacido.', ok:'interna' },
+    { id:'c', txt:'c) Una persona con prejuicios.', ok:'interna' },
+    { id:'d', txt:'d) Alguien que no controla sus ataques de furia.', ok:'interna' },
+    { id:'e', txt:'e) Un ciudadano de un país sin democracia.', ok:'externa' },
+  ];
+
+  const data = store.get('libertad.ficha', { idea:'', vulneracion:'', medida:'', clasif:{ externa:[], interna:[], banco: casInit() } });
+  function casInit(){ return casos.map(c=>c.id) }
+
+  function token(id){
+    const c = casos.find(x=>x.id===id);
+    const el = document.createElement('div');
+    el.className = 'token glass rounded-xl p-3 flex items-center justify-between gap-2';
+    el.draggable = true; el.dataset.id = id;
+    el.innerHTML = `<span>${c.txt}</span>
+      <div class="flex gap-2 text-xs">
+        <button class="px-2 py-1 rounded-md bg-white/10 hover:bg-white/20" data-move="externa">Externa</button>
+        <button class="px-2 py-1 rounded-md bg-white/10 hover:bg-white/20" data-move="interna">Interna</button>
+      </div>`;
+    el.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', id); e.dataTransfer.effectAllowed='move' });
+    el.querySelectorAll('[data-move]').forEach(b=>b.addEventListener('click', e=>{ place(id, e.target.dataset.move) }));
+    return el;
+  }
+
+  function render(){
+    // limpiar
+    $('#banco').innerHTML = ''; $$('[data-cat] .valores').forEach(v=>v.innerHTML='');
+    // banco
+    (data.clasif.banco||[]).forEach(id=>$('#banco').appendChild(token(id)));
+    // cols
+    (data.clasif.externa||[]).forEach(id=>document.querySelector('[data-cat="externa"] .valores').appendChild(token(id)));
+    (data.clasif.interna||[]).forEach(id=>document.querySelector('[data-cat="interna"] .valores').appendChild(token(id)));
+    // resumen
+    $('#msg').textContent = `Clasificados: ${(data.clasif.externa.length + data.clasif.interna.length)}/5`;
+  }
+
+  function place(id, cat){
+    // remove from all
+    ['banco','externa','interna'].forEach(k=>{ const i = data.clasif[k].indexOf(id); if(i>-1) data.clasif[k].splice(i,1) });
+    // add
+    data.clasif[cat].push(id);
+    save(); render();
+  }
+
+  // drop zones
+  $$('.droptarget').forEach(zone=>{
+    zone.addEventListener('dragover', e=>{ e.preventDefault(); zone.classList.add('ring-2','ring-cyan-300') });
+    zone.addEventListener('dragleave', ()=>zone.classList.remove('ring-2','ring-cyan-300'));
+    zone.addEventListener('drop', e=>{ e.preventDefault(); zone.classList.remove('ring-2','ring-cyan-300'); const id = e.dataTransfer.getData('text/plain'); place(id, zone.dataset.cat) });
+  });
+
+  // soluciones y reset
+  $('#btnSol').addEventListener('click', ()=>{
+    data.clasif.externa = casos.filter(c=>c.ok==='externa').map(c=>c.id);
+    data.clasif.interna = casos.filter(c=>c.ok==='interna').map(c=>c.id);
+    data.clasif.banco = [];
+    save(); render();
+    const ok = validar();
+    $('#msg').textContent = `✔️ Solución mostrada. Aciertos: ${ok}/5`;
+  });
+  $('#btnReset').addEventListener('click', ()=>{ data.clasif = { externa:[], interna:[], banco: casInit() }; save(); render(); $('#msg').textContent='Reiniciado.' });
+
+  function validar(){
+    let score = 0;
+    casos.forEach(c=>{
+      if(data.clasif[c.ok].includes(c.id)) score++;
+    });
+    return score;
+  }
+
+  // ===== Inputs y autosave =====
+  function bind(id, key){ const el=$(id); if(!el) return; el.addEventListener('input', ()=>{ data[key]=el.value; save(); renderPreview(); }); if(data[key]) el.value = data[key]; }
+  bind('#idea','idea');
+  bind('#vulneracion','vulneracion');
+  bind('#medida','medida');
+
+  function save(){ store.set('libertad.ficha', data); renderPreview(); }
+
+  // ===== Vista previa / export =====
+  function renderPreview(){
+    const lines = [];
+    lines.push('LIBERTAD — Ficha interactiva (externa/interna)');
+    lines.push('');
+    lines.push('PREGUNTA INICIAL:');
+    lines.push(data.idea||'');
+    lines.push('');
+    lines.push('CLASIFICACIÓN DE CASOS:');
+    lines.push('Falta libertad externa: ' + (data.clasif.externa||[]).map(id=>casos.find(c=>c.id===id).txt).join(' | '));
+    lines.push('Falta libertad interna: ' + (data.clasif.interna||[]).map(id=>casos.find(c=>c.id===id).txt).join(' | '));
+    lines.push(`Aciertos (si se corrige): ${validar()}/5`);
+    lines.push('');
+    lines.push('DERECHO Y DIGNIDAD:');
+    lines.push('Ejemplo de vulneración: ' + (data.vulneracion||''));
+    lines.push('Medida de protección: ' + (data.medida||''));
+    $('#preview').textContent = lines.join('\n');
+  }
+
+  $('#btnExport').addEventListener('click', ()=>{
+    const blob = new Blob([$('#preview').textContent||'' ], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'ficha_libertad_externa_interna.txt'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  $('#btnReiniciarTodo').addEventListener('click', ()=>{ localStorage.removeItem('libertad.ficha'); location.reload() });
+  $('#btnImprimir').addEventListener('click', ()=>window.print());
+  $('#btnAyuda').addEventListener('click', ()=>$('#modalAyuda').showModal());
+  window.addEventListener('keydown', e=>{
+    if(e.key==='?'){ const m=$('#modalAyuda'); m.open? m.close(): m.showModal() }
+    if(e.ctrlKey && e.key.toLowerCase()==='s'){ e.preventDefault(); $('#btnExport').click() }
+  });
+
+  // init
+  if(!data.clasif || !('banco' in data.clasif)) data.clasif = { externa:[], interna:[], banco: casInit() };
+  render();
+  renderPreview();
+  </script>
+</body>
+</html>
