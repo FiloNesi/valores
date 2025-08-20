@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Semáforo del Respeto — Actividad cooperativa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green:#10b981; /* emerald-500 */
+      --amber:#f59e0b; /* amber-500  */
+      --red:#ef4444;   /* red-500    */
+    }
+    html,body{height:100%}
+    body{font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#fafafa}
+    /* Print: muestra resumen y columnas limpias */
+    @media print{
+      #toolbar, #legend, #addModal, #toast { display:none !important; }
+      .card textarea{ border:1px solid #ddd !important; }
+      .no-print{ display:none !important; }
+      .print-show{ display:block !important; }
+    }
+    /* Pequeño toast */
+    #toast{position:fixed;inset:auto 1rem 1rem auto;background:#111;color:#fff;padding:.6rem .8rem;border-radius:.5rem;opacity:0;transform:translateY(12px);transition:.2s}
+    #toast.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <header class="bg-white shadow-sm sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-400 via-amber-400 to-red-400"></div>
+        <div>
+          <h1 class="text-xl font-[700] leading-tight">Semáforo del respeto</h1>
+          <p class="text-sm text-gray-600">Clasifica las frases y justifica por qué: <span class="font-medium text-emerald-700">verde</span> (respeto), <span class="font-medium text-amber-700">ámbar</span> (duda/alerta), <span class="font-medium text-red-700">rojo</span> (control/manipulación).</p>
+        </div>
+      </div>
+
+      <div id="toolbar" class="flex flex-wrap items-center gap-2">
+        <input id="groupName" class="px-3 py-2 border rounded-lg text-sm" placeholder="Nombre del grupo (2–3 alumnos)" />
+        <button id="btnShuffle" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">Aleatorizar</button>
+        <button id="btnAdd" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">Añadir frase</button>
+        <button id="btnExport" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">Exportar CSV</button>
+        <button id="btnPrint" class="px-3 py-2 rounded-lg bg-gray-900 hover:bg-black text-white text-sm">Imprimir</button>
+        <button id="btnReset" class="px-3 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-sm">Reiniciar</button>
+        <button id="btnLegend" class="px-3 py-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 text-sm">Guía rápida</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-5">
+    <!-- Guía / Leyenda -->
+    <section id="legend" class="hidden rounded-xl border bg-white p-4 text-sm">
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="rounded-lg border-l-4" style="border-left-color:var(--green)">
+          <div class="px-3 py-2">
+            <h3 class="font-semibold text-emerald-700">VERDE · Respeto</h3>
+            <p class="text-gray-700">Hay <strong>consentimiento</strong>, cuidado, apoyo y <strong>autonomía</strong>. No hay chantaje ni control.</p>
+          </div>
+        </div>
+        <div class="rounded-lg border-l-4" style="border-left-color:var(--amber)">
+          <div class="px-3 py-2">
+            <h3 class="font-semibold text-amber-700">ÁMBAR · Duda/Alerta</h3>
+            <p class="text-gray-700">Faltan datos, hay ambigüedad o señales de alerta. Se necesita <strong>diálogo</strong> y concretar límites.</p>
+          </div>
+        </div>
+        <div class="rounded-lg border-l-4" style="border-left-color:var(--red)">
+          <div class="px-3 py-2">
+            <h3 class="font-semibold text-red-700">ROJO · Control/Manipulación</h3>
+            <p class="text-gray-700">Presión, chantaje, celos, prohibiciones, <strong>control</strong> o desvalorización. No hay respeto a la autonomía.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progreso -->
+    <section class="rounded-xl border bg-white p-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="text-sm text-gray-700">
+          <span id="progressCount" class="font-semibold">0</span>/<span id="totalCount">0</span> frases clasificadas ·
+          <span id="justCount" class="font-semibold">0</span> con justificación
+        </div>
+        <div class="w-full sm:w-1/2 bg-gray-100 rounded-full h-2 overflow-hidden">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-emerald-400 via-amber-400 to-red-400" style="width:0%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Columnas -->
+    <section class="grid lg:grid-cols-3 gap-4">
+      <!-- Verde -->
+      <div class="rounded-xl border bg-white p-3">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-semibold flex items-center gap-2 text-emerald-700">
+            <span class="inline-block h-3 w-3 rounded-full" style="background:var(--green)"></span>
+            Verde · Respeto
+          </h2>
+          <span id="count-verde" class="text-xs text-gray-600">0</span>
+        </div>
+        <div id="col-verde" class="space-y-3 min-h-[120px]"></div>
+      </div>
+      <!-- Ámbar -->
+      <div class="rounded-xl border bg-white p-3">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-semibold flex items-center gap-2 text-amber-700">
+            <span class="inline-block h-3 w-3 rounded-full" style="background:var(--amber)"></span>
+            Ámbar · Duda
+          </h2>
+          <span id="count-ambar" class="text-xs text-gray-600">0</span>
+        </div>
+        <div id="col-ambar" class="space-y-3 min-h-[120px]"></div>
+      </div>
+      <!-- Rojo -->
+      <div class="rounded-xl border bg-white p-3">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-semibold flex items-center gap-2 text-red-700">
+            <span class="inline-block h-3 w-3 rounded-full" style="background:var(--red)"></span>
+            Rojo · Control/Manipulación
+          </h2>
+        <span id="count-rojo" class="text-xs text-gray-600">0</span>
+        </div>
+        <div id="col-rojo" class="space-y-3 min-h-[120px]"></div>
+      </div>
+    </section>
+
+    <!-- Compartir en voz alta -->
+    <section class="rounded-xl border bg-white p-4 space-y-3">
+      <h3 class="font-semibold">Para poner en común (voz alta)</h3>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div>
+          <label class="text-sm text-gray-700 block mb-1">Elige una frase <strong>ROJA</strong></label>
+          <select id="shareRed" class="w-full px-3 py-2 border rounded-lg text-sm"></select>
+        </div>
+        <div>
+          <label class="text-sm text-gray-700 block mb-1">Elige una frase <strong>VERDE</strong></label>
+          <select id="shareGreen" class="w-full px-3 py-2 border rounded-lg text-sm"></select>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="btnCopyShare" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">Copiar selección</button>
+        <span class="text-xs text-gray-500">Consejo: decidid quién la lee y quién aporta la justificación.</span>
+      </div>
+    </section>
+
+    <p class="text-xs text-gray-500 text-center">Los datos se guardan solo en tu navegador (localStorage). No se envían a ningún servidor.</p>
+  </main>
+
+  <!-- Modal Añadir Frase -->
+  <dialog id="addModal" class="rounded-2xl p-0 backdrop:bg-black/30">
+    <form method="dialog" class="w-[min(92vw,560px)] bg-white rounded-2xl overflow-hidden">
+      <div class="px-4 py-3 border-b">
+        <h3 class="font-semibold">Añadir nueva frase</h3>
+      </div>
+      <div class="p-4 space-y-3">
+        <label class="text-sm text-gray-700">Texto de la frase</label>
+        <textarea id="newPhrase" class="w-full px-3 py-2 border rounded-lg min-h-[120px]" placeholder="Escribe aquí la frase (mejor breve y concreta)"></textarea>
+      </div>
+      <div class="px-4 py-3 border-t flex items-center justify-end gap-2">
+        <button value="cancel" class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">Cancelar</button>
+        <button id="confirmAdd" value="default" class="px-3 py-2 rounded-lg bg-gray-900 hover:bg-black text-white text-sm">Añadir</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /*************** Datos iniciales *****************/
+    const STORAGE_KEY = 'semaforo_respecto_v1';
+    const defaults = [
+      "Si me quisieras, lo harías.",
+      "Te apoyo en tus decisiones.",
+      "No quiero que hables con esa persona.",
+      "Me gusta que seas como eres.",
+      "El amor duele a veces.",
+      "Necesitamos encontrar nuestra media naranja.",
+      "Los celos son una muestra de amor.",
+      "El amor te llega, no se decide.",
+      "El amor es eterno.",
+      "El amor es satisfacción.",
+      "El amor es felicidad.",
+      "El amor más importante es el amor propio."
+    ];
+
+    let state = loadState();
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw){
+          const parsed = JSON.parse(raw);
+          // sanea keys mínimas
+          if(Array.isArray(parsed.items)) return parsed;
+        }
+      }catch(e){}
+      return {
+        groupName: "",
+        items: defaults.map((t,i)=>({
+          id: 'p'+(i+1),
+          text: t,
+          status: "",            // "verde" | "ambar" | "rojo" | ""
+          justification: ""      // string
+        }))
+      };
+    }
+
+    function saveState(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }catch(e){}
+    }
+
+    /*************** Utilidades UI *****************/
+    const qs = s => document.querySelector(s);
+    const elCols = {
+      verde: qs('#col-verde'),
+      ambar: qs('#col-ambar'),
+      rojo:  qs('#col-rojo')
+    };
+
+    function showToast(msg){
+      const t = qs('#toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 1600);
+    }
+
+    function updateProgress(){
+      const total = state.items.length;
+      const classified = state.items.filter(it=>it.status).length;
+      const justified = state.items.filter(it=>it.status && it.justification.trim().length>0).length;
+      qs('#totalCount').textContent = total;
+      qs('#progressCount').textContent = classified;
+      qs('#justCount').textContent = justified;
+      const pct = Math.round((classified/Math.max(total,1))*100);
+      qs('#progressBar').style.width = pct + '%';
+      qs('#count-verde').textContent = state.items.filter(it=>it.status==='verde').length;
+      qs('#count-ambar').textContent = state.items.filter(it=>it.status==='ambar').length;
+      qs('#count-rojo').textContent  = state.items.filter(it=>it.status==='rojo').length;
+      // actualizar selects de compartir
+      const red = state.items.filter(it=>it.status==='rojo');
+      const green = state.items.filter(it=>it.status==='verde');
+      fillSelect(qs('#shareRed'), red);
+      fillSelect(qs('#shareGreen'), green);
+    }
+
+    function fillSelect(selectEl, items){
+      const cur = selectEl.value;
+      selectEl.innerHTML = '';
+      const opt0 = document.createElement('option');
+      opt0.value = '';
+      opt0.textContent = items.length ? '— Selecciona —' : 'Sin opciones aún';
+      selectEl.appendChild(opt0);
+      items.forEach(it=>{
+        const o = document.createElement('option');
+        o.value = it.id;
+        const jOK = it.justification.trim().length>0 ? ' · con justificación' : '';
+        o.textContent = it.text.slice(0,120) + (it.text.length>120?'…':'') + jOK;
+        selectEl.appendChild(o);
+      });
+      if(cur) selectEl.value = cur; // intenta mantener selección
+    }
+
+    function cardColor(status){
+      if(status==='verde') return 'border-emerald-200';
+      if(status==='ambar') return 'border-amber-200';
+      if(status==='rojo')  return 'border-red-200';
+      return 'border-gray-200';
+    }
+    function badge(status){
+      if(status==='verde') return '<span class="inline-flex items-center gap-1 text-emerald-700 text-xs font-medium"><span class="h-2 w-2 rounded-full inline-block" style="background:var(--green)"></span>Verde</span>';
+      if(status==='ambar') return '<span class="inline-flex items-center gap-1 text-amber-700 text-xs font-medium"><span class="h-2 w-2 rounded-full inline-block" style="background:var(--amber)"></span>Ámbar</span>';
+      if(status==='rojo')  return '<span class="inline-flex items-center gap-1 text-red-700 text-xs font-medium"><span class="h-2 w-2 rounded-full inline-block" style="background:var(--red)"></span>Rojo</span>';
+      return '<span class="text-xs text-gray-500">Sin clasificar</span>';
+    }
+
+    function render(){
+      // Vacía columnas
+      Object.values(elCols).forEach(c=>c.innerHTML='');
+      // Orden: primero sin clasificar (se reparten en Ámbar por defecto visual) -> realmente mejor abajo: mostramos SOLO las clasificadas en su columna.
+      const byStatus = {
+        verde: state.items.filter(it=>it.status==='verde'),
+        ambar: state.items.filter(it=>it.status==='ambar'),
+        rojo:  state.items.filter(it=>it.status==='rojo')
+      };
+      // Tarjetas por columna
+      ['verde','ambar','rojo'].forEach(st=>{
+        const col = elCols[st];
+        if(byStatus[st].length===0){
+          const hint = document.createElement('div');
+          hint.className = "text-xs text-gray-400 italic";
+          hint.textContent = "Arriba verás aquí las frases clasificadas como " + (st==='verde'?'verdes':st==='ambar'?'ámbar':'rojas') + ".";
+          col.appendChild(hint);
+        }
+        byStatus[st].forEach(it=>{
+          col.appendChild(makeCard(it));
+        });
+      });
+
+      // Además, al final de Ámbar muestra las no clasificadas para empezar a trabajar
+      const unclassified = state.items.filter(it=>!it.status);
+      if(unclassified.length){
+        const sep = document.createElement('div');
+        sep.className = "mt-4 pt-3 border-t";
+        const label = document.createElement('div');
+        label.className = "text-xs text-gray-500 mb-2";
+        label.textContent = "Sin clasificar (empieza por aquí):";
+        sep.appendChild(label);
+        unclassified.forEach(it=>sep.appendChild(makeCard(it)));
+        elCols.ambar.appendChild(sep);
+      }
+
+      updateProgress();
+    }
+
+    function makeCard(item){
+      const wrap = document.createElement('div');
+      wrap.className = `card border rounded-xl p-3 bg-white`;
+      wrap.classList.add(cardColor(item.status));
+
+      const top = document.createElement('div');
+      top.className = "flex items-start justify-between gap-3";
+      const txt = document.createElement('p');
+      txt.className = "text-sm leading-relaxed";
+      txt.textContent = item.text;
+      const statusEl = document.createElement('div');
+      statusEl.innerHTML = badge(item.status);
+      top.appendChild(txt); top.appendChild(statusEl);
+
+      const actions = document.createElement('div');
+      actions.className = "mt-2 flex flex-wrap gap-2";
+      actions.innerHTML = `
+        <button data-action="set" data-status="verde" data-id="${item.id}" class="px-2.5 py-1.5 rounded-lg text-xs border hover:bg-emerald-50">🟢 Verde</button>
+        <button data-action="set" data-status="ambar" data-id="${item.id}" class="px-2.5 py-1.5 rounded-lg text-xs border hover:bg-amber-50">🟡 Ámbar</button>
+        <button data-action="set" data-status="rojo"  data-id="${item.id}" class="px-2.5 py-1.5 rounded-lg text-xs border hover:bg-red-50">🔴 Rojo</button>
+      `;
+
+      const just = document.createElement('div');
+      just.className = "mt-2";
+      const label = document.createElement('label');
+      label.className = "text-xs text-gray-600 block mb-1";
+      label.textContent = "Justificación (obligatoria): ¿por qué lo habéis puesto ahí?";
+      const ta = document.createElement('textarea');
+      ta.className = "w-full px-3 py-2 border rounded-lg text-sm";
+      ta.placeholder = "Ej.: Respeta la autonomía y apoya decisiones (no hay chantaje)...";
+      ta.value = item.justification || "";
+      ta.dataset.id = item.id;
+
+      ta.addEventListener('input', (e)=>{
+        const it = state.items.find(x=>x.id===item.id);
+        it.justification = e.target.value;
+        saveState();
+        updateProgress();
+      });
+
+      just.appendChild(label); just.appendChild(ta);
+
+      wrap.appendChild(top);
+      wrap.appendChild(actions);
+      wrap.appendChild(just);
+
+      // Accesibilidad: cambia borde según estado actual
+      requestAnimationFrame(()=>{
+        wrap.classList.remove('border-emerald-200','border-amber-200','border-red-200','border-gray-200');
+        wrap.classList.add(cardColor(item.status));
+      });
+
+      return wrap;
+    }
+
+    // Delegación de eventos para clasificación
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-action="set"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      const status = btn.dataset.status; // verde|ambar|rojo
+      const item = state.items.find(it=>it.id===id);
+      if(!item) return;
+      item.status = status;
+      saveState();
+      render();
+      showToast(`Clasificada como ${status.toUpperCase()}`);
+      // Foco a la justificación recién renderizada:
+      setTimeout(()=>{
+        const ta = document.querySelector(`textarea[data-id="${id}"]`);
+        if(ta) ta.focus();
+      }, 50);
+    });
+
+    /*************** Barra superior ***************/
+    // Grupo
+    const groupNameEl = qs('#groupName');
+    groupNameEl.value = state.groupName || '';
+    groupNameEl.addEventListener('input', ()=>{
+      state.groupName = groupNameEl.value;
+      saveState();
+    });
+
+    // Aleatorizar
+    qs('#btnShuffle').addEventListener('click', ()=>{
+      // Fisher-Yates sobre items, manteniendo status/justificación
+      for(let i = state.items.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [state.items[i], state.items[j]] = [state.items[j], state.items[i]];
+      }
+      saveState(); render(); showToast('Frases aleatorizadas');
+    });
+
+    // Añadir
+    const addModal = qs('#addModal');
+    const newPhrase = qs('#newPhrase');
+    qs('#btnAdd').addEventListener('click', ()=>{
+      newPhrase.value = "";
+      addModal.showModal();
+      setTimeout(()=>newPhrase.focus(), 50);
+    });
+    qs('#confirmAdd').addEventListener('click', (ev)=>{
+      ev.preventDefault();
+      const t = (newPhrase.value||"").trim();
+      if(!t){ showToast('Escribe una frase'); return; }
+      const id = 'p' + (Date.now().toString(36));
+      state.items.push({id, text:t, status:"", justification:""});
+      saveState(); render(); addModal.close(); showToast('Frase añadida');
+    });
+
+    // Exportar CSV
+    qs('#btnExport').addEventListener('click', ()=>{
+      const rows = [
+        ['Grupo', state.groupName || ''],
+        [],
+        ['ID','Frase','Clasificación','Justificación']
+      ];
+      state.items.forEach(it=>{
+        rows.push([it.id, it.text, it.status || 'sin clasificar', it.justification.replace(/\n/g,' ')]);
+      });
+      const csv = rows.map(r=>r.map(cell=>{
+        const s = String(cell??'');
+        if(/[",\n;]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
+        return s;
+      }).join(';')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'semaforo_del_respeto.csv';
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
+    });
+
+    // Imprimir
+    qs('#btnPrint').addEventListener('click', ()=> window.print());
+
+    // Reiniciar
+    qs('#btnReset').addEventListener('click', ()=>{
+      if(!confirm('¿Seguro que quieres reiniciar la actividad? Se perderán las clasificaciones y justificaciones.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = loadState();
+      groupNameEl.value = "";
+      render();
+      showToast('Actividad reiniciada');
+    });
+
+    // Guía
+    qs('#btnLegend').addEventListener('click', ()=>{
+      const el = qs('#legend');
+      el.classList.toggle('hidden');
+    });
+
+    // Copiar selección para compartir
+    qs('#btnCopyShare').addEventListener('click', ()=>{
+      const redId = qs('#shareRed').value;
+      const greenId = qs('#shareGreen').value;
+      const red = state.items.find(it=>it.id===redId);
+      const green = state.items.find(it=>it.id===greenId);
+      if(!red && !green){ showToast('Elige al menos una frase'); return; }
+      const lines = [];
+      if(state.groupName) lines.push(`Grupo: ${state.groupName}`);
+      if(red){
+        lines.push(`ROJA: ${red.text}`);
+        lines.push(`Justificación: ${red.justification||'(sin justificar)'}`);
+      }
+      if(green){
+        lines.push(`VERDE: ${green.text}`);
+        lines.push(`Justificación: ${green.justification||'(sin justificar)'}`);
+      }
+      const clip = lines.join('\n');
+      navigator.clipboard.writeText(clip).then(()=>showToast('Selección copiada'));
+    });
+
+    /*************** Inicio ***************/
+    render();
+  </script>
+</body>
+</html>
