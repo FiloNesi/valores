@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Juego de reflexión — Estoy orgulloso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#fafafa}
+    @media print{#toolbar,#toast{display:none!important}}
+    #toast{position:fixed;inset:auto 1rem 1rem auto;background:#111;color:#fff;padding:.6rem .8rem;border-radius:.5rem;opacity:0;transform:translateY(12px);transition:.2s}
+    #toast.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <header class="bg-white shadow-sm sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-emerald-400 via-amber-400 to-red-400"></div>
+        <div>
+          <h1 class="text-xl font-[700] leading-tight">Juego de reflexión: Estoy orgulloso</h1>
+          <p class="text-sm text-gray-600">Dinámica para reconocer logros personales y escribir en el diario filosófico.</p>
+        </div>
+      </div>
+      <div id="toolbar" class="flex items-center gap-2">
+        <button id="btnPrint" class="px-3 py-2 rounded-lg bg-gray-900 hover:bg-black text-white text-sm">Imprimir</button>
+        <button id="btnReset" class="px-3 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-sm">Reiniciar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <!-- Instrucciones -->
+    <section class="rounded-xl border bg-white p-6 space-y-4">
+      <h2 class="font-semibold text-lg">Instrucciones del juego</h2>
+      <p class="text-gray-800 leading-relaxed">
+        Os propongo un juego que se llama <strong>«Estoy orgulloso»</strong>.
+      </p>
+      <p class="text-gray-800 leading-relaxed">
+        Supongo que muchos no habéis aprendido que estar orgullosos de vosotros mismos es algo totalmente normal y agradable, como decir: 
+        «Me he portado bien; estoy contento de mí». Sin embargo, la sociedad suele valorar poco este sentimiento, porque las personas orgullosas de sí mismas son más <strong>independientes</strong> y actúan según lo que consideran correcto.
+      </p>
+      <p class="text-gray-800 leading-relaxed">
+        Cuando nos comparamos con otros («corro más que Francisco») caemos en la trampa de medirnos con un <em>metro exterior</em>. 
+        Entonces ya no importa la satisfacción propia, sino quién gana. Esa comparación genera <strong>competición, inseguridad y miedo</strong>.
+      </p>
+      <p class="text-gray-800 leading-relaxed">
+        En cambio, si escuchamos nuestra <strong>voz interior</strong>, podemos reconocer: 
+        «He corrido al límite de mis posibilidades. He tenido una fantástica sensación. Estoy satisfecho de mí». 
+      </p>
+      <hr class="my-4" />
+      <h3 class="font-semibold">Cómo jugamos</h3>
+      <ul class="list-disc list-inside space-y-2 text-gray-800">
+        <li>Pensad en algo de lo que estáis orgullosos (algo reciente, un aprendizaje, una habilidad...).</li>
+        <li>Quien empieza dice: «Estoy orgulloso de mí porque…» y lanza una pelota a otro compañero, preguntándole: «¿De qué estás orgulloso?». </li>
+        <li>El siguiente responde y lanza la pelota a otro.</li>
+        <li>Si alguien no quiere o no se le ocurre nada, puede decir <em>“paso”</em> y lanzar la pelota a otro.</li>
+        <li>El juego dura de <strong>5 a 10 minutos</strong>. Después se interrumpe.</li>
+        <li>Al final, quien quiera puede compartir voluntariamente de qué se siente orgulloso.</li>
+      </ul>
+    </section>
+
+    <!-- Diario filosófico -->
+    <section class="rounded-xl border bg-white p-6 space-y-3">
+      <h2 class="font-semibold text-lg">Tu diario filosófico</h2>
+      <p class="text-gray-700 text-sm">Después del juego, escribe aquí lo que quieras rescatar para tu diario filosófico. Se guardará automáticamente en tu navegador.</p>
+      <textarea id="diaryText" class="w-full px-3 py-2 border rounded-lg text-sm min-h-[180px]" placeholder="Escribe aquí tu reflexión personal: ¿de qué te sientes orgulloso/a?"></textarea>
+    </section>
+
+    <p class="text-xs text-gray-500 text-center">Todo se guarda solo en tu navegador (localStorage). No se envía a ningún servidor.</p>
+  </main>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = 'estoy_orgulloso_v1';
+    let state = loadState();
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw) return JSON.parse(raw);
+      }catch(e){}
+      return { diary:'' };
+    }
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+    function showToast(msg){
+      const t=document.getElementById('toast');
+      t.textContent=msg;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),1600);
+    }
+
+    // Eventos
+    document.getElementById('diaryText').value = state.diary;
+    document.getElementById('diaryText').addEventListener('input', e=>{
+      state.diary = e.target.value;
+      saveState();
+    });
+
+    document.getElementById('btnPrint').addEventListener('click', ()=>window.print());
+    document.getElementById('btnReset').addEventListener('click', ()=>{
+      if(!confirm('¿Seguro que quieres reiniciar tu reflexión?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = { diary:'' };
+      document.getElementById('diaryText').value='';
+      showToast('Reiniciado');
+    });
+  </script>
+</body>
+</html>
