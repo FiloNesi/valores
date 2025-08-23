@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Vocabulario: Valores Cívicos y Morales</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            border-bottom: 2px solid #c5cae9;
+            padding-bottom: 10px;
+        }
+        .term-card {
+            background-color: #e8eaf6;
+            border-left: 5px solid #3f51b5;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        .term-card h2 {
+            font-size: 1.8em;
+            color: #1a237e;
+            margin-top: 0;
+        }
+        .term-card p {
+            margin-bottom: 10px;
+        }
+        .term-card strong {
+            color: #303f9f;
+        }
+        .explanation {
+            font-style: italic;
+            color: #555;
+        }
+        .think-question {
+            background-color: #fffde7;
+            border: 1px dashed #fbc02d;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .easy-definition {
+            font-weight: bold;
+            text-align: right;
+            color: #d32f2f;
+        }
+        .more-info {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ficha de Vocabulario: Nuestros Derechos y Responsabilidades</h1>
+
+        <div class="term-card">
+            <h2>Legalidad ⚖️</h2>
+            <p><strong>Definición:</strong> Es la cualidad de todo aquello que se hace cumpliendo la ley. Una acción es legal si está permitida o mandada por las normas que toda la sociedad ha acordado.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Es como seguir las reglas de un juego. Si en el parchís solo puedes mover una ficha si sacas un 5, moverla sin haberlo sacado sería una acción <em>ilegal</em> dentro del juego. En la vida real, cruzar un semáforo en rojo es ilegal porque no cumple la norma de tráfico.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Por qué es importante que todas las personas, incluidos los gobernantes, respeten el principio de legalidad?</p>
+            <p class="easy-definition">Más fácil: Cumplir las normas.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Busca en YouTube el vídeo "Qué son las leyes y por qué son importantes".</p>
+        </div>
+
+        <div class="term-card">
+            <h2>Legitimidad ✅</h2>
+            <p><strong>Definición:</strong> Es la cualidad de algo que es justo, correcto y aceptado por la mayoría de las personas como bueno, aunque no siempre esté escrito en una ley. Se basa en nuestros valores morales y éticos.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Imagina que en un grupo de amigos siempre decide uno solo lo que se hace, sin preguntar a los demás. Aunque no haya una "ley" escrita que lo prohíba, su liderazgo no es <em>legítimo</em> porque no es justo ni tiene la aceptación del grupo. La legitimidad es el "permiso" moral que le damos a una norma o a una autoridad.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Puede una ley ser legal pero ilegítima o injusta para un grupo de personas? Pon algún ejemplo.</p>
+            <p class="easy-definition">Más fácil: Es lo que consideramos justo.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Explora la historia de Nelson Mandela o Rosa Parks, que lucharon contra leyes que eran legales pero ilegítimas.</p>
+        </div>
+
+        <div class="term-card">
+            <h2>Objeción de Conciencia 🧠❤️</h2>
+            <p><strong>Definición:</strong> Es el derecho a negarse a cumplir una orden o una ley por tener unas convicciones morales o religiosas muy fuertes que entran en conflicto con ella.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Es como si fueras vegetariano por convicciones éticas sobre los animales y en el comedor del instituto te obligaran a comer carne. La objeción de conciencia sería tu negativa a hacerlo, explicando tus motivos profundos.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Qué diferencia hay entre la objeción de conciencia y simplemente desobedecer una norma porque no te apetece cumplirla?</p>
+            <p class="easy-definition">Más fácil: Negarse a hacer algo por tus ideas.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Investiga sobre la historia de la objeción de conciencia al servicio militar en España.</p>
+        </div>
+
+        <div class="term-card">
+            <h2>Libertad de Expresión 🗣️</h2>
+            <p><strong>Definición:</strong> Es el derecho fundamental que tenemos todas las personas a decir, escribir, buscar y compartir ideas y opiniones libremente, sin miedo a ser castigado por ello.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Es poder dar tu opinión en clase sobre un tema, escribir lo que piensas en tus redes sociales o crear un rap con una letra reivindicativa. Sin embargo, esta libertad tiene límites.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Dónde crees que está el límite? ¿La libertad de expresión te da derecho a insultar, a difundir mentiras o a incitar al odio contra otras personas?</p>
+            <p class="easy-definition">Más fácil: Poder decir lo que piensas.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Busca vídeos cortos sobre "límites de la libertad de expresión para niños y jóvenes".</p>
+        </div>
+        
+        <div class="term-card">
+            <h2>Desinformación (Fake News) 📰❌</h2>
+            <p><strong>Definición:</strong> Es la información falsa o engañosa que se crea y se difunde con la intención de engañar a la gente, manipular la opinión pública o hacer daño.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Es como un rumor falso que alguien se inventa y comparte por WhatsApp. Por ejemplo, un audio que dice que van a cancelar las clases por una razón inventada para crear caos. Las <em>fake news</em> a menudo parecen noticias de verdad.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Por qué crees que la gente crea y comparte desinformación? ¿Qué puedes hacer tú para no caer en la trampa y no compartirla?</p>
+            <p class="easy-definition">Más fácil: Noticias falsas.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Juega a algún juego online sobre cómo detectar <em>fake news</em>, como los que ofrecen Maldita.es o Newtral.</p>
+        </div>
+
+        <div class="term-card">
+            <h2>Derecho a la Intimidad 🤫</h2>
+            <p><strong>Definición:</strong> Es el derecho a tener un espacio personal y privado, tanto físico como digital, donde nadie puede entrar sin nuestro permiso. Protege nuestros secretos, nuestra vida familiar y nuestros datos personales.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Tu habitación es un espacio íntimo. También lo son tu diario, tu móvil y tus conversaciones privadas de WhatsApp. Nadie tiene derecho a leer tus mensajes sin tu permiso.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> Cuando aceptas los "términos y condiciones" de una app o red social, ¿estás cediendo parte de tu intimidad? ¿Qué datos personales compartes en internet?</p>
+            <p class="easy-definition">Más fácil: Proteger tu vida privada.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Busca información en la web de la Agencia Española de Protección de Datos (AEPD) sobre los derechos de los menores en internet.</p>
+        </div>
+
+        <div class="term-card">
+            <h2>Ciberacoso (Cyberbullying) 💻💔</h2>
+            <p><strong>Definición:</strong> Es el acoso o la intimidación que se produce a través de tecnologías digitales (redes sociales, móviles, videojuegos online). Puede incluir insultos, amenazas o la publicación de fotos privadas para humillar a alguien.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> Es cuando alguien crea un perfil falso para insultarte, te excluyen de un grupo de WhatsApp para hablar mal de ti, o comparten una foto tuya editada para que otros se rían. Puede ocurrir 24 horas al día.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Qué papel juega el "espectador" en un caso de ciberacoso? ¿Qué puedes hacer si ves que alguien está siendo acosado en la red?</p>
+            <p class="easy-definition">Más fácil: Acosar a alguien por internet.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Consulta las guías sobre ciberacoso de UNICEF o de la Policía Nacional. <strong>Recuerda: si lo sufres o lo ves, cuéntalo a un adulto de confianza.</strong></p>
+        </div>
+
+        <div class="term-card">
+            <h2>Conducta Adictiva 🔗🕹️</h2>
+            <p><strong>Definición:</strong> Es cuando una actividad (como usar redes sociales, jugar a videojuegos) se convierte en una necesidad tan fuerte que no puedes controlarla, y dejas de lado otras cosas importantes como los estudios o los amigos.</p>
+            <p class="explanation"><strong>Para que lo entiendas:</strong> No es simplemente que te guste mucho un videojuego. Es cuando <em>necesitas</em> jugar a todas horas, te pones de mal humor si no puedes hacerlo y mientes sobre el tiempo que le dedicas.</p>
+            <p class="think-question"><strong>Piensa en...:</strong> ¿Cómo puedes diferenciar una afición que te gusta mucho de una conducta que empieza a ser adictiva? ¿Qué señales de alarma existen?</p>
+            <p class="easy-definition">Más fácil: No poder parar de hacer algo.</p>
+            <p class="more-info"><strong>Para saber más:</strong> Visualiza algún vídeo corto de psicólogos en plataformas como YouTube o TikTok que expliquen de forma sencilla cómo funcionan las adicciones sin sustancia.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
