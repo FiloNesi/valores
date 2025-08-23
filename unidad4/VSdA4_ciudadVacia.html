@@ -1,0 +1,501 @@
+import React, { useMemo, useState } from "react";
+
+// Web interactiva: "Un día en una ciudad vacía"
+// Instrucciones rápidas:
+// 1) Pulsa "Comenzar" para leer la situación detonante.
+// 2) En cada pantalla elige una de las 3 opciones. El recorrido tiene 3 decisiones.
+// 3) Al final, verás preguntas de reflexión y podrás copiar tus respuestas.
+
+export default function CiudadVaciaInteractive() {
+  const [started, setStarted] = useState(false);
+  const [path, setPath] = useState([]); // array de node ids elegidos
+  const [choices, setChoices] = useState([]); // array de {nodeId, optionLabel}
+
+  // Grafo narrativo: 3 niveles de decisiones (L1, L2, L3)
+  const nodes = useMemo(() => ({
+    intro: {
+      title: "Un día en una ciudad vacía",
+      text: (
+        <>
+          <p className="mb-3">Imagina que hoy te despiertas y descubres que eres la única persona en tu ciudad. No hay tiendas abiertas, ni internet estable, ni policía, ni médicos. Al principio sientes libertad, pero pronto aparecen dudas: ¿cómo conseguirás comida, seguridad y compañía?</p>
+          <p className="mb-2">Vas a tomar <strong>tres decisiones</strong>. Cada una te llevará a nuevas situaciones y problemas. ¡Piensa y elige!</p>
+        </>
+      ),
+      options: [
+        { id: "L1_comida", label: "Buscar comida y agua (supervivencia)" },
+        { id: "L1_comunicacion", label: "Buscar ayuda/comunicación (hablar con alguien)" },
+        { id: "L1_explorar", label: "Explorar la ciudad (organizarse y planificar)" },
+      ],
+    },
+
+    // ===== Nivel 1 =====
+    L1_comida: {
+      title: "Objetivo: supervivencia inmediata",
+      text: (
+        <>
+          <p className="mb-2">Llegas a un supermercado. Las estanterías aún tienen productos, pero la luz parpadea y los frigoríficos dejan de funcionar.</p>
+          <p className="mb-2">Piensas en cuánto durará la comida y en la posibilidad de racionarla.</p>
+        </>
+      ),
+      options: [
+        {
+          id: "L2_racionar",
+          label: "Racionar víveres y organizar una despensa básica",
+        },
+        {
+          id: "L2_buscaragua",
+          label: "Buscar fuentes de agua seguras en la ciudad",
+        },
+        {
+          id: "L2_energia",
+          label: "Intentar restablecer energía básica (generador)",
+        },
+      ],
+    },
+
+    L1_comunicacion: {
+      title: "Objetivo: comunicarte con alguien",
+      text: (
+        <>
+          <p className="mb-2">Encuentras una comisaría con radios y un centro cívico con un panel informativo antiguo.</p>
+          <p className="mb-2">La señal es inestable y no sabes si alguien puede oírte.</p>
+        </>
+      ),
+      options: [
+        { id: "L2_radio", label: "Probar emisora de radio y dejar mensajes periódicos" },
+        { id: "L2_mensajes", label: "Escribir señales visibles por la ciudad (plaza, azoteas)" },
+        { id: "L2_refugio", label: "Montar un punto de encuentro/refugio con normas básicas" },
+      ],
+    },
+
+    L1_explorar: {
+      title: "Objetivo: explorar y planificar",
+      text: (
+        <>
+          <p className="mb-2">Subes a un edificio alto para observar la ciudad. Ves hospitales, estación de tren y depósitos municipales.</p>
+          <p className="mb-2">Trazas un mapa con posibles recursos… y riesgos.</p>
+        </>
+      ),
+      options: [
+        { id: "L2_hospital", label: "Ir al hospital a por botiquín y aprender primeros auxilios" },
+        { id: "L2_estacion", label: "Revisar estación/depósito para transporte y logística" },
+        { id: "L2_normas", label: "Escribir un borrador de normas para una convivencia futura" },
+      ],
+    },
+
+    // ===== Nivel 2 =====
+    L2_racionar: {
+      title: "Racionar y calcular",
+      text: (
+        <>
+          <p className="mb-2">Organizas comida para una semana, pero te preocupa la nutrición y el desperdicio.</p>
+          <p className="mb-2">Sin cooperación, cada error pesa más. ¿Cómo minimizar riesgos?</p>
+        </>
+      ),
+      options: [
+        { id: "L3_huerto", label: "Iniciar un huerto urbano básico (progreso sostenible)" },
+        { id: "L3_intercambio", label: "Diseñar reglas para un futuro intercambio justo" },
+        { id: "L3_proteccion", label: "Asegurar el almacén: inventario y protocolo de acceso" },
+      ],
+    },
+    L2_buscaragua: {
+      title: "Agua segura",
+      text: (
+        <>
+          <p className="mb-2">Localizas una fuente y depósitos. Necesitas potabilizar el agua para evitar enfermedades.</p>
+        </>
+      ),
+      options: [
+        { id: "L3_hervir", label: "Hervir y filtrar con métodos caseros" },
+        { id: "L3_quimico", label: "Buscar pastillas potabilizadoras en farmacias" },
+        { id: "L3_cooperar", label: "Dejar instrucciones visibles para otras posibles personas" },
+      ],
+    },
+    L2_energia: {
+      title: "Energía básica",
+      text: (
+        <>
+          <p className="mb-2">Encuentras un generador, pero requiere combustible y mantenimiento.</p>
+          <p className="mb-2">¿Qué priorizarás si la energía es limitada?</p>
+        </>
+      ),
+      options: [
+        { id: "L3_comunicacionEnergia", label: "Priorizar comunicaciones y radio de emergencia" },
+        { id: "L3_refrigeracion", label: "Refrigerar comida crítica para evitar pérdidas" },
+        { id: "L3_luzSeguridad", label: "Iluminación y seguridad perimetral por la noche" },
+      ],
+    },
+
+    L2_radio: {
+      title: "Señales al aire",
+      text: (
+        <>
+          <p className="mb-2">Emites a horas fijas. El silencio genera incertidumbre, pero establecer rutinas ayuda.</p>
+        </>
+      ),
+      options: [
+        { id: "L3_protocolo", label: "Crear un protocolo de comunicación claro y repetible" },
+        { id: "L3_baliza", label: "Instalar una baliza visual (señales en azoteas)" },
+        { id: "L3_registro", label: "Llevar un registro de intentos y resultados (evidencias)" },
+      ],
+    },
+    L2_mensajes: {
+      title: "Deja huellas útiles",
+      text: (
+        <>
+          <p className="mb-2">Colocas mensajes en puntos clave. Eliges un lenguaje claro y símbolos entendibles.</p>
+        </>
+      ),
+      options: [
+        { id: "L3_mapa", label: "Dibujar un mapa simple de recursos y riesgos" },
+        { id: "L3_idiomas", label: "Usar varios idiomas e iconos para inclusión" },
+        { id: "L3_punto", label: "Definir un punto de encuentro con horarios" },
+      ],
+    },
+    L2_refugio: {
+      title: "Refugio con normas",
+      text: (
+        <>
+          <p className="mb-2">Preparas un espacio acogedor. Surgen preguntas: ¿quién decide? ¿cómo se reparte lo escaso?</p>
+        </>
+      ),
+      options: [
+        { id: "L3_normasJustas", label: "Escribir normas claras (turnos, limpieza, seguridad)" },
+        { id: "L3_mediacion", label: "Diseñar un sistema de mediación para conflictos" },
+        { id: "L3_transparencia", label: "Publicar inventarios y decisiones (transparencia)" },
+      ],
+    },
+
+    L2_hospital: {
+      title: "Salud y cuidado",
+      text: (
+        <>
+          <p className="mb-2">Consigues un botiquín y una guía de primeros auxilios. Aprender salva vidas.</p>
+        </>
+      ),
+      options: [
+        { id: "L3_formacion", label: "Hacer un plan de formación básica en salud" },
+        { id: "L3_prevencion", label: "Prevenir riesgos (limpieza, agua, residuos)" },
+        { id: "L3_derivar", label: "Dejar señales de dónde encontrar material médico" },
+      ],
+    },
+    L2_estacion: {
+      title: "Logística y movilidad",
+      text: (
+        <>
+          <p className="mb-2">Revisas rutas, combustibles y transporte. La logística coordina la ciudad.</p>
+        </>
+      ),
+      options: [
+        { id: "L3_rutas", label: "Trazar rutas seguras y eficientes" },
+        { id: "L3_almacen", label: "Centralizar almacenes y repartir con equidad" },
+        { id: "L3_emergencias", label: "Definir prioridades ante emergencias" },
+      ],
+    },
+    L2_normas: {
+      title: "Esbozo de normas",
+      text: (
+        <>
+          <p className="mb-2">Piensas en la convivencia futura. ¿Cómo garantizar justicia y participación?</p>
+        </>
+      ),
+      options: [
+        { id: "L3_constituyentes", label: "Redactar principios básicos (dignidad, igualdad, cooperación)" },
+        { id: "L3_tomasdecisiones", label: "Elegir un sistema de toma de decisiones (votos/consenso)" },
+        { id: "L3_derechos", label: "Definir derechos y deberes mínimos" },
+      ],
+    },
+
+    // ===== Nivel 3 (cierres con reflexión) =====
+    L3_huerto: endNode("Progreso sostenible", [
+      "Has asegurado calorías a medio plazo. ¿Qué conocimientos necesitas compartir para mejorar la cosecha?",
+    ]),
+    L3_intercambio: endNode("Reglas para el intercambio", [
+      "Piensas en precios justos y en evitar abusos. ¿Cómo garantizarías transparencia y acceso equitativo?",
+    ]),
+    L3_proteccion: endNode("Seguridad alimentaria", [
+      "Inventario claro y accesos definidos reducen conflictos. ¿Cómo comunicarías estas reglas?",
+    ]),
+
+    L3_hervir: endNode("Potabilización básica", [
+      "Reducir riesgos requiere disciplina. ¿Cómo mantendrías el protocolo cuando lleguen más personas?",
+    ]),
+    L3_quimico: endNode("Recursos sanitarios", [
+      "Las farmacias son finitas. ¿Cómo planificar el relevo cuando se agoten los suministros?",
+    ]),
+    L3_cooperar: endNode("Cooperación abierta", [
+      "Dejar instrucciones ayuda a otros. ¿Qué virtudes del diálogo practicarás si aparece más gente?",
+    ]),
+
+    L3_comunicacionEnergia: endNode("Energía para comunicar", [
+      "Priorizar comunicación puede traer ayuda. ¿Qué normas de uso establecerías para el equipo?",
+    ]),
+    L3_refrigeracion: endNode("Guardar lo esencial", [
+      "Evitas pérdidas, pero consumes energía. ¿Cómo decidirías qué se refrigera primero?",
+    ]),
+    L3_luzSeguridad: endNode("Iluminar y cuidar", [
+      "La seguridad aumenta el descanso. ¿Cómo equilibrar seguridad con ahorro energético?",
+    ]),
+
+    L3_protocolo: endNode("Lenguaje claro", [
+      "Un protocolo reduce malentendidos. ¿Qué indicadores usarás para evaluar si funciona?",
+    ]),
+    L3_baliza: endNode("Señales visibles", [
+      "Las balizas orientan a cualquiera. ¿Cómo evitarías que la información se manipule?",
+    ]),
+    L3_registro: endNode("Evidencias y mejora", [
+      "Registrar ayuda a aprender. ¿Qué patrones buscarías en los datos?",
+    ]),
+
+    L3_mapa: endNode("Mapa inclusivo", [
+      "Un mapa guía a recién llegados. ¿Cómo lo mantendrás actualizado?",
+    ]),
+    L3_idiomas: endNode("Comunicación inclusiva", [
+      "Múltiples idiomas e iconos reducen barreras. ¿Qué otras barreras debes prever?",
+    ]),
+    L3_punto: endNode("Encuentro seguro", [
+      "Un punto y horarios evitan pérdidas de tiempo. ¿Qué harás ante desacuerdos?",
+    ]),
+
+    L3_normasJustas: endNode("Normas claras", [
+      "Las reglas dan estabilidad. ¿Cómo asegurarías que todos participen en su revisión?",
+    ]),
+    L3_mediacion: endNode("Mediación y paz", [
+      "Diseñas un sistema para resolver conflictos. ¿Qué virtudes del diálogo son clave?",
+    ]),
+    L3_transparencia: endNode("Transparencia", [
+      "Publicar decisiones reduce sospechas. ¿Qué información debe ser pública y cuál privada?",
+    ]),
+
+    L3_formacion: endNode("Cuidar la vida", [
+      "Formarse salva vidas. ¿Cómo organizarías turnos y tutorías para aprender?",
+    ]),
+    L3_prevencion: endNode("Prevención primero", [
+      "La salud depende de hábitos. ¿Qué normas higiénicas consensuarías?",
+    ]),
+    L3_derivar: endNode("Red de salud", [
+      "Señalizar recursos mejora el acceso. ¿Cómo priorizarías casos urgentes?",
+    ]),
+
+    L3_rutas: endNode("Rutas seguras", [
+      "Definir rutas ahorra tiempo y riesgos. ¿Cómo evaluarías su eficacia?",
+    ]),
+    L3_almacen: endNode("Reparto equitativo", [
+      "Centralizar ayuda a la justicia distributiva. ¿Qué criterio usarías para repartir?",
+    ]),
+    L3_emergencias: endNode("Prioridades claras", [
+      "Un plan salva vidas en crisis. ¿Quién decide y con qué legitimidad?",
+    ]),
+
+    L3_constituyentes: endNode("Principios básicos", [
+      "Dignidad, igualdad y cooperación como base. ¿Cómo relacionas esto con el art. 1 y 10 de la Constitución de 1978?",
+    ]),
+    L3_tomasdecisiones: endNode("Decidir juntos", [
+      "Voto o consenso: opciones distintas. ¿Cuándo preferirías cada una?",
+    ]),
+    L3_derechos: endNode("Derechos y deberes", [
+      "Equilibrar libertades y responsabilidades evita abusos. ¿Qué derechos mínimos garantizarías?",
+    ]),
+  }), []);
+
+  function endNode(title, prompts) {
+    return {
+      title,
+      text: (
+        <>
+          {prompts.map((p, i) => (
+            <p key={i} className="mb-2">{p}</p>
+          ))}
+          <p className="mt-3 text-sm italic">Has completado las 3 decisiones. Pasa a la reflexión final.</p>
+        </>
+      ),
+      options: [],
+      end: true,
+    };
+  }
+
+  const currentNodeId = useMemo(() => {
+    if (!started) return "intro";
+    return path.length === 0 ? "intro" : path[path.length - 1];
+  }, [started, path]);
+
+  const currentNode = nodes[currentNodeId] ?? nodes["intro"];
+
+  const onChoose = (option) => {
+    if (currentNode.end) return;
+    const nextId = option.id;
+    setPath((p) => (p.length === 0 ? [nextId] : [...p, nextId]));
+    setChoices((c) => [...c, { nodeId: currentNodeId, optionLabel: option.label }]);
+  };
+
+  const canChoose = currentNode.options?.length > 0 && path.length < 3; // 3 decisiones
+
+  const restart = () => {
+    setStarted(false);
+    setPath([]);
+    setChoices([]);
+  };
+
+  const copySummary = async () => {
+    const ruta = path.join(" → ");
+    const resumen = `Ruta elegida: ${ruta}\n\nOpciones:\n${choices
+      .map((c, i) => `${i + 1}. [${c.nodeId}] ${c.optionLabel}`)
+      .join("\n")}\n`;
+    try {
+      await navigator.clipboard.writeText(resumen);
+      alert("Resumen copiado al portapapeles");
+    } catch (e) {
+      alert("No se pudo copiar. Selecciona y copia manualmente.");
+    }
+  };
+
+  // Progreso visual
+  const progress = Math.min(path.length / 3, 1);
+
+  return (
+    <div className="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <header className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold">Un día en una ciudad vacía</h1>
+            <p className="text-slate-500">Aventura de 3 decisiones · supervivencia · comunicación · progreso</p>
+          </div>
+          <div className="text-right">
+            <button onClick={restart} className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm">Reiniciar</button>
+          </div>
+        </header>
+
+        {/* Barra de progreso */}
+        <div className="mt-4 h-2 w-full bg-slate-200 rounded-full overflow-hidden" aria-label="Progreso">
+          <div className="h-full bg-slate-700" style={{ width: `${progress * 100}%` }} />
+        </div>
+        <p className="mt-1 text-xs text-slate-400">Decisiones: {path.length} / 3</p>
+
+        {/* Contenido */}
+        <main className="mt-6">
+          {!started ? (
+            <IntroCard onStart={() => setStarted(true)} node={nodes.intro} />
+          ) : (
+            <NodeCard
+              node={currentNode}
+              canChoose={canChoose}
+              onChoose={onChoose}
+              finished={path.length >= 3 || currentNode.end}
+              copySummary={copySummary}
+              pathIds={path}
+              nodes={nodes}
+            />
+          )}
+        </main>
+
+        <footer className="mt-8 text-xs text-slate-400">
+          <p>
+            Pensado para 2º ESO · Conexiones curriculares: naturaleza social del ser humano; resolución pacífica de conflictos; virtudes del diálogo; ley, poder y justicia (Constitución de 1978).
+          </p>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+function IntroCard({ onStart, node }) {
+  return (
+    <div className="grid gap-4">
+      <article className="bg-slate-100 rounded-2xl p-4 md:p-6">
+        <h2 className="text-xl font-semibold mb-2">{node.title}</h2>
+        <div className="prose prose-slate max-w-none">
+          {node.text}
+        </div>
+      </article>
+      <div className="flex flex-wrap gap-3">
+        {node.options.map((opt) => (
+          <button
+            key={opt.id}
+            onClick={onStart}
+            className="px-4 py-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900"
+          >
+            Comenzar
+          </button>
+        ))}
+      </div>
+      <Tips />
+    </div>
+  );
+}
+
+function NodeCard({ node, canChoose, onChoose, finished, copySummary, pathIds, nodes }) {
+  return (
+    <div className="grid gap-4">
+      <article className="bg-slate-100 rounded-2xl p-4 md:p-6">
+        <h2 className="text-xl font-semibold mb-2">{node.title}</h2>
+        <div className="prose prose-slate max-w-none">
+          {node.text}
+        </div>
+      </article>
+
+      {canChoose ? (
+        <div className="grid md:grid-cols-3 gap-3">
+          {node.options.map((opt) => (
+            <button
+              key={opt.id}
+              onClick={() => onChoose(opt)}
+              className="w-full text-left bg-white border border-slate-200 hover:border-slate-400 rounded-xl p-4 shadow-sm hover:shadow"
+            >
+              <div className="font-medium">{opt.label}</div>
+              <div className="text-xs text-slate-500">Elige para continuar…</div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-200 p-4">
+          {finished ? (
+            <Reflection copySummary={copySummary} pathIds={pathIds} nodes={nodes} />
+          ) : (
+            <p className="text-slate-500">No hay más opciones en este punto.</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Reflection({ copySummary, pathIds, nodes }) {
+  return (
+    <div className="grid gap-3">
+      <h3 className="text-lg font-semibold">Reflexión final</h3>
+      <ul className="list-disc pl-5 text-slate-700 space-y-2">
+        <li>Relaciona tus decisiones con los <strong>tres motivos</strong> para vivir en sociedad: <em>sobrevivir, comunicarse, progresar</em>.</li>
+        <li>¿Qué <strong>normas</strong> serían necesarias si mañana llegan más personas? Propón 3.</li>
+        <li>Vincula una de tus normas con la <strong>justicia</strong>. ¿A quién protege? ¿Por qué es legítima?</li>
+        <li>Conecta con la Constitución de 1978: menciona un artículo (p. ej., art. 1 o 10) que apoye tu propuesta.</li>
+      </ul>
+
+      <div className="flex flex-wrap gap-3 mt-2">
+        <button onClick={copySummary} className="px-4 py-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900">Copiar mi recorrido</button>
+        <details className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200">
+          <summary className="cursor-pointer font-medium">Ver ruta elegida</summary>
+          <ol className="list-decimal pl-5 mt-2 text-slate-600">
+            {pathIds.map((id, i) => (
+              <li key={i}><span className="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded">{id}</span> — <em>{nodes[id]?.title || ""}</em></li>
+            ))}
+          </ol>
+        </details>
+      </div>
+
+      <Tips />
+    </div>
+  );
+}
+
+function Tips() {
+  return (
+    <aside className="grid gap-2 bg-white border border-slate-200 rounded-xl p-4">
+      <h4 className="font-semibold">Pistas didácticas</h4>
+      <ul className="list-disc pl-5 text-slate-600 text-sm space-y-1">
+        <li><strong>Objetivo:</strong> comprender la necesidad de la sociedad y la política; practicar toma de decisiones y reflexión ética.</li>
+        <li><strong>Conexiones:</strong> virtudes del diálogo, resolución pacífica de conflictos, justicia y Constitución de 1978.</li>
+        <li><strong>DUA:</strong> decisiones breves, lenguaje claro, apoyo visual y posibilidad de copiar el recorrido.</li>
+      </ul>
+    </aside>
+  );
+}
