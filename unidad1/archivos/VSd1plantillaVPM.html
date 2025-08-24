@@ -1,222 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plantillas A4 – SDA “Vivir bien juntos: felicidad, deber y virtud en nuestra aula”</title>
+  <title>Plantilla “Veo – Pienso – Me pregunto” · Imprimible A4</title>
   <style>
-    :root {
-      --ink:#111;
-      --muted:#666;
-      --line:#222;
-      --accent:#0a7;
+    :root{
+      --accent:#0ea5e9; /* cambia este color si lo deseas */
+      --ink:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --soft:#f0f9ff;
     }
-    @page { size: A4; margin: 1.6cm; }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; color: var(--ink); margin: 0; }
-    .sheet { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 12mm 10mm; position: relative; }
-    .screen-shadow { box-shadow: 0 0 0 1px #00000010, 0 10px 30px #0000001a; background:#fff; }
-    h1, h2, h3 { margin: 0 0 6mm; line-height: 1.15; }
-    h1 { font-size: 16pt; letter-spacing: .2px; }
-    h2 { font-size: 13pt; margin-top: 2mm; }
-    h3 { font-size: 11.5pt; margin-top: 2mm; color: var(--muted); }
-    p { margin: 0 0 4mm; font-size: 10.5pt; }
-    .meta { font-size: 9.5pt; color: var(--muted); display:flex; gap:10mm; flex-wrap:wrap; margin-bottom: 4mm; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
-    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; }
-    .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
-    .box { border: 1px solid var(--line); border-radius: 5px; padding: 4mm; }
-    .checklist { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 6mm; font-size: 10.5pt; }
-    .checklist li { display: flex; gap: 3mm; align-items: flex-start; }
-    .check { width: 12pt; height: 12pt; border: 1px solid var(--line); border-radius: 2px; display: inline-block; margin-top: 2pt; }
-    .line { border-bottom: 1px solid var(--line); height: 14pt; }
-    .lines-2 .line { margin-bottom: 2mm; }
-    .tiny { font-size: 9pt; color: var(--muted); }
-    .signature { display:grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 6mm; align-items:end; }
-    .signature .sig-line { border-bottom: 1px solid var(--line); height: 12mm; }
-    .badge { font-size: 9pt; color: var(--muted); position: absolute; bottom: 10mm; right: 10mm; }
-    .page-break { page-break-after: always; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid var(--line); padding: 3mm; font-size: 10pt; }
-    th { background: #f6f6f6; font-weight: 600; }
-    .narrow td, .narrow th { padding: 2mm; font-size: 9.5pt; }
-    .center { text-align: center; }
-    .muted { color: var(--muted); }
-    .pill { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:0 6px; font-size:9pt; color:var(--muted); }
-    .help { font-size: 9.5pt; color: var(--muted); margin-top: 1mm; }
-    .grid { display: grid; gap: 4mm; }
-    .two { grid-template-columns: 1fr 1fr; }
-    .three { grid-template-columns: repeat(3,1fr); }
+    *{ box-sizing:border-box; }
 
-    @media print {
-      .screen-shadow { box-shadow: none; }
-      .badge { color: #999; }
+    /* Tamaño y márgenes de impresión */
+    @page{ size:A4; margin:16mm; }
+    @media print{
+      body{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print{ display:none !important; }
+      .page{ box-shadow:none; margin:0; }
     }
+
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--ink);
+      background:#f8fafc;
+    }
+
+    .page{
+      width:210mm; /* A4 */
+      min-height:calc(297mm - 32mm); /* A4 menos márgenes @page */
+      margin:12mm auto; /* pequeño margen visual en pantalla */
+      background:#fff;
+      box-shadow:0 10px 28px rgba(0,0,0,.08);
+      display:flex; flex-direction:column;
+    }
+
+    /* Cabecera */
+    .header{ padding:18mm 16mm 8mm; }
+    .title{ font-size:20pt; font-weight:800; letter-spacing:.2px; margin:0 0 2mm; }
+    .subtitle{ margin:0 0 8mm; color:var(--muted); font-size:10.5pt; }
+
+    .meta{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr 1fr;
+      gap:4mm;
+      margin-bottom:8mm;
+    }
+    .field{ border:1px solid var(--line); border-radius:6px; padding:3mm; min-height:14mm; }
+    .field label{ display:block; font-size:9pt; color:var(--muted); margin-bottom:1.5mm; }
+    .field .input{ min-height:8mm; }
+
+    /* Cinta de instrucciones (se oculta en clase si no quieres) */
+    .banner{ background:linear-gradient(90deg, var(--accent), #60a5fa); color:#fff; padding:6mm 16mm; }
+    .banner p{ margin:0; font-size:10.5pt; }
+
+    /* Secciones */
+    .sections{ display:grid; grid-template-columns:1fr; gap:8mm; padding:12mm 16mm 14mm; }
+    .section{ border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+    .section header{ display:flex; align-items:center; gap:6mm; background:var(--soft); border-bottom:1px solid var(--line); padding:5mm 6mm; }
+    .badge{ inline-size:12mm; block-size:12mm; border-radius:999px; display:grid; place-items:center; background:var(--accent); color:#fff; font-weight:800; }
+    .section h2{ margin:0; font-size:14pt; line-height:1.1; }
+    .prompt{ margin-left:auto; font-size:10pt; color:var(--muted); }
+
+    /* Área con líneas para escribir a mano */
+    .write-area{ padding:6mm; min-height:74mm; background:
+      repeating-linear-gradient(to bottom, #fff 0 11mm, var(--line) 11mm 11.4mm);
+    }
+    .note{ font-size:9pt; color:var(--muted); padding:0 6mm 6mm; }
+
+    /* Pie */
+    .footer{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:8mm; padding:6mm 16mm 12mm; color:var(--muted); font-size:9pt; }
+    .checks{ display:flex; gap:6mm; flex-wrap:wrap; }
+    .check{ display:flex; align-items:center; gap:4mm; }
+    .box{ width:4.2mm; height:4.2mm; border:1.2px solid var(--muted); border-radius:2px; }
+    .brand{ font-weight:600; opacity:.9; }
+
+    /* Variante MINI en la 2ª página (recortable) */
+    .page.mini{ padding:10mm 12mm; }
+    .grid-3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:6mm; }
+    .card{ border:1px dashed var(--line); border-radius:10px; }
+    .card header{ background:var(--soft); border-bottom:1px dashed var(--line); padding:4mm; display:flex; align-items:center; gap:4mm; }
+    .card h3{ margin:0; font-size:11.5pt; }
+    .card .area{ padding:4mm; min-height:70mm; background:repeating-linear-gradient(to bottom, #fff 0 9.5mm, var(--line) 9.5mm 9.9mm); }
+    .card .meta-mini{ display:grid; grid-template-columns:1fr 1fr; gap:3mm; padding:4mm; }
+    .meta-mini .mfield{ border:1px solid var(--line); border-radius:6px; padding:2.5mm; min-height:11mm; }
+    .meta-mini label{ display:block; font-size:8.5pt; color:var(--muted); margin-bottom:1mm; }
   </style>
 </head>
 <body>
-
-  
-
-  
-  <!-- Página 3: Caso ficticio -->
-  <section class="sheet screen-shadow">
-    <h1>Plantilla “Caso ficticio verosímil”</h1>
-    <div class="meta">
-      <div><strong>Pareja:</strong> ______ y ______</div>
-      <div><strong>Materia del trabajo:</strong> __________</div>
-      <div><strong>Curso:</strong> ______</div>
-      <div class="pill">CE1–1.1 · CE1–1.2</div>
-    </div>
-
-    <h2>1) Título del caso</h2>
-    <div class="line"></div>
-
-    <div class="row" style="margin-top:4mm;">
-      <div>
-        <h2>2) Actores y roles</h2>
-        <div class="grid">
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>
+  <!-- PÁGINA 1 · Plantilla completa -->
+  <section class="page">
+    <header class="header">
+      <h1 class="title">Veo – Pienso – Me pregunto</h1>
+      <p class="subtitle">Rutina de pensamiento para separar observaciones de inferencias y abrir preguntas de investigación.</p>
+      <div class="meta">
+        <div class="field"><label>Nombre</label><div class="input"></div></div>
+        <div class="field"><label>Fecha</label><div class="input"></div></div>
+        <div class="field"><label>Curso / Grupo</label><div class="input"></div></div>
+        <div class="field"><label>Fuente / Objeto de análisis</label><div class="input"></div></div>
       </div>
-      <div>
-        <h2>3) Hechos (sin juicios)</h2>
-        <div class="grid">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>
-      </div>
+    </header>
+
+    <div class="banner no-print">
+      <p><strong>Instrucciones (opcional):</strong> 1) Describe <em>hechos</em> visibles sin interpretar. 2) Explica en qué basas tus <em>inferencias</em>. 3) Formula <em>preguntas abiertas</em> y qué evidencias necesitarías para responderlas.</p>
     </div>
 
-    <h2 style="margin-top:4mm;">4) Valores en tensión</h2>
-    <div class="box" style="margin-bottom:4mm;">
-      <div class="row-4">
-        <label><input type="checkbox"/> Libertad ↔ Responsabilidad</label>
-        <label><input type="checkbox"/> Igualdad ↔ Mérito</label>
-        <label><input type="checkbox"/> Bienestar del grupo ↔ Preferencia individual</label>
-        <label><input type="checkbox"/> Dignidad ↔ Utilidad</label>
-        <label><input type="checkbox"/> Sinceridad ↔ Lealtad</label>
-        <label><input type="checkbox"/> Justicia ↔ Amistad</label>
-        <label><input type="checkbox"/> Otros:</label>
-        <div class="line"></div>
-      </div>
-    </div>
+    <main class="sections">
+      <article class="section" aria-labelledby="veo">
+        <header>
+          <div class="badge" aria-hidden="true">1</div>
+          <h2 id="veo">Veo</h2>
+          <div class="prompt">¿Qué observo? Hechos, detalles, datos.</div>
+        </header>
+        <div class="write-area" aria-label="Espacio para escribir observaciones"></div>
+        <div class="note">Pistas: colores, números, palabras clave, gestos, relaciones espaciales, tiempo, fuente.</div>
+      </article>
 
-    <div class="row">
-      <div>
-        <h2>5) Pregunta ética abierta</h2>
-        <div class="grid">
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>
-      </div>
-      <div>
-        <h2>6) Indicadores de impacto</h2>
-        <div class="box">
-          <div class="row-4">
-            <label><input type="checkbox"/> Tiempo perdido</label>
-            <label><input type="checkbox"/> Aprendizaje desigual</label>
-            <label><input type="checkbox"/> Clima de aula tenso</label>
-            <label><input type="checkbox"/> Satisfacción baja</label>
-            <label><input type="checkbox"/> Nota del grupo afectada</label>
-            <label><input type="checkbox"/> Participación oral desigual</label>
-            <label><input type="checkbox"/> Estrés/ansiedad</label>
-            <label><input type="checkbox"/> Otros</label>
-          </div>
-        </div>
-      </div>
-    </div>
+      <article class="section" aria-labelledby="pienso">
+        <header>
+          <div class="badge" aria-hidden="true">2</div>
+          <h2 id="pienso">Pienso</h2>
+          <div class="prompt">¿Qué infiero y por qué? Conexiones, causas, patrones.</div>
+        </header>
+        <div class="write-area" aria-label="Espacio para escribir inferencias"></div>
+        <div class="note">Justifica con base en lo que “ves”. Distingue hipótesis de certezas.</div>
+      </article>
 
-    <h2 style="margin-top:4mm;">7) Opciones iniciales de actuación (al menos 2)</h2>
-    <div class="box">
-      <div class="grid">
-        <div><strong>Opción A:</strong> <div class="line"></div></div>
-        <div class="row">
-          <div><span class="tiny">Pros</span><div class="line"></div></div>
-          <div><span class="tiny">Contras</span><div class="line"></div></div>
-        </div>
-        <div><strong>Opción B:</strong> <div class="line"></div></div>
-        <div class="row">
-          <div><span class="tiny">Pros</span><div class="line"></div></div>
-          <div><span class="tiny">Contras</span><div class="line"></div></div>
-        </div>
-        <div><strong>Opción C (opcional):</strong> <div class="line"></div></div>
+      <article class="section" aria-labelledby="me-pregunto">
+        <header>
+          <div class="badge" aria-hidden="true">3</div>
+          <h2 id="me-pregunto">Me pregunto</h2>
+          <div class="prompt">¿Qué preguntas abiertas surgen? ¿Qué evidencias necesitaría?</div>
+        </header>
+        <div class="write-area" aria-label="Espacio para escribir preguntas"></div>
+        <div class="note">Ejemplos: ¿Qué pasaría si…? ¿Cómo sé que…? ¿Qué otras perspectivas existen?</div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <div class="checks">
+        <label class="check"><span class="box" aria-hidden="true"></span><span>Separé hechos de opiniones</span></label>
+        <label class="check"><span class="box" aria-hidden="true"></span><span>Usé evidencias</span></label>
+        <label class="check"><span class="box" aria-hidden="true"></span><span>Formulé preguntas explorables</span></label>
       </div>
-    </div>
-
-    <h2 style="margin-top:4mm;">8) Posibles objeciones / puntos de vista contrarios</h2>
-    <div class="grid">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
-    </div>
-
-    <div class="box" style="margin-top:5mm;">
-      <strong>Lista de cotejo rápida</strong> — ☐ Hechos claros  ☐ Valores en tensión precisos  ☐ Pregunta ética abierta  ☐ Impacto descrito
-    </div>
-    <div class="badge">Plantilla 3/4</div>
+      <div class="brand">Plantilla · “Veo – Pienso – Me pregunto”</div>
+    </footer>
   </section>
 
-  <div class="page-break"></div>
-
-  <!-- Página 4: Checklist de participación -->
-  <section class="sheet screen-shadow">
-    <h1>Checklist de participación y clima – Sesión 1</h1>
-    <div class="meta">
-      <div><strong>Curso/Grupo:</strong> ________</div>
-      <div><strong>Fecha:</strong> ____ / ____ / ______</div>
-      <div><strong>Docente:</strong> __________________</div>
-      <div class="pill">CE1–1.1 · CE1–1.2 · CE4–4.1</div>
+  <!-- PÁGINA 2 · Versión MINI (recortable, tres tarjetas) -->
+  <section class="page mini">
+    <div class="grid-3">
+      <div class="card">
+        <header><div class="badge" aria-hidden="true">1</div><h3>Veo</h3></header>
+        <div class="area" aria-label="Área de notas: Veo"></div>
+        <div class="meta-mini">
+          <div class="mfield"><label>Nombre</label></div>
+          <div class="mfield"><label>Fecha</label></div>
+        </div>
+      </div>
+      <div class="card">
+        <header><div class="badge" aria-hidden="true">2</div><h3>Pienso</h3></header>
+        <div class="area" aria-label="Área de notas: Pienso"></div>
+        <div class="meta-mini">
+          <div class="mfield"><label>Nombre</label></div>
+          <div class="mfield"><label>Fecha</label></div>
+        </div>
+      </div>
+      <div class="card">
+        <header><div class="badge" aria-hidden="true">3</div><h3>Me pregunto</h3></header>
+        <div class="area" aria-label="Área de notas: Me pregunto"></div>
+        <div class="meta-mini">
+          <div class="mfield"><label>Nombre</label></div>
+          <div class="mfield"><label>Fecha</label></div>
+        </div>
+      </div>
     </div>
-
-    <p class="help">Marca ✓ o 0/1. Usa la columna de observaciones para anotar evidencias concretas (p. ej., “reformuló la idea de su compañera antes de responder”).</p>
-
-    <table class="narrow" style="margin-top:4mm;">
-      <thead>
-        <tr>
-          <th class="center">Nº</th>
-          <th>Nombre</th>
-          <th class="center">Turno y escucha<br/><span class="muted">(4.1)</span></th>
-          <th class="center">Respeta contrato<br/><span class="muted">(4.1)</span></th>
-          <th class="center">Aporta razones/ejemplos<br/><span class="muted">(1.2)</span></th>
-          <th class="center">Formula preguntas éticas<br/><span class="muted">(1.1)</span></th>
-          <th class="center">Autorregula emoción/pausa<br/><span class="muted">(4.1)</span></th>
-          <th class="center">Trabajo en pareja<br/><span class="muted">(1.2)</span></th>
-          <th class="center">Entrega H1<br/><span class="muted">(1.1)</span></th>
-          <th>Observaciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- 15 filas -->
-        <tr><td class="center">1</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">2</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">3</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">4</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">5</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">6</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">7</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">8</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">9</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">10</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">11</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">12</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">13</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">14</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-        <tr><td class="center">15</td><td></td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td><td></td></tr>
-      </tbody>
-    </table>
-
-    <h3 style="margin-top:6mm;">Notas rápidas de la sesión</h3>
-    <div class="grid lines-2">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
-    </div>
-    <div class="badge">Plantilla 4/4</div>
   </section>
-
 </body>
 </html>
