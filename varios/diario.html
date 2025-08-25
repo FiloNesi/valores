@@ -1,1 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diario filosófico · Educación en Valores (2º ESO)</title>
+  <style>
+    /* --- Hoja A4 y estilos de impresión --- */
+    @page { size: A4; margin: 15mm; }
+    @media print {
+      body { background: #fff; }
+      .sheet { box-shadow: none; margin: 0; }
+      .no-print { display: none !important; }
+      .hint { color: #444 !important; }
+    }
+
+    /* --- Estilos generales (pantalla + impresión) --- */
+    :root{
+      --ink:#111;
+      --muted:#6b7280; /* gris */
+      --line:#d1d5db;  /* gris claro */
+      --accent:#0b57d0; /* azul suave para títulos */
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0; padding:0; background:#f6f7fb; color:var(--ink);
+      font-family: Arial, Helvetica, sans-serif; font-size:12pt; line-height:1.35;
+    }
+    .sheet{
+      width: 210mm; min-height: 297mm; margin: 12mm auto; background:#fff;
+      box-shadow: 0 5mm 20mm rgba(0,0,0,.1);
+      border: 1px solid #eee;
+    }
+    .inner{ padding: 18mm; }
+
+    h1{
+      font-size: 18pt; margin:0 0 8mm; letter-spacing:.2px; color:var(--accent);
+    }
+    h2{ font-size: 13pt; margin: 0 0 6mm; color: var(--ink); }
+    .subtitle{ color:var(--muted); font-size:10pt; margin-top:2mm; }
+
+    /* Grid superior (encabezado) */
+    .header-grid{
+      display:grid; grid-template-columns: 34mm 1fr; gap: 6mm; align-items:end;
+      margin-bottom: 10mm;
+    }
+    .field-label{ font-size:10pt; color:var(--muted); margin-bottom:2mm; }
+    .line{
+      border-bottom: 1.6pt solid var(--line); min-height: 10mm; padding: 3mm 2mm;
+    }
+
+    /* Bloques con borde lateral sutil */
+    .block{
+      border:1px solid var(--line); border-left:3.5mm solid var(--accent);
+      padding: 5mm; border-radius: 6px; margin-bottom: 8mm;
+    }
+    .hint{ font-size:10pt; color:var(--muted); margin: 2mm 0 4mm; }
+
+    /* Áreas de escritura (con "rayas" ligeras en pantalla e impresión) */
+    .ruled{
+      width:100%; min-height: 34mm; padding: 3mm 4mm; border:1px solid var(--line);
+      border-radius:4px; resize:vertical; outline:none; background: repeating-linear-gradient(
+        to bottom, #fff, #fff 22px, #f3f4f6 22px, #f3f4f6 23px
+      );
+      font: inherit; color: inherit;
+    }
+    .ruled.small{ min-height: 22mm; }
+    .ruled.tiny{ min-height: 14mm; }
+
+    /* Cajas de checklist */
+    .checks{
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4mm 8mm;
+      font-size: 11pt;
+    }
+    .checks label{ display:flex; align-items:center; gap: 6px; }
+    .checks input{ width: 14px; height: 14px; }
+
+    /* Radios en línea */
+    .inline-radios{ display:flex; flex-wrap:wrap; gap: 8px 14px; align-items:center; }
+    .tag{ font-size:10pt; color:var(--muted); }
+
+    /* Pie */
+    .footer{ display:flex; justify-content:space-between; align-items:center; margin-top: 6mm; }
+    .signature{ width: 65mm; border-top: 1px solid var(--line); text-align:center; padding-top:2mm; font-size:10pt; color:var(--muted); }
+
+    /* Botones (solo pantalla) */
+    .toolbar{ display:flex; gap:8px; justify-content:flex-end; padding:10px 12px; }
+    .btn{
+      border:1px solid var(--line); background:#fff; padding:8px 12px; border-radius:8px;
+      cursor:pointer; font-size: 11pt;
+    }
+    .btn:hover{ border-color:#cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+  </div>
+
+  <section class="sheet" role="document">
+    <div class="inner">
+      <header>
+        <h1>Diario filosófico · Educación en Valores (2º ESO)</h1>
+        <div class="subtitle">Rellena al final de la sesión (≈ 5 minutos). Responde breve y con sinceridad.</div>
+      </header>
+
+      <!-- Encabezado: fecha y título -->
+      <div class="header-grid">
+        <div>
+          <div class="field-label">Fecha</div>
+          <div class="line" aria-label="Fecha de hoy" contenteditable="true"></div>
+        </div>
+        <div>
+          <div class="field-label">Título de la sesión</div>
+          <div class="line" aria-label="Título de la sesión" contenteditable="true"></div>
+        </div>
+      </div>
+
+      <!-- Resumen breve -->
+      <section class="block">
+        <h2>1) ¿Qué hemos trabajado hoy?</h2>
+        <p class="hint">(Contenidos, actividades, ideas clave en 2–3 líneas)</p>
+        <div class="ruled small" aria-label="Resumen breve" contenteditable="true"></div>
+      </section>
+
+      <!-- Reflexión personal -->
+      <section class="block">
+        <h2>2) Reflexión personal</h2>
+        <p class="hint">¿Qué pienso o siento sobre lo de hoy? ¿Qué relación tiene con mi vida o con la sociedad?</p>
+        <div class="ruled" aria-label="Reflexión personal" contenteditable="true"></div>
+      </section>
+
+      <!-- Idea clave + Pregunta abierta -->
+      <section class="block">
+        <h2>3) Idea clave &amp; Pregunta</h2>
+        <p class="hint">Escribe una idea principal que te llevas y, si quieres, una pregunta que te haya surgido.</p>
+        <div style="display:grid; grid-template-columns: 1fr; gap:5mm;">
+          <div>
+            <div class="field-label">La idea más importante que me llevo hoy es…</div>
+            <div class="ruled tiny" aria-label="Idea clave" contenteditable="true"></div>
+          </div>
+          <div>
+            <div class="field-label">Una pregunta que me queda (opcional)…</div>
+            <div class="ruled tiny" aria-label="Pregunta abierta" contenteditable="true"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Autoevaluación rápida -->
+      <section class="block">
+        <h2>4) Autoevaluación rápida</h2>
+        <div class="hint">Marca las opciones que se ajusten a tu participación de hoy.</div>
+        <div class="checks" role="group" aria-label="Autoevaluación">
+          <label><input type="checkbox" /> He hablado al menos una vez</label>
+          <label><input type="checkbox" /> He escuchado con respeto</label>
+          <label><input type="checkbox" /> He cuidado mis palabras en el desacuerdo</label>
+          <label><input type="checkbox" /> He ayudado a que otros participen</label>
+        </div>
+        <div style="height:6mm"></div>
+        <div class="inline-radios" role="group" aria-label="Balance de la sesión">
+          <span class="tag">¿Cómo me he sentido hoy?</span>
+          <label><input type="radio" name="estado" /> 😃 Bien</label>
+          <label><input type="radio" name="estado" /> 😐 Regular</label>
+          <label><input type="radio" name="estado" /> 😞 Difícil</label>
+        </div>
+      </section>
+
+      <!-- Compromiso breve -->
+      <section class="block">
+        <h2>5) Un gesto para la próxima vez</h2>
+        <p class="hint">Escribe un pequeño compromiso para mejorar la convivencia o tu aprendizaje.</p>
+        <div class="ruled tiny" aria-label="Compromiso breve" contenteditable="true"></div>
+      </section>
+
+      <footer class="footer">
+        <div class="tag">Curso: ________  ·  Grupo: ________</div>
+        <div class="signature">Espacio docente (comentario/sello)</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Nota: Puedes duplicar la sección .sheet si deseas imprimir varias copias por página. -->
+</body>
+</html>
 
