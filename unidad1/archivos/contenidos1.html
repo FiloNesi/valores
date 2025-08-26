@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[TÍTULO DEL TEMA] · Plantilla imprimible</title>
+  <style>
+    /* —————————————————————————————————————————
+       PLANTILLA IMPRIMIBLE PARA TEMAS TEÓRICOS
+       Autor/a: Inés (uso docente).
+       Uso: Duplica este archivo por tema, cambia los metadatos
+            y pega el contenido en los bloques <section>.
+       Notas:
+       - Colores pensados para impresión en B/N (alto contraste).
+       - Utiliza las utilidades: .page-break, .avoid-break, .cols-2
+       - Para forzar salto de página, añade <div class="page-break"></div>.
+       - Para evitar cortes feos, añade .avoid-break al contenedor.
+       ————————————————————————————————————————— */
+
+    :root{
+      --font-body: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Helvetica Neue", sans-serif;
+      --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --ink: #111;            /* texto principal */
+      --muted: #555;          /* texto secundario */
+      --line: #333;           /* bordes */
+      --bg-note: #f4f4f4;     /* fondos suaves en B/N */
+      --accent: #000;         /* acentos de alto contraste */
+    }
+
+    html, body { height: 100%; }
+    body{
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.45;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Tamaño de página y márgenes para impresión */
+    @page{ size: A4; margin: 1.8cm; }
+
+    .container{ max-width: 800px; margin: 0 auto; padding: 24px; }
+
+    header.doc-header{ border-bottom: 2px solid var(--line); padding-bottom: 10px; margin-bottom: 16px; }
+    .brandline{ font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .title{ font-family: var(--font-serif); font-size: 28px; line-height: 1.2; margin: 6px 0 10px; }
+    .subtitle{ color: var(--muted); margin: 4px 0 0; }
+
+    .meta{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 12px; }
+    .meta .field{ border: 1px solid var(--line); padding: 6px 8px; border-radius: 6px; }
+    .meta .label{ display:block; font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: .06em; }
+    .meta .value{ font-size: 12px; font-weight: 600; }
+
+    /* Tipografía de contenidos */
+    h2{ font-family: var(--font-serif); font-size: 20px; margin: 18px 0 8px; }
+    h3{ font-size: 16px; margin: 14px 0 6px; }
+    p{ margin: 10px 0; }
+    ul, ol{ margin: 10px 0 10px 20px; }
+    blockquote{ margin: 12px 0; padding: 10px 12px; border-left: 3px solid var(--line); background: var(--bg-note); font-family: var(--font-serif); }
+    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* Cajas de énfasis */
+    .callout{ border: 1.5px solid var(--line); border-left-width: 6px; padding: 10px 12px; border-radius: 6px; background: #fff; }
+    .callout + .callout{ margin-top: 8px; }
+    .callout .kicker{ font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+    .callout .content{ font-size: 14px; }
+    .callout.nota{ border-left-color: var(--ink); }
+    .callout.estudiar{ border-left-color: var(--ink); background: var(--bg-note); }
+
+    /* Tablas limpias para esquemas, glosarios, etc. */
+    table{ width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td{ border: 1px solid var(--line); padding: 8px; vertical-align: top; }
+    th{ text-align: left; background: var(--bg-note); }
+
+    /* Figuras e imágenes */
+    figure{ margin: 12px 0; }
+    figcaption{ font-size: 12px; color: var(--muted); margin-top: 4px; }
+    img{ max-width: 100%; height: auto; }
+
+    /* Utilidades de maquetación */
+    .muted{ color: var(--muted); }
+    .small{ font-size: 12px; }
+    .avoid-break{ break-inside: avoid; page-break-inside: avoid; }
+    .page-break{ break-after: page; page-break-after: always; height: 0; }
+    .cols-2{ column-count: 2; column-gap: 24px; }
+    .mb-0{ margin-bottom: 0 !important; }
+    .mt-0{ margin-top: 0 !important; }
+
+    /* Barra superior sólo para pantalla */
+    .toolbar{ position: sticky; top: 0; background: #fff; border-bottom: 1px solid var(--line); padding: 8px 12px; display: flex; gap: 8px; justify-content: flex-end; }
+    .btn{ border: 1px solid var(--line); padding: 6px 10px; border-radius: 6px; background: #fff; cursor: pointer; font-size: 14px; }
+    .btn:active{ transform: translateY(1px); }
+    @media print{
+      .toolbar{ display: none !important; }
+      .container{ padding: 0; }
+      a[href]::after{ content: " (" attr(href) ")"; font-size: 10px; color: var(--muted); }
+    }
+
+    /* Numeración de secciones (opcional) */
+    .enumerado h2{ counter-increment: h2counter; }
+    .enumerado h2::before{ content: counter(h2counter) ". "; color: var(--muted); }
+    .enumerado{ counter-reset: h2counter; }
+  </style>
+</head>
+<body>
+  <!-- Barra de acciones (no se imprime) -->
+  <div class="toolbar no-print">
+    <button class="btn" onclick="window.print()">🖨️ Imprimir</button>
+  </div>
+
+  <div class="container">
+    <!-- CABECERA DEL DOCUMENTO -->
+    <header class="doc-header avoid-break">
+      <div class="brandline">Educación en Valores 2º ESO</div>
+      <h1 class="title">Fundamentos de la ética y la identidad persONAL</h1>
+      <p class="subtitle">Reflexionaremos sobre la ética como guía de nuestras acciones</p>
+
+      <div class="meta">
+        <div class="field"><span class="label">Asignatura</span><span class="value">Valores</span></div>
+        <div class="field"><span class="label">Curso / Grupo</span><span class="value">2º ESO </span></div>
+        <div class="field"><span class="label">Unidad</span><span class="value">1</span></div>
+        <div class="field"><span class="label">Fecha</span><span class="value" id="hoy">15/09/25</span></div>
+        <div class="field"><span class="label">Docente</span><span class="value">Inés</span></div>
+        <div class="field"><span class="label">Duración orientativa</span><span class="value">4 sesiones</span></div>
+      </div>
+    </header>
+
+    <!-- BLOQUES DE CONTENIDO -->
+    <main class="enumerado">
+      <!-- 1. CONTENIDOS -->
+      <section class="avoid-break">
+        <h2>Objetivos de aprendizaje</h2>
+        <ul>
+          <li>¿Qué es la ética?</li>
+          <li>La naturaleza humana y la identidad personal.</li>
+          <li>Dignidad, libertad y moralidad.</li>
+          <li>Éticas de la felicidad, del deber y de la virtud.</li>
+        </ul>
+
+      </section>
+
+      <!-- 2. MAPA / ESQUEMA VISUAL (opcional) -->
+      <section class="avoid-break">
+        <h2>Esquema inicial</h2>
+        <p class="muted small">Sugerencia: usa viñetas, tabla o imagen con las ideas-fuerza del tema.</p>
+        <table>
+          <thead><tr><th>Idea</th><th>Conceptos relacionados</th><th>Notas</th></tr></thead>
+          <tbody>
+            <tr><td>[Idea 1]</td><td>[Conceptos]</td><td>[Notas]</td></tr>
+            <tr><td>[Idea 2]</td><td>[Conceptos]</td><td>[Notas]</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 3. DESARROLLO TEÓRICO -->
+      <section>
+        <h2>Desarrollo teórico</h2>
+        <div class="cols-2">
+          <h3>La Formación de Nuestra Personalidad: Un Viaje de Autodescubrimiento</h3>
+          <p>Durante nuestra vida, especialmente en la infancia y adolescencia, desarrollamos nuestra personalidad única. Esta no es algo fijo con lo que nacemos, sino que evoluciona constantemente.<br>
+            Vamos a explorar los tres factores principales que influyen en quiénes somos:<br>
+<ul>
+          <li>Factor Biológico (Lo Heredado)<br>
+<ul><ol>El temperamento básico que heredamos de nuestros padres</ol>
+<ol>Características genéticas que influyen en nuestro comportamiento</ol>
+<ol>Características genéticas que influyen en nuestro comportamiento</ol>
+<ol>Predisposiciones naturales hacia ciertos rasgos</ol></ul>
+          </li>
+    
+    <li>Factor Sociocultural (Lo Aprendido)<br>
+<ul><ol>Influencias de nuestra familia y amigos</ol>
+<ol>Impacto de nuestra cultura y sociedad</ol>
+<ol>Experiencias educativas y sociales</ol>
+<ol>Normas y valores de nuestra comunidad</ol></ul>
+          </li>
+    
+
+<li>Factor Personal (Nuestras Elecciones)<br>
+<ul><ol>Decisiones que tomamos día a día</ol>
+<ol>Hábitos que desarrollamos conscientemente</ol>
+<ol>Valores y principios que elegimos seguir</ol>
+<ol>Metas y aspiraciones personales</ol></ul>
+          </li>
+    
+</ul>
+
+
+
+    
+</p>
+
+          <h3>¿Cómo Interactúan Estos Factores?</h3>
+          <p>Nuestro temperamento heredado (factor biológico) puede influir en cómo respondemos a las situaciones sociales<br>
+    El entorno social (factor sociocultural) puede ayudarnos a desarrollar o modificar nuestras tendencias naturales<br>
+    Nuestras decisiones personales (factor personal) pueden ayudarnos a superar limitaciones tanto biológicas como sociales</p>
+
+          <blockquote>
+            <strong>Cita clave:</strong> «[Texto citado]». <span class="muted">([Referencia/autor, año])</span>
+          </blockquote>
+
+          <figure>
+            <img src="[ruta/imagen.png]" alt="[Descripción]" />
+            <figcaption>Figura: [Pie de figura / fuente]</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 4. DEFINICIONES / GLOSARIO -->
+      <section class="avoid-break">
+        <h2>Definiciones esenciales</h2>
+        <table>
+          <thead><tr><th>Término</th><th>Definición breve</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td>[Término]</td><td>[Definición]</td><td>[Ejemplo]</td></tr>
+            <tr><td>[Término]</td><td>[Definición]</td><td>[Ejemplo]</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 5. CAJAS DE ÉNFASIS: NOTA / ESTUDIAR -->
+      <section class="avoid-break">
+        <div class="callout nota">
+          <div class="kicker">Nota importante</div>
+          <div class="content">[Mensaje breve que el alumnado DEBE recordar.]</div>
+        </div>
+        <div class="callout estudiar">
+          <div class="kicker">Para estudiar</div>
+          <div class="content">[Síntesis/teoremas/lista mínima para examen.]</div>
+        </div>
+      </section>
+
+      <!-- 6. EJEMPLOS Y CONTRAEJEMPLOS -->
+      <section>
+        <h2>Ejemplos y contraejemplos</h2>
+        <ul>
+          <li><strong>Ejemplo:</strong> [Descripción]</li>
+          <li><strong>Contraejemplo:</strong> [Descripción]</li>
+        </ul>
+      </section>
+
+      <!-- 7. PREGUNTAS DE REPASO / ACTIVIDADES MÍNIMAS -->
+      <section class="avoid-break">
+        <h2>Preguntas de repaso</h2>
+        <ol>
+          <li>[Pregunta 1]</li>
+          <li>[Pregunta 2]</li>
+          <li>[Pregunta 3]</li>
+        </ol>
+
+        <h3 class="mt-0">Actividades mínimas</h3>
+        <ul>
+          <li>[Actividad breve 1]</li>
+          <li>[Actividad breve 2]</li>
+        </ul>
+      </section>
+
+      <!-- 8. REFERENCIAS / RECURSOS -->
+      <section>
+        <h2>Referencias y recursos</h2>
+        <ul>
+          <li>[Autor, A. A.] ([Año]). <em>[Título]</em>. [Editorial].</li>
+          <li>[Artículo o vídeo] — [URL]</li>
+        </ul>
+        <p class="small muted">Indica siempre la fuente de imágenes/tablas.</p>
+      </section>
+
+      <!-- 9. LICENCIA (opcional) -->
+      <section class="avoid-break">
+        <h2>Licencia y créditos</h2>
+        <p class="small">[Indica si el material es de uso docente interno, CC BY-NC-SA, etc.]</p>
+      </section>
+    </main>
+
+    <div class="page-break"></div>
+
+    <!-- PIE (texto informativo, no repetitivo por página) -->
+    <footer class="small muted">
+      <p class="mb-0">Plantilla HTML imprimible para temas teóricos — Inés · Última edición: <span id="fecha-edicion">[dd/mm/aaaa]</span></p>
+      <p class="mt-0">Sugerencia: exporta a PDF desde el navegador (Archivo → Imprimir → Guardar como PDF).</p>
+    </footer>
+  </div>
+
+  <script>
+    // Rellena la fecha de hoy automáticamente si no la cambias manualmente
+    (function(){
+      const hoy = new Date();
+      const dd = String(hoy.getDate()).padStart(2, '0');
+      const mm = String(hoy.getMonth()+1).padStart(2, '0');
+      const yyyy = hoy.getFullYear();
+      const stamp = `${dd}/${mm}/${yyyy}`;
+      const elHoy = document.getElementById('hoy');
+      const elEdit = document.getElementById('fecha-edicion');
+      if(elHoy && elHoy.textContent.includes('[')) elHoy.textContent = stamp;
+      if(elEdit && elEdit.textContent.includes('[')) elEdit.textContent = stamp;
+    })();
+  </script>
+</body>
+</html>
